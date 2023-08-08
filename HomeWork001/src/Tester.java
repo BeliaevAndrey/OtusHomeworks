@@ -7,28 +7,30 @@ import java.util.HashMap;
 public class Tester {
     static final String directory = "HomeWork001/testData";
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         Tester test = new Tester();
+
         HashMap<Long, Long> testValues = test.loadTests(Path.of(directory, "1.Tickets"));
+
         for (Long key : testValues.keySet()) {
             Long value = testValues.get(key);
             boolean answer = test.testPair(key, value);
             if (answer)
-                System.out.printf("for %d: expected: %d  %b\n", key, value, answer);
+                System.out.printf("for %d-digits number: expected: %d  %b\n", key, value, answer);
             else {
                 double actual = new LuckyTicket().findAmount(key.intValue());
-                System.out.printf("for %d: expected: %d  actual: %f %b\n", key, value, actual, answer);
+                System.out.printf("for %d-digits number: expected: %d  actual: %f %b\n", key, value, actual, answer);
             }
         }
-
     }
 
     boolean testPair(Long valueIn, Long expected) {
-        LuckyTicket luckyTicket = new LuckyTicket();
-        double actual = luckyTicket.findAmount(valueIn.intValue());
+        double actual = new LuckyTicket().findAmount(valueIn.intValue());
         return actual == expected;
     }
-    HashMap<Long, Long> loadTests(Path path) throws IOException {
+
+    HashMap<Long, Long> loadTests(Path path) {
+
         HashMap<Long, Long> testPairs = new HashMap<>();
 
         try (DirectoryStream<Path> dirStream = Files.newDirectoryStream(path)) {
@@ -41,12 +43,14 @@ public class Tester {
                     }
                 }
             });
+        } catch (IOException exc) {
+            exc.printStackTrace();
         }
         return testPairs;
     }
 
     Long readLongFromFile(String fileName) {
-        try(BufferedReader br = new BufferedReader(new FileReader(fileName))){
+        try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
             return Long.parseLong(br.readLine());
         } catch (IOException e) {
             e.printStackTrace();
