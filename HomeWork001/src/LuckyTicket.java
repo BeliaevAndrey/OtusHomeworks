@@ -7,23 +7,21 @@ public class LuckyTicket {
 
     public static void main(String[] args) {
         LuckyTicket luckyTicket = new LuckyTicket();
-        for (int i = 1; i < 10; i++) {
-            System.out.println(luckyTicket.findAmount(i));
+        for (int i = 1; i < 11; i++) {
+            System.out.printf("%3d: %-25.0f\n", i, luckyTicket.findAmount(i));
         }
     }
 
     double findAmount(int len_num) {
         if (len_num < 1)
-            return 0;
-        if (len_num == 1)
-            return 10;
-        int[] b = new int[]{1, 1, 1, 1, 1, 1, 1, 1, 1, 1};
-        for (int n = 1; n < len_num; n++) {
+            return 0L;
+        int[] b = new int[]{1};
+        for (int n = 0; n < len_num; n++) {
             int[][] a = tabulator(b);
             b = summarizer(a);
         }
 
-        return Arrays.stream(b).mapToLong(x -> (long)Math.pow(x, 2)).sum();
+        return Arrays.stream(b).mapToDouble(x -> Math.pow(x, 2)).sum();
     }
 
     int[] summarizer(int[][] sums) {
@@ -42,6 +40,7 @@ public class LuckyTicket {
             for (int j = 0; j < sums.length; j++){
                 tmp[i][i + j] = sums[j];
             }
+
         return tmp;
     }
 

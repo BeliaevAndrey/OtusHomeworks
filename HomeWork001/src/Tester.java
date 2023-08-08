@@ -9,24 +9,18 @@ public class Tester {
 
     public static void main(String[] args) {
         Tester test = new Tester();
-
-        HashMap<Long, Long> testValues = test.loadTests(Path.of(directory, "1.Tickets"));
-
-        for (Long key : testValues.keySet()) {
-            Long value = testValues.get(key);
-            boolean answer = test.testPair(key, value);
-            if (answer)
-                System.out.printf("for %d-digits number: expected: %d  %b\n", key, value, answer);
-            else {
-                double actual = new LuckyTicket().findAmount(key.intValue());
-                System.out.printf("for %d-digits number: expected: %d  actual: %f %b\n", key, value, actual, answer);
-            }
-        }
+        test.testPairs();
     }
 
-    boolean testPair(Long valueIn, Long expected) {
-        double actual = new LuckyTicket().findAmount(valueIn.intValue());
-        return actual == expected;
+
+    void testPairs() {
+        HashMap<Long, Long> testValues = loadTests(Path.of(directory, "1.Tickets"));
+        for (Long key : testValues.keySet()) {
+            Long expected = testValues.get(key);
+            double actual = new LuckyTicket().findAmount(key.intValue());
+            boolean answer = (actual == expected);
+            System.out.printf("for %3d-digits number -> expected: %-25d actual: %-25.0f %10b\n", key, expected, actual, answer);
+        }
     }
 
     HashMap<Long, Long> loadTests(Path path) {
