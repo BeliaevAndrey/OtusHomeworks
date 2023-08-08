@@ -12,7 +12,7 @@ public class LuckyTicket {
         }
     }
 
-    long findAmount(int len_num) {
+    double findAmount(int len_num) {
         if (len_num < 1)
             return 0;
         if (len_num == 1)

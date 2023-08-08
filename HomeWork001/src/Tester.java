@@ -16,8 +16,8 @@ public class Tester {
             if (answer)
                 System.out.printf("for %d: expected: %d  %b\n", key, value, answer);
             else {
-                Long actual = new LuckyTicket().findAmount(key.intValue());
-                System.out.printf("for %d: expected: %d  actual: %d %b\n", key, value, actual, answer);
+                double actual = new LuckyTicket().findAmount(key.intValue());
+                System.out.printf("for %d: expected: %d  actual: %f %b\n", key, value, actual, answer);
             }
         }
 
@@ -25,8 +25,8 @@ public class Tester {
 
     boolean testPair(Long valueIn, Long expected) {
         LuckyTicket luckyTicket = new LuckyTicket();
-        Long actual = luckyTicket.findAmount(valueIn.intValue());
-        return actual.equals(expected);
+        double actual = luckyTicket.findAmount(valueIn.intValue());
+        return actual == expected;
     }
     HashMap<Long, Long> loadTests(Path path) throws IOException {
         HashMap<Long, Long> testPairs = new HashMap<>();
