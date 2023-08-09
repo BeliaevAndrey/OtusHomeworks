@@ -24,24 +24,24 @@ public class LuckyTicket {
         return Arrays.stream(b).mapToDouble(x -> Math.pow(x, 2)).sum();
     }
 
-    int[] summarizer(int[][] sums) {
-        int[] tmp = new int[sums[0].length];
-        for (int i = 0; i < sums.length; i++) {
-            for (int j = 0; j < sums[0].length; j++) {
-                tmp[j] += sums[i][j];
+    int[] summarizer(int[][] table) {
+        int[] sums = new int[table[0].length];
+        for (int i = 0; i < table.length; i++) {
+            for (int j = 0; j < table[0].length; j++) {
+                sums[j] += table[i][j];
             }
         }
-        return tmp;
+        return sums;
     }
 
     int[][] tabulator(int[] sums) {
-        int[][] tmp = new int[height][sums.length + deltaWidth];
+        int[][] table = new int[height][sums.length + deltaWidth];
         for (int i = 0; i < height; i++)
             for (int j = 0; j < sums.length; j++){
-                tmp[i][i + j] = sums[j];
+                table[i][i + j] = sums[j];
             }
 
-        return tmp;
+        return table;
     }
 
     void printArray(int[][] arr) {
