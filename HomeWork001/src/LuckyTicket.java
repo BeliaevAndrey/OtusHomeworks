@@ -20,9 +20,9 @@ public class LuckyTicket {
             int[][] a = tabulator(b);
             b = summarizer(a);
         }
-
         return Arrays.stream(b).mapToDouble(x -> Math.pow(x, 2)).sum();
     }
+
 
     int[] summarizer(int[][] table) {
         int[] sums = new int[table[0].length];
@@ -40,7 +40,6 @@ public class LuckyTicket {
             for (int j = 0; j < sums.length; j++){
                 table[i][i + j] = sums[j];
             }
-
         return table;
     }
 
