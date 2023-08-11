@@ -5,7 +5,7 @@ import java.nio.file.Path;
 import java.util.HashMap;
 
 public class Tester {
-    static final String directory = "HomeWork001/testData";
+    static final String directory = "HomeWork002/testData";
 
     public static void main(String[] args) {
         Tester test = new Tester();
