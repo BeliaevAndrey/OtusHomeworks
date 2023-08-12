@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 public class Fibonacci {
     public static void main(String[] args) {
         Fibonacci fib = new Fibonacci();
@@ -16,11 +18,11 @@ public class Fibonacci {
         double end4 = (System.nanoTime() - start4) / 1e9;
 
         double start5 = System.nanoTime();
-        double res5 = fib.goldenSectionFib(position);
+        double res5 = fib.matMulFib(position);
         double end5 = (System.nanoTime() - start5) / 1e9;
 
         double start6 = System.nanoTime();
-        double res6 = fib.goldenSectionFib(position);
+        double res6 = fib.matMulFibBin(position);
         double end6 = (System.nanoTime() - start6) / 1e9;
 
 
@@ -72,21 +74,22 @@ public class Fibonacci {
         if (position == 1) return 1D;
 
         double[][] trnMatrix = new double[][]{{1, 1}, {1, 0}};
-        double[][] fibMatrix = new double[][]{{1, 1}, {1, 0}};
+        double[][] fibMatrix = new double[][]{{1, 0}, {0, 1}};
 
-        while (position >= 3) {
+        while (position > 0) {
             position -= 1;
             double[][] tmp = new double[2][2];
             for (int i = 0; i < 2; i++) {
                 for (int j = 0; j < 2; j++) {
-                    for (int common = 0; common < 2; common++) {
-                        tmp[i][j] += fibMatrix[i][common] * trnMatrix[common][j];
+                    for (int k = 0; k < 2; k++) {
+                        tmp[i][j] += fibMatrix[i][k] * trnMatrix[k][j];
                     }
                 }
             }
             fibMatrix = tmp;
+            MatrixMultiply.printMtr(fibMatrix);
         }
-        return fibMatrix[0][0];
+        return fibMatrix[1][0];
     }
 
     double matMulFib(int position) {
@@ -115,15 +118,23 @@ class MatrixMultiply {
     static double[][] matrixMult(double[][] left, double[][] right) {
         int newHeight = left.length;
         int newWidth = right[0].length;
+        int common = right.length;
         double[][] result = new double[newHeight][newWidth];
 
         for (int i = 0; i < newHeight; i++) {
             for (int j = 0; j < newWidth; j++) {
-                for (int common = 0; common < newWidth; common++) {
-                    result[i][j] += left[i][common] * right[common][j];
+                for (int k = 0; k < common; k++) {
+                    result[i][j] += left[i][k] * right[k][j];
                 }
             }
         }
         return result;
     }
+    static void printMtr(double[][] arr) {
+        for (double[] row : arr) {
+            System.out.println(Arrays.toString(row));
+        }
+        System.out.println("=".repeat(20));
+    }
+
 }
