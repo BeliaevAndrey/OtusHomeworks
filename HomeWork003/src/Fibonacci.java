@@ -87,7 +87,6 @@ public class Fibonacci {
                 }
             }
             fibMatrix = tmp;
-            MatrixMultiply.printMtr(fibMatrix);
         }
         return fibMatrix[1][0];
     }
@@ -96,7 +95,7 @@ public class Fibonacci {
         double[][] trnMtr = new double[][]{{1, 1}, {1, 0}};
         double[][] fibMtr = new double[][]{{1, 0}, {0, 1}};
         while (position > 0) {
-            fibMtr = MatrixMultiply.matrixMult(fibMtr, trnMtr);
+            fibMtr = matrixMult(fibMtr, trnMtr);
             position -= 1;
         }
         return fibMtr[1][0];
@@ -106,15 +105,13 @@ public class Fibonacci {
         double[][] trnMtr = new double[][]{{1, 1}, {1, 0}};
         double[][] fibMtr = new double[][]{{1, 0}, {0, 1}};
         while (position > 0) {
-            if ((position & 1) == 1) fibMtr = MatrixMultiply.matrixMult(fibMtr, trnMtr);
-            trnMtr = MatrixMultiply.matrixMult(trnMtr, trnMtr);
+            if ((position & 1) == 1) fibMtr = matrixMult(fibMtr, trnMtr);
+            trnMtr = matrixMult(trnMtr, trnMtr);
             position >>= 1;
         }
         return fibMtr[1][0];
     }
 
-}
-class MatrixMultiply {
     static double[][] matrixMult(double[][] left, double[][] right) {
         int newHeight = left.length;
         int newWidth = right[0].length;
@@ -130,11 +127,11 @@ class MatrixMultiply {
         }
         return result;
     }
+
     static void printMtr(double[][] arr) {
         for (double[] row : arr) {
             System.out.println(Arrays.toString(row));
         }
         System.out.println("=".repeat(20));
     }
-
 }
