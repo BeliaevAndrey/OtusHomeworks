@@ -26,24 +26,27 @@ public class IsPrime {
     }
 
 
-    int eratosthenesON(long N) {
+    int eratosthenesON(long num) {
+        /*
+        sources: seminar,  https://habr.com/ru/articles/452388/
+        * */
         int count = 0;
-        int[] lp = new int[(int) N + 1];
-        for (int i = 2; i < N; i++) {
+        int[] lp = new int[(int) num + 1];
+        for (int i = 2; i < num; i++) {
             if (lp[i] == 0) {
                 lp[i] = i;
                 count++;
             }
-            for (int p = 2; p <= lp[i] && (long) p * i < N; p++) {
-                lp[p * i] = p;
+            for (int p = 2; p <= lp[i] && (long) p * i < num; p++) {
+                lp[p * i] = p;      // placing a composite to lp
             }
         }
         return count;
     }
 
-    int countPrimes(long N) {
+    int countPrimes(long num) {
         int count = 0;
-        for (int i = 2; i <= N; i++) {
+        for (int i = 2; i <= num; i++) {
             if (isPrimeOSqtrN(i))
                 count++;
         }
@@ -105,15 +108,15 @@ public class IsPrime {
         return true;
     }
 
-    int eratosthenes(long N) {
-        boolean[] divs = new boolean[(int) N + 1];
+    int eratosthenes(long num) {
+        boolean[] divs = new boolean[(int) num + 1];
         int count = 0;
-        int sqrt = (int) Math.sqrt(N);
-        for (int p = 2; p <= N; p++) {
+        int sqrt = (int) Math.sqrt(num);
+        for (int p = 2; p <= num; p++) {
             if (!divs[p]) {
                 count++;
                 if (p <= sqrt)
-                    for (int i = p * p; i <= N; i += p) {
+                    for (int i = p * p; i <= num; i += p) {
                         divs[i] = true;
                     }
             }
@@ -122,12 +125,3 @@ public class IsPrime {
     }
 
 }
-//1: для i := 2, 3, 4, ..., до n:
-//        2:  если lp[i] = 0:
-//        3:       lp[i] := i
-//        4:       pr[] += {i}
-//        5:   для p из pr пока p ≤ lp[i] и p*i ≤ n:
-//        6:       lp[p*i] := p
-//Результат:
-//lp - минимальный простой делитель для кажого числа до n
-//pr - список всех простых до n.
