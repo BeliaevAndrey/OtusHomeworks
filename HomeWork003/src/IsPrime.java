@@ -26,17 +26,15 @@ public class IsPrime {
     }
 
 
-    int eratosthenesON(long N) {                // TODO: under construction
+    int eratosthenesON(long N) {
         int count = 0;
         int[] lp = new int[(int) N + 1];
-        int[] pr = new int[(int) N + 1];
         for (int i = 2; i < N; i++) {
             if (lp[i] == 0) {
                 lp[i] = i;
-                pr[i] = i;
                 count++;
             }
-            for (int p = 2; p <= lp[i] && p * i < N; p++) {
+            for (int p = 2; p <= lp[i] && (long) p * i < N; p++) {
                 lp[p * i] = p;
             }
         }
