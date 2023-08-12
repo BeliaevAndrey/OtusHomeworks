@@ -3,7 +3,7 @@ import java.util.Arrays;
 public class IsPrime {
     public static void main(String[] args) {
         IsPrime prm = new IsPrime();
-        long number = 1_000L;
+        long number = 1_000_000L;
 //        long number = 1_000_000_000L;
 
         long start2 = System.nanoTime();
@@ -31,14 +31,16 @@ public class IsPrime {
         sources: seminar,  https://habr.com/ru/articles/452388/
         * */
         int count = 0;
-        int[] lp = new int[(int) num + 1];
+        int[] lp = new int[(int) num];
+//        int[] pr = new int[(int) num];
         for (int i = 2; i < num; i++) {
             if (lp[i] == 0) {
-                lp[i] = i;
+                lp[i] = i;          // prime dividers
+//                pr[i] = i;          // primes
                 count++;
             }
-            for (int p = 2; p <= lp[i] && (long) p * i < num; p++) {
-                lp[p * i] = p;      // placing a composite to lp
+            for (int p = 2; p <= lp[i] && p * i < (int) num; p++) {
+                lp[p * i] = p;      // placing to a composite-numbered cell prime divider
             }
         }
         return count;
