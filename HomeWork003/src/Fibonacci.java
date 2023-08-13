@@ -6,7 +6,7 @@ public class Fibonacci {
     public static void main(String[] args) {
         Fibonacci fib = new Fibonacci();
         String outTemplate = "%-40s %.0f\n";
-        int position = 55;
+        int position = 10000000;
 
         double start1 = System.nanoTime();
         double res1 = fib.iterFibonacci(position);
