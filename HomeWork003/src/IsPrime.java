@@ -1,9 +1,13 @@
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Stack;
 
 public class IsPrime {
     public static void main(String[] args) {
         IsPrime prm = new IsPrime();
-        long number = 1_000_000L;
+//        long number = 1_0007L;
+        long number = 123_456_789L;
+//        long number = 1_000_000L;
 //        long number = 1_000_000_000L;
 
         long start2 = System.nanoTime();
@@ -18,6 +22,12 @@ public class IsPrime {
         System.out.printf("eratosthenesON:\t%d  %d\n", number, resE2);
         System.out.println(end3);
 
+        long start1 = System.nanoTime();
+        int res1 = prm.countPrimesOSqtrN(number);
+        double end1 = (System.nanoTime() - start1) / 1e9;
+        System.out.printf("countPrimes Sqrt:\t%d  %d\n", number, res1);
+        System.out.println(end1);
+
         long start = System.nanoTime();
         int res = prm.countPrimes(number);
         double end = (System.nanoTime() - start) / 1e9;
@@ -26,90 +36,41 @@ public class IsPrime {
     }
 
 
-    int eratosthenesON(long num) {
-        /*
-        sources: seminar,  https://habr.com/ru/articles/452388/
-        * */
-        int count = 0;
-        int[] lp = new int[(int) num];
-//        int[] pr = new int[(int) num];
-        for (int i = 2; i < num; i++) {
-            if (lp[i] == 0) {
-                lp[i] = i;          // prime dividers
-//                pr[i] = i;          // primes
-                count++;
-            }
-            for (int p = 2; p <= lp[i] && p * i < (int) num; p++) {
-                lp[p * i] = p;      // placing to a composite-numbered cell prime divider
-            }
-        }
-        return count;
-    }
-
+    /*Реализовать алгоритм поиска количества простых чисел через
+    перебор делителей, O(N^2).*/
     int countPrimes(long num) {
-        int count = 0;
-        for (int i = 2; i <= num; i++) {
-            if (isPrimeOSqtrN(i))
-                count++;
+        int count = 1;
+        for (int i = 3; i <= num; i++) {
+            count++;
+            for (int div = 2; div < i; div++)
+                if (i % div == 0) {
+                    count--;
+                    break;
+                }
         }
         return count;
     }
 
-    /*a*/
-    boolean isPrimeOSqtrN(long num) {
-        if (num == 2) return true;
-        if (num < 2 || num % 2 == 0) return false;
-        int lim = (int) Math.sqrt(num) + 1;
-        for (int div = 3; div < lim; div += 2)
-            if (num % div == 0) return false;
-        return true;
-    }
-
-    /*b*/
-    boolean isPrimeOSqtrN2(long num) {
-        if (num == 2) return true;
-        if (num < 2 || num % 2 == 0) return false;
-        for (int div = 3; div <= Math.sqrt(num) + 1; div += 2)
-            if (num % div == 0) return false;
-        return true;
-    }
-
-    /*c*/
-    boolean isPrimeOHalfN(long num) {
-        if (num == 2) return true;
-        if (num < 2 || num % 2 == 0) return false;
-        long lim = num / 2 + 1;
-        for (int div = 3; div <= lim; div += 2)
-            if (num % div == 0) return false;
-        return true;
+    /*Реализовать алгоритм поиска простых чисел с оптимизациями поиска и
+      делением только на простые числа, O(N * Sqrt(N) / Ln (N)).*/
+    int countPrimesOSqtrN(long num) {
+        int count = 1;
+        for (int i = 3; i <= num; i += 2) {
+            count++;
+            int lim = (int) Math.sqrt(i) + 1;
+            for (int div = 3; div < lim; div += 2) {
+                if (i % div == 0) {
+                    count--;
+                    break;
+                }
+            }
+        }
+        return count;
     }
 
 
-    /*d*/
-    boolean isPrimeOHalfNFull(long num) {
-        if (num < 2 || num % 2 == 0) return false;
-        for (int div = 2; div <= num / 2 + 1; div++)
-            if (num % div == 0) return false;
-        return true;
-    }
-
-    /*e*/
-    boolean isPrimeON(long num) {
-        if (num == 2) return true;
-        if (num < 2 || num % 2 == 0) return false;
-        for (int div = 3; div <= num; div += 2)
-            if (num % div == 0) return false;
-        return true;
-    }
-
-    /*f*/
-    boolean isPrimeONFull(long num) {
-        if (num == 2) return true;
-        for (int div = 2; div <= num; div++)
-            if (num % div == 0) return false;
-        return true;
-    }
-
+    /*Реализовать алгоритм "Решето Эратосфена" для быстрого поиска
+    простых чисел O(N Log Log N).*/
     int eratosthenes(long num) {
         boolean[] divs = new boolean[(int) num + 1];
         int count = 0;
@@ -121,6 +82,26 @@ public class IsPrime {
                     for (int i = p * p; i <= num; i += p) {
                         divs[i] = true;
                     }
+            }
+        }
+        return count;
+    }
+
+    /*Решето Эратосфена со сложностью O(n), см. дополнительный материал.
+      sources: seminar,  https://habr.com/ru/articles/452388/
+     * */
+    int eratosthenesON(long num) {
+        int count = 0;
+        int[] lp = new int[(int) num + 1];
+//        int[] pr = new int[(int) num + 1];
+        for (int i = 2; i <= num; i++) {
+            if (lp[i] == 0) {
+                lp[i] = i;          // prime dividers
+//                pr[i] = i;          // primes
+                count++;
+            }
+            for (int p = 2; p <= lp[i] && p * i < (int) num + 1; p++) {
+                lp[p * i] = p;      // placing to a composite-numbered cell prime divider
             }
         }
         return count;
