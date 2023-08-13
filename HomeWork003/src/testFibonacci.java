@@ -70,7 +70,7 @@ public class testFibonacci {
                     result3, end3, delta3);
 
             testsResults.add(new HashMap<>() {{
-                put("testData", test);
+                put("testData", new double[]{test[0], test[1]});
                 put("Golden Section", new double[]{result0, end0, delta0});
                 put("Matrix pwr",  new double[]{result1, end1, delta1});
                 put("Matrix pwr mlt",  new double[]{result2, end2, delta2});
@@ -135,6 +135,9 @@ public class testFibonacci {
                 for (double rst : results.get("testData")) {
                     sb.append(rst).append(",");
                 }
+                for (double rst : results.get("Golden Section")) {
+                    sb.append(rst).append(",");
+                }
                 for (double rst : results.get("Matrix pwr")) {
                     sb.append(rst).append(",");
                 }
@@ -144,9 +147,10 @@ public class testFibonacci {
                 for (double rst : results.get("Iterations")) {
                     sb.append(rst).append(",");
                 }
-                sb.append("\n");
+                sb.replace(sb.length() - 1, sb.length(), "\n");
             }
             bw.write(sb.toString());
+            System.out.println(bw.toString());
             bw.flush();
         } catch (IOException e) {
             e.printStackTrace();
