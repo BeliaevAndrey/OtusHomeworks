@@ -39,6 +39,7 @@ public class IsPrime {
     /*Реализовать алгоритм поиска количества простых чисел через
     перебор делителей, O(N^2).*/
     int countPrimes(long num) {
+        if (num < 2) return 0;
         int count = 1;
         for (int i = 3; i <= num; i++) {
             count++;
@@ -54,6 +55,7 @@ public class IsPrime {
     /*Реализовать алгоритм поиска простых чисел с оптимизациями поиска и
       делением только на простые числа, O(N * Sqrt(N) / Ln (N)).*/
     int countPrimesOSqtrN(long num) {
+        if (num < 2) return 0;
         int count = 1;
         for (int i = 3; i <= num; i += 2) {
             count++;
@@ -72,6 +74,7 @@ public class IsPrime {
     /*Реализовать алгоритм "Решето Эратосфена" для быстрого поиска
     простых чисел O(N Log Log N).*/
     int eratosthenes(long num) {
+        if (num < 2) return 0;
         boolean[] divs = new boolean[(int) num + 1];
         int count = 0;
         int sqrt = (int) Math.sqrt(num);
