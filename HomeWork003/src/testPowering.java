@@ -114,25 +114,25 @@ public class testPowering {
     }
 
     void writeResultsToFile(ArrayList<HashMap<String, double[]>> testsResults) {
-        String headLine = "Number;Power;Answer;" +
-                "Binary recursive;time;delta;" +
-                "Binary iter. mlt.;time;delta;" +
-                "Iterative;time;delta;\n";
+        String headLine = "Number,Power,Answer," +
+                "Binary recursive,time,delta," +
+                "Binary iter. mlt.,time,delta," +
+                "Iterative,time,delta,\n";
         try (BufferedWriter bw = Files.newBufferedWriter(Path.of(outDirectory), StandardOpenOption.APPEND)) {
             bw.write(headLine);
             StringBuilder sb = new StringBuilder();
             for (HashMap<String, double[]> results : testsResults) {
                 for (double rst : results.get("testData")) {
-                    sb.append(rst).append(";");
+                    sb.append(rst).append(",");
                 }
                 for (double rst : results.get("Binary recursive")) {
-                    sb.append(rst).append(";");
+                    sb.append(rst).append(",");
                 }
                 for (double rst : results.get("Binary iter. mlt.")) {
-                    sb.append(rst).append(";");
+                    sb.append(rst).append(",");
                 }
                 for (double rst : results.get("Iterative")) {
-                    sb.append(rst).append(";");
+                    sb.append(rst).append(",");
                 }
                 sb.append("\n");
             }
