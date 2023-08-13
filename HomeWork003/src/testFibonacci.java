@@ -143,9 +143,7 @@ public class testFibonacci {
                 }
                 for (double rst : results.get("Iterations")) {
                     sb.append(rst).append(",");
-                    System.out.print(rst + " ");
                 }
-                System.out.println();
                 sb.append("\n");
             }
             bw.write(sb.toString());
