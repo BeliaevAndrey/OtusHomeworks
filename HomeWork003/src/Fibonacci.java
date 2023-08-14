@@ -48,6 +48,7 @@ public class Fibonacci {
     }
 
     double recFibonacci(int position) {
+        if (position == 0) return 0;
         if (position <= 2) return 1;
         return recFibonacci(position - 1) + recFibonacci(position - 2);
     }
