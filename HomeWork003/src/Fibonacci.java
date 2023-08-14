@@ -33,14 +33,6 @@ public class Fibonacci {
         System.out.printf("Iterations: %.3e\nGolden Section: %.3e\n", end1, end4);
         System.out.printf("Matrix powering: %.3e\nMatrix multiply binary decomposition: %.3e\n", end5, end6);
 
-//        double start3 = System.nanoTime();
-//        double res3 = fib.recFibonacci(position);
-//        double end3 = (System.nanoTime() - start3) / 1e9;
-//
-//        System.out.printf("%20s: %.0f\n", "Recursive", res3);
-//        System.out.printf("Iterations: %.3e Matrices: %.3e Golden Section: %.3e\nRecursion: %.3e \n",
-//                end1, end2, end4, end3);
-
     }
 
     /* Реализовать рекурсивный O(2^N) и итеративный O(N) алгоритмы поиска чисел Фибоначчи.*/
