@@ -6,7 +6,15 @@ public class Fibonacci {
     public static void main(String[] args) {
         Fibonacci fib = new Fibonacci();
         String outTemplate = "%-40s %.0f\n";
-        int position = 10000000;
+        int position = 50;
+
+        double start2 = System.nanoTime();
+        double res2 = fib.recFibonacci(position);
+        double end2 = (System.nanoTime() - start2) / 1e9;
+
+        System.out.println(res2);
+        System.out.println(end2);
+
 
         double start1 = System.nanoTime();
         double res1 = fib.iterFibonacci(position);
