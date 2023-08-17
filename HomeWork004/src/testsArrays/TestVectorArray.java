@@ -1,45 +1,46 @@
 package testsArrays;
 
-import model.FactorArray;
 import model.IArray;
+import model.VectorArray;
 
 import java.util.Date;
 
-public class TestFactorArray {
+public class TestVectorArray {
 
     public static void main(String[] args) {
-        new TestFactorArray().testSingleArray();
+        new TestVectorArray().testSingleArray();
     }
 
     void testSingleArray() {
-        IArray factorArray = new FactorArray();
-        testAddArray(factorArray, 10_000);
+        IArray vectorArray = new VectorArray();
+        testAddArray(vectorArray, 10_000);
+
         System.out.println("\nadd testing");
-        testAddPosArray(factorArray, 1000, "test 1");
-        testAddPosArray(factorArray, 1000, "test 2");
-        testAddPosArray(factorArray, factorArray.size(), "test tail");
-        testAddPosArray(factorArray, 1000, "test 3");
-        testAddPosArray(factorArray, 0, "test head");
-        testAddPosArray(factorArray, 1001, "test 4");
+        testAddPosArray(vectorArray, 1000, "test 1");
+        testAddPosArray(vectorArray, 1000, "test 2");
+        testAddPosArray(vectorArray, vectorArray.size(), "test tail");
+        testAddPosArray(vectorArray, 1000, "test 3");
+        testAddPosArray(vectorArray, 0, "test head");
+        testAddPosArray(vectorArray, 1001, "test 4");
         System.out.println("\nadd checking");
         for (int i = 999; i < 1010; i++) {
-            System.out.println(i + " " + factorArray.get(i));
+            System.out.println(i + " " + vectorArray.get(i));
         }
-        System.out.println(factorArray.get(0));
-        System.out.println(factorArray.get(factorArray.size() - 1));
+        System.out.println(vectorArray.get(0));
+        System.out.println(vectorArray.get(vectorArray.size() - 1));
 
         System.out.println("\nremove testing");
-        testDelPosArray(factorArray, 0);
-        testDelPosArray(factorArray, 1000);
-        testDelPosArray(factorArray, factorArray.size() - 1);
-        testDelPosArray(factorArray, 1000);
-        testDelPosArray(factorArray, 1000);
-        System.out.println("\nremove checking " + factorArray.size());
+        testDelPosArray(vectorArray, 0);
+        testDelPosArray(vectorArray, 1000);
+        testDelPosArray(vectorArray, vectorArray.size() - 1);
+        testDelPosArray(vectorArray, 1000);
+        testDelPosArray(vectorArray, 1000);
+        System.out.println("\nremove checking " + vectorArray.size());
         for (int i = 999; i < 1010; i++) {  // test 1 should stay
-            System.out.println(i + " " + factorArray.get(i));
+            System.out.println(i + " " + vectorArray.get(i));
         }
-        System.out.println("head " + factorArray.get(0));
-        System.out.println("tail " + factorArray.get(factorArray.size() - 1));
+        System.out.println("head " + vectorArray.get(0));
+        System.out.println("tail " + vectorArray.get(vectorArray.size() - 1));
     }
 
     private void testAddArray(IArray data, int total) {
