@@ -2,17 +2,16 @@ package testsArrays;
 
 import model.IArray;
 import model.MatrixArray;
-import model.VectorArray;
 
 import java.util.Date;
 
 public class TestMatrixArray {
 
     public static void main(String[] args) {
-        new TestMatrixArray().testSingleArray();
+        new TestMatrixArray().testMatrixArray();
     }
 
-    void testSingleArray() {
+    void testMatrixArray() {
         IArray<String> matrixArray = new MatrixArray<>();
         testAddArray(matrixArray, 100_000);
 
@@ -21,14 +20,21 @@ public class TestMatrixArray {
         testDelPosArray(matrixArray, 0);
         testDelPosArray(matrixArray, matrixArray.size() - 1);
         testDelPosArray(matrixArray, 50000);
-        testDelPosArray(matrixArray, 50000);
-        testDelPosArray(matrixArray, 50000);
         System.out.println("\nremove checking " + matrixArray.size());
         for (int i = 49998; i < 50002; i++) {
             System.out.println(i + " " + matrixArray.get(i));
         }
         System.out.println("head " + matrixArray.get(0));
         System.out.println("tail " + matrixArray.get(matrixArray.size() - 1));
+
+        matrixArray.add("new 1", 60000);
+        matrixArray.add("new 2", 0);
+        matrixArray.add("new 3", matrixArray.size());
+        System.out.println("head " + matrixArray.get(0));
+        System.out.println("tail " + matrixArray.get(matrixArray.size() - 1));
+        System.out.println("60001 " + matrixArray.get(60001));
+
+
     }
 
     private void testAddArray(IArray<String> data, int total) {
