@@ -28,8 +28,6 @@ public class SingleArray<T> implements IArray<T> {
     private void resize() {
         Object[] newArray = new Object[size() + 1];
         System.arraycopy(array, 0, newArray, 0, size());
-//        for (int j = 0; j < size(); j ++)
-//            newArray[j] = array[j];
         array = newArray;
     }
 
@@ -52,11 +50,12 @@ public class SingleArray<T> implements IArray<T> {
     public T remove(int index){
         Object[] newArray = new Object[size() - 1];
         T tmp = (T) this.array[index];
-        for (int i = 0; i < index; i++) {
-            newArray[i] = this.array[i];
-        }
-        for (int i = index + 1; i < size(); i++) {
-            newArray[i - 1] = this.array[i];
+        this.array[index] = null;
+        int k = 0;
+        for (int i = 0; i < size(); i++) {
+            if (this.array[i] != null) {
+                newArray[i - k] = this.array[i];
+            } else k += 1;
         }
         this.array = newArray;
         return tmp;
