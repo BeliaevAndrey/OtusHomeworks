@@ -71,4 +71,9 @@ public class FactorArray<T> implements IArray<T> {
         this.array = newArray;
         return tmp;
     }
+
+    @Override
+    public boolean isEmpty() {
+        return this.size == 0;
+    }
 }

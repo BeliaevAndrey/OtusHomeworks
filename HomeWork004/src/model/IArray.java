@@ -11,4 +11,6 @@ public interface IArray<T> {
     void add(T item, int index); // with shift to tail
 
     T remove(int index); // return deleted element
+
+    boolean isEmpty();
 }

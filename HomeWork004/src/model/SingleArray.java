@@ -31,6 +31,11 @@ public class SingleArray<T> implements IArray<T> {
         array = newArray;
     }
 
+    @Override
+    public boolean isEmpty(){
+        return this.size() == 0;
+    }
+
     // HW
     @Override
     public void add(T item, int index) {

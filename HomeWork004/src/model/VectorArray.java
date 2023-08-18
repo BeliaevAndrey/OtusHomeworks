@@ -41,6 +41,10 @@ public class VectorArray<T> implements IArray<T> {
         array = newArray;
     }
 
+    @Override
+    public boolean isEmpty() {
+        return this.size == 0;
+    }
 
     // HW
     @Override
