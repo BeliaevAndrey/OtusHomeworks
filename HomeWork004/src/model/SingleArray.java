@@ -53,6 +53,7 @@ public class SingleArray<T> implements IArray<T> {
     @Override
     @SuppressWarnings("unchecked")
     public T remove(int index){
+        if (size() == 0) return null;
         Object[] newArray = new Object[size() - 1];
         T tmp = (T) this.array[index];
         this.array[index] = null;

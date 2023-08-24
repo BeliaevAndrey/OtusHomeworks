@@ -55,6 +55,7 @@ public class MatrixArray<T> implements IArray<T> {
 
     @Override
     public T remove(int index) {
+        if (size() == 0) return null;
         int currentArr = index / vector;
         int currentItem = index % vector;
         T tmp = this.array.get(currentArr).get(currentItem);
