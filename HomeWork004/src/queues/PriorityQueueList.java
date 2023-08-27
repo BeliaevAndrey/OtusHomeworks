@@ -20,7 +20,7 @@ public class PriorityQueueList<T> implements IPriorityQueue<T> {
             return;
         }
 
-        if (head.priority > priority){
+        if (head.priority < priority){
             newNode.next = head;
             this.head = newNode;
             return;
@@ -28,7 +28,7 @@ public class PriorityQueueList<T> implements IPriorityQueue<T> {
         PriorityNode<T> current = head;
 
         while (current.next != null) {
-            if (current.next.priority > priority) {
+            if (current.next.priority < priority) {
                 newNode.next = current.next;
                 current.next = newNode;
                 return;
@@ -49,15 +49,8 @@ public class PriorityQueueList<T> implements IPriorityQueue<T> {
             head.data = null;
             return item;
         }
-        PriorityNode<T> current = head;
-        PriorityNode<T> previous = head;
-        while (current.next != null) {
-            previous = current;
-            current = current.next;
-        }
-        T item = current.data;
-        previous.next = null;
-        priorities = Math.max(this.priorities, previous.priority);
+        T item = head.data;
+        head = head.next;
         return item;
     }
 
@@ -68,7 +61,7 @@ public class PriorityQueueList<T> implements IPriorityQueue<T> {
 
     @Override
     public int priorities() {
-        return 0;
+        return this.priorities;
     }
 
     @Override
@@ -76,7 +69,7 @@ public class PriorityQueueList<T> implements IPriorityQueue<T> {
         StringBuilder sb = new StringBuilder();
         PriorityNode<T> current = this.head;
         while (current != null) {
-            sb.append(current.priority).append(": ").append(current.data).append(", ");
+            sb.append("pr: ").append(current.priority).append("; item: ").append(current.data).append(", ");
             current = current.next;
         }
         return sb.toString();

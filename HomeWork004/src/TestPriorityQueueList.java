@@ -23,7 +23,7 @@ public class TestPriorityQueueList {
         int prLim = total / 2;
         for (int i = 0; i < total; i++) {
             int priority = rnd.nextInt(prLim);
-            pq.enqueue(priority, "tester " + i);
+            pq.enqueue(priority, "test " + i);
         }
     }
 
