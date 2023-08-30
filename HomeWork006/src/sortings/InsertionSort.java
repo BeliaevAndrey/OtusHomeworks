@@ -36,6 +36,32 @@ public class InsertionSort {
         }
     }
 
+    public void shiftBinSearchSort() {
+        int i;
+        for (int j = 1; j < length; j++) {
+            int buffer = array[j];
+            int limit = binarySearchRec(buffer, 0, j-1);
+            for (i = j - 1; i >= limit && array[i] > buffer; i--) {
+                array[i + 1] = array[i];
+            }
+            array[i + 1] = buffer;
+        }
+    }
+
+    int binarySearchRec(int key, int low, int high) {
+        if (high <= low)
+            if (key >= array[low])
+                return low + 1;
+            else
+                return low;
+        int mid = (low + high) / 2;
+        if (key > array[mid])
+            return binarySearchRec(key, mid + 1, high);
+        else
+            return binarySearchRec(key, low, mid - 1);
+
+    }
+
     void swap(int left, int right) {
         int tmp = array[left];
         array[left] = array[right];
