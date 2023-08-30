@@ -16,7 +16,7 @@ public class app {
 
 //        System.out.println(Arrays.toString(arr1));
         bubble.sort();
-        System.out.println(isValid(arr1));
+        System.out.println(isValid(arr2));
 //        System.out.println(Arrays.toString(arr1));
 
 //        System.out.println(Arrays.toString(arr2));
