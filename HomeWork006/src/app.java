@@ -9,8 +9,8 @@ public class app {
 
         BubbleSort bubble = new BubbleSort();
         InsertionSort insert = new InsertionSort();
-        int[] arr1 = ArrayGen.setReverse(30);
-        int[] arr2 = ArrayGen.setReverse(30);
+        int[] arr1 = ArrayGen.setRandom(40);
+        int[] arr2 = ArrayGen.setRandom(40);
         bubble.init(arr1);
         insert.init(arr2);
 
@@ -19,7 +19,7 @@ public class app {
         System.out.println(Arrays.toString(arr1));
 
         System.out.println(Arrays.toString(arr2));
-        insert.sort();
+        insert.shiftSort();
         System.out.println(Arrays.toString(arr2));
     }
 }
