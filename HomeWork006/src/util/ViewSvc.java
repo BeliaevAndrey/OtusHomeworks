@@ -7,18 +7,26 @@ import java.util.TreeMap;
 public class ViewSvc {
     public static void printHashMap(HashMap<Integer, TreeMap<String, Double>> results) {
         String[] srtNames = new String[]{
-                "Bubble","Insertion","Insert Shift","Insert Binary","Shell", "Shell Knuth", "Shell Sedgewick"};
+                "Bubble", "Insertion", "Insert Shift", "Insert Binary", "Shell", "Shell Knuth", "Shell Sedgewick"};
         String format = "%-16s%-16s%-16s%-16s%-16s%-16s%-16s%-16s\n";
         System.out.printf(format,
                 "Array length", "Bubble",
-                "Insertion","Insert Shift","Insert Binary",
+                "Insertion", "Insert Shift", "Insert Binary",
                 "Shell", "Shell Knuth", "Shell Sedgewick");
 
-        results.keySet().stream().sorted().forEach(key->{
+        results.keySet().stream().sorted().forEach(key -> {
             System.out.printf("%-16d", key);
             for (String sorter : srtNames)
-                System.out.printf("%-16e",  results.get(key).get(sorter));
+                System.out.printf("%-16e", results.get(key).get(sorter));
             System.out.println();
         });
+    }
+
+    public static void printExternalTestsResults(HashMap<String, HashMap<String, String>> results) {
+        for (String key : results.keySet()) {
+            for (String len : results.get(key).keySet()) {
+                System.out.println(results.get(key).get(len));
+            }
+        }
     }
 }

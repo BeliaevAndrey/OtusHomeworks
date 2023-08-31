@@ -51,4 +51,22 @@ public class FileWriteSvc {
         });
         return sb.toString();
     }
+
+    public static void writeExtTestsResults(HashMap<String, HashMap<String, String>> results) {
+        String basicPath = System.getProperty("user.dir");
+
+        for (String key : results.keySet()) {
+            for (String methodLen : results.get(key).keySet()) {
+                Path outPath = Path.of(basicPath, "HomeWork006", "TestsResultsExternal", key, "test" + methodLen + ".result");
+                try (BufferedWriter bw = Files.newBufferedWriter(outPath)) {
+                    bw.append(results.get(key).get(methodLen));
+                    bw.flush();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }
+
+    }
 }

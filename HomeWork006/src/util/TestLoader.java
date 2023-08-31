@@ -14,19 +14,19 @@ public class TestLoader {
 
     Path path;
 
-    private HashMap<Integer, Integer[]> tests_in = new HashMap<>();
-    private HashMap<Integer, String> tests_out = new HashMap<>();
+    public HashMap<Integer, Integer[]> tests_in = new HashMap<>();
+    public HashMap<Integer, String> tests_out = new HashMap<>();
 
-    private final String basicPath = "/large/data2/Home/Andrew/Documents/OTUS/Algorithms/006_20230828/sorting-tests/0.random/";
+    private final String basicPath = "/large/data2/Home/Andrew/Documents/OTUS/Algorithms/006_20230828/sorting-tests/";
 
 
-    public TestLoader(String path) {
-        this.path = Path.of(path);
+    public TestLoader(String path, String testPath) {
+        this.path = Path.of(path, testPath);
         loadTests();
     }
 
-    public TestLoader() {
-        this.path = Path.of(this.basicPath);
+    public TestLoader(String testPath) {
+        this.path = Path.of(this.basicPath, testPath);
         loadTests();
     }
 
@@ -72,14 +72,6 @@ public class TestLoader {
                 e.printStackTrace();
             }
         });
-    }
-
-    public HashMap<Integer, Integer[]> getTests_in() {
-        return tests_in;
-    }
-
-    public HashMap<Integer, String> getTests_out() {
-        return tests_out;
     }
 
 }
