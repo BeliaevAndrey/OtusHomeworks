@@ -13,26 +13,35 @@ import java.util.HashMap;
 public class TestLoader {
 
     Path path;
-    HashMap<Integer, Integer[]> tests_in = new HashMap<>();
-    HashMap<Integer, String> tests_out = new HashMap<>();
 
-    public static void main(String[] args) {
-        String basicPath = "/large/data2/Home/Andrew/Documents/OTUS/Algorithms/006_20230828/sorting-tests/0.random/";
-        TestLoader tl = new TestLoader(basicPath);
-        tl.loadTests();
-        tl.printContents();
-    }
+    private HashMap<Integer, Integer[]> tests_in = new HashMap<>();
+    private HashMap<Integer, String> tests_out = new HashMap<>();
+
+    private final String basicPath = "/large/data2/Home/Andrew/Documents/OTUS/Algorithms/006_20230828/sorting-tests/0.random/";
+
 
     public TestLoader(String path) {
         this.path = Path.of(path);
+        loadTests();
+    }
+
+    public TestLoader() {
+        this.path = Path.of(this.basicPath);
+        loadTests();
     }
 
     void printContents() {
-        for (int key: tests_in.keySet()) {
+        tests_in.keySet().stream().sorted().forEach(key -> {
             System.out.println(key);
-            System.out.println(Arrays.toString(tests_in.get(key)));
-            System.out.println(tests_out.get(key));
-        }
+            if (key < 1000) {
+                StringBuilder sb = new StringBuilder();
+                Arrays.stream(tests_in.get(key)).sorted().forEach(num -> sb.append(num).append(" "));
+
+                sb.replace(sb.length() - 1, sb.length(), "");
+                System.out.println("rst: " + sb.toString() + " out->" + tests_out.get(key));
+                System.out.println(sb.toString().equals(tests_out.get(key)));
+            }
+        });
     }
 
     void loadTests() {
@@ -64,4 +73,13 @@ public class TestLoader {
             }
         });
     }
+
+    public HashMap<Integer, Integer[]> getTests_in() {
+        return tests_in;
+    }
+
+    public HashMap<Integer, String> getTests_out() {
+        return tests_out;
+    }
+
 }

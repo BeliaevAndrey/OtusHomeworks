@@ -10,12 +10,13 @@ import java.util.TreeMap;
 
 public class SortingsSimpleTests {
 
-    HashMap<Integer, TreeMap<String, Double>> results;
+    private HashMap<Integer, TreeMap<String, Double>> results;
+    private int upperLimit = 0;
 
     public static void main(String[] args) {
-        SortingsSimpleTests sst = new SortingsSimpleTests();
+        SortingsSimpleTests sst = new SortingsSimpleTests(1000_000);
         String[] types = new String[]{"Random", "Digits", "Sorted", "Reversed"};
-        int[] array;
+        Integer[] array;
         for (String arrayType : types) {
             sst.results = new HashMap<>();
 
@@ -33,7 +34,7 @@ public class SortingsSimpleTests {
                 sst.testInsertionShift(array, i);
 
                 array = ArrayGen.getArray(i, arrayType);
-                sst.testInsertionShiftBinary(array, i);
+                sst.testInsertionBinary(array, i);
 
                 array = ArrayGen.getArray(i, arrayType);
                 sst.testShell(array, i);
@@ -50,10 +51,14 @@ public class SortingsSimpleTests {
         }
     }
 
-    void testBubble(int[] array, int key) {
+    public SortingsSimpleTests(int upperLimit){
+        this.upperLimit = upperLimit;
+    }
+
+    void testBubble(Integer[] array, int key) {
         Double end = null;
         System.out.print(" testBubble");
-        if (key < 1000000) {
+        if (upperLimit > 0 && key < upperLimit) {
             BubbleSort sorter = new BubbleSort();
             sorter.init(array);
             long start = System.nanoTime();
@@ -64,10 +69,10 @@ public class SortingsSimpleTests {
         System.out.printf(" %e ", end);
     }
 
-    void testInsertion(int[] array, int key) {
+    void testInsertion(Integer[] array, int key) {
         Double end = null;
         System.out.print(" testInsertion");
-        if (key < 1000000)  {
+        if (upperLimit > 0 && key < upperLimit)  {
             InsertionSort sorter = new InsertionSort();
             sorter.init(array);
             long start = System.nanoTime();
@@ -79,10 +84,10 @@ public class SortingsSimpleTests {
 
     }
 
-    void testInsertionShift(int[] array, int key) {
+    void testInsertionShift(Integer[] array, int key) {
         Double end = null;
         System.out.print(" testInsertionShift");
-        if (key <= 1000000)  {
+        if (upperLimit > 0 && key <= upperLimit)  {
             InsertionSort sorter = new InsertionSort();
             sorter.init(array);
             long start = System.nanoTime();
@@ -93,10 +98,10 @@ public class SortingsSimpleTests {
         System.out.printf(" %e ", end);
     }
 
-    void testInsertionShiftBinary(int[] array, int key) {
+    void testInsertionBinary(Integer[] array, int key) {
         Double end = null;
         System.out.print(" testInsertionShiftBinary");
-        if (key < 1000000)  {
+        if (upperLimit > 0 && key < upperLimit)  {
             InsertionSort sorter = new InsertionSort();
             sorter.init(array);
             long start = System.nanoTime();
@@ -107,7 +112,7 @@ public class SortingsSimpleTests {
         System.out.printf(" %e ", end);
     }
 
-    void testShell(int[] array, int key) {
+    void testShell(Integer[] array, int key) {
         System.out.print(" testShell");
         ShellSort sorter = new ShellSort();
         sorter.init(array);
@@ -118,7 +123,7 @@ public class SortingsSimpleTests {
         System.out.printf(" %e ", end);
     }
 
-    void testShellKnuth(int[] array, int key) {
+    void testShellKnuth(Integer[] array, int key) {
         System.out.print(" testShellKnuth");
         ShellSort sorter = new ShellSort();
         sorter.init(array);
@@ -129,7 +134,7 @@ public class SortingsSimpleTests {
         System.out.printf(" %e ", end);
     }
 
-    void testShellSedgewich(int[] array, int key) {
+    void testShellSedgewich(Integer[] array, int key) {
         System.out.print(" testShellSedgewich");
         ShellSort sorter = new ShellSort();
         sorter.init(array);
@@ -138,5 +143,9 @@ public class SortingsSimpleTests {
         double end = (System.nanoTime() - start) / 1e9;
         results.get(key).put("Shell Sedgewick", end);
         System.out.printf(" %e ", end);
+    }
+
+    public HashMap<Integer, TreeMap<String, Double>> getResults() {
+        return results;
     }
 }

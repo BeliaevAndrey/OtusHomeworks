@@ -12,10 +12,10 @@ public class app {
         InsertionSort insert = new InsertionSort();
         ShellSort shell = new ShellSort();
         ShellSort shell2 = new ShellSort();
-        int[] arr1 = ArrayGen.setRandom(N);
-        int[] arr2 = ArrayGen.setRandom(N);
-        int[] arr3 = ArrayGen.setRandom(N);
-        int[] arr4 = ArrayGen.setRandom(N);
+        Integer[] arr1 = ArrayGen.setRandom(N);
+        Integer[] arr2 = ArrayGen.setRandom(N);
+        Integer[] arr3 = ArrayGen.setRandom(N);
+        Integer[] arr4 = ArrayGen.setRandom(N);
 
         shell.init(arr1);
         long start = System.nanoTime();
@@ -50,7 +50,7 @@ public class app {
                 shellKnuthTime, shellSedgewickTime);
     }
 
-    static boolean isAscending(int[] arr) {
+    static boolean isAscending(Integer[] arr) {
         for (int i = 1; i < arr.length; i++) {
             if (arr[i - 1] > arr[i]) {
                 System.out.println("i-1: " + (i - 1) + " i: " + i + " arr[i-1] " + arr[i - 1] + " arr[i] " + arr[i]);

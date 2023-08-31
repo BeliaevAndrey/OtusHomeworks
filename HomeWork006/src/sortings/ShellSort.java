@@ -2,15 +2,15 @@ package sortings;
 
 public class ShellSort {
 
-    int[] array;
+    Integer[] array;
     int length;
 
     public ShellSort() {
-        this.array = new int[0];
+        this.array = new Integer[0];
         this.length = 0;
     }
 
-    public void init(int[] array) {
+    public void init(Integer[] array) {
         this.array = array;
         this.length = array.length;
     }
