@@ -12,10 +12,10 @@ public class app {
         InsertionSort insert = new InsertionSort();
         ShellSort shell = new ShellSort();
         ShellSort shell2 = new ShellSort();
-        int[] arr1 = ArrayGen.setRandom(N, true);
-        int[] arr2 = ArrayGen.setRandom(N, true);
-        int[] arr3 = ArrayGen.setRandom(N, true);
-        int[] arr4 = ArrayGen.setRandom(N, true);
+        int[] arr1 = ArrayGen.setRandom(N);
+        int[] arr2 = ArrayGen.setRandom(N);
+        int[] arr3 = ArrayGen.setRandom(N);
+        int[] arr4 = ArrayGen.setRandom(N);
 
         shell.init(arr1);
         long start = System.nanoTime();
