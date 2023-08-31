@@ -6,6 +6,18 @@ public class ArrayGen {
 
     static int SEED = 12345;
 
+
+    public static int[] getArray(int length, String arrType) {
+        switch (arrType) {
+            case "Random": return setRandom(length);
+            case "Digits": return setRandom(length, true);
+            case "Sorted": return setSorted(length);
+            case "Reversed": return setReverse(length);
+            default:
+                throw new IllegalArgumentException("Missing array type: Random/Digits/Sorted/Reversed");
+        }
+    }
+
     /**
      * Build int[] array of random numbers or digits
      */

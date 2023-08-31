@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.HashMap;
+import java.util.TreeMap;
 
 public class FileWriteSvc {
     private Path path = Path.of(System.getProperty("user.dir"), "HomeWork006", "TestResults");
@@ -26,7 +27,7 @@ public class FileWriteSvc {
         }
     }
 
-    public static void writeHashMap(HashMap<Integer, HashMap<String, Double>> results, String fileName) {
+    public static void writeHashMap(HashMap<Integer, TreeMap<String, Double>> results, String fileName) {
         FileWriteSvc fws = new FileWriteSvc();
         fws.checkDir(fws.path);
         String out = makeString(results);
@@ -39,7 +40,7 @@ public class FileWriteSvc {
         }
     }
 
-    private static String makeString(HashMap<Integer, HashMap<String, Double>> results) {
+    private static String makeString(HashMap<Integer, TreeMap<String, Double>> results) {
         StringBuilder sb = new StringBuilder();
         sb.append("Array length,Bubble,Insertion,Insert Shift,Insert Binary,Shell,Shell Knuth,Shell Sedgewick\n");
         results.keySet().stream().sorted().forEach(key -> {
@@ -48,7 +49,6 @@ public class FileWriteSvc {
                 sb.append(results.get(key).get(sorter)).append(",");
             sb.replace(sb.length() - 1, sb.length(), "\n");
         });
-        System.out.println(sb);
         return sb.toString();
     }
 }
