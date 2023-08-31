@@ -15,7 +15,7 @@ public class SortingsSimpleTests {
     public static void main(String[] args) {
         SortingsSimpleTests sst = new SortingsSimpleTests();
         String[] types = new String[]{"Random", "Digits", "Sorted", "Reversed"};
-
+        int[] array;
         for (String arrayType : types) {
             sst.results = new HashMap<>();
 
@@ -23,11 +23,10 @@ public class SortingsSimpleTests {
                 sst.results.put(i, new TreeMap<>());
                 System.out.print("array: " + i);
 
-                int[] array = ArrayGen.getArray(i, arrayType);
+                array = ArrayGen.getArray(i, arrayType);
                 sst.testBubble(array, i);
 
                 array = ArrayGen.getArray(i, arrayType);
-                ;
                 sst.testInsertion(array, i);
 
                 array = ArrayGen.getArray(i, arrayType);
