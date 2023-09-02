@@ -3,9 +3,7 @@ import sortings.InsertionSort;
 import sortings.ShellSort;
 import util.ArrayGen;
 
-import java.util.Arrays;
-
-public class app {
+public class App006 {
     public static void main(String[] args) {
         int N = 1000_000;
         BubbleSort bubble = new BubbleSort();
