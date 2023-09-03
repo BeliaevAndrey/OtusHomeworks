@@ -5,7 +5,7 @@ import util.ArrayGen;
 public class App007 {
 
     public static void main(String[] args) {
-        int limit = (int) 5e5;
+        int limit = (int) 1e5;
         Integer[] arr = ArrayGen.setReverse(limit);
         App007 app = new App007();
         SelectionSort sel = new SelectionSort();
