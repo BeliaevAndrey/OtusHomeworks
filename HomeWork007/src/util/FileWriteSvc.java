@@ -48,9 +48,11 @@ public class FileWriteSvc {
     }
 
     public static void writeExtTestsResults(HashMap<String, HashMap<String, String>> results) {
+        FileWriteSvc fws = new FileWriteSvc();
         String basicPath = System.getProperty("user.dir");
 
         for (String key : results.keySet()) {
+            fws.checkDir(Path.of(basicPath, "HomeWork007", "TestsResultsExternal", key));
             for (String methodLen : results.get(key).keySet()) {
                 Path outPath = Path.of(basicPath, "HomeWork007", "TestsResultsExternal", key, "test" + methodLen + ".result");
                 try (BufferedWriter bw = Files.newBufferedWriter(outPath)) {
