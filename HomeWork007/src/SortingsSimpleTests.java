@@ -9,12 +9,13 @@ import java.util.TreeMap;
 public class SortingsSimpleTests {
 
     private HashMap<Integer, TreeMap<String, Double>> results;
-    private int upperLimit = 0;
+    private int upperLimit;
 
     public static void main(String[] args) {
         SortingsSimpleTests sst = new SortingsSimpleTests(1000_000);
         String[] types = new String[]{"Random", "Digits", "Sorted", "Reversed"};
         Integer[] array;
+        App007 app007 = new App007();
         for (String arrayType : types) {
             System.out.println(arrayType);
             sst.results = new HashMap<>();
@@ -25,24 +26,12 @@ public class SortingsSimpleTests {
 
                 array = ArrayGen.getArray(i, arrayType);
                 sst.testSelection(array, i);
+                System.out.print(" Ascending: " + app007.isAscending(array));
 
                 array = ArrayGen.getArray(i, arrayType);
                 sst.testHeapSort(array, i);
+                System.out.print(" Ascending: " + app007.isAscending(array));
 
-//                array = ArrayGen.getArray(i, arrayType);
-//                sst.testInsertionShift(array, i);
-//
-//                array = ArrayGen.getArray(i, arrayType);
-//                sst.testInsertionBinary(array, i);
-//
-//                array = ArrayGen.getArray(i, arrayType);
-//                sst.testShell(array, i);
-//
-//                array = ArrayGen.getArray(i, arrayType);
-//                sst.testShellKnuth(array, i);
-//
-//                array = ArrayGen.getArray(i, arrayType);
-//                sst.testShellSedgewich(array, i);
                 System.out.println();
             }
             ViewSvc.printHashMap(sst.results);
