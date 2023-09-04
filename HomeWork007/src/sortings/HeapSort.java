@@ -2,7 +2,7 @@ package sortings;
 
 public class HeapSort {
 
-    Integer[] array;
+    int[] array;
     int length;
 
     //
@@ -17,11 +17,11 @@ public class HeapSort {
     //
 
     public HeapSort() {
-        this.array = new Integer[0];
+        this.array = new int[0];
         this.length = 0;
     }
 
-    public void init(Integer[] array) {
+    public void init(int[] array) {
         this.array = array;
         this.length = array.length;
     }

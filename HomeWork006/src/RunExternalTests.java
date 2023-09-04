@@ -30,7 +30,7 @@ public class RunExternalTests {
         }
     }
 
-    void testShell(TestLoader tl, Integer key, String testDir) {
+    void testShell(TestLoader tl, int key, String testDir) {
         ShellSort shell = new ShellSort();
         StringBuilder sb = new StringBuilder();
         shell.init(tl.tests_in.get(key));
@@ -41,7 +41,7 @@ public class RunExternalTests {
         results.get(testDir).put("ShellSort" + key, sb.toString());
     }
 
-    void testShellKnuth(TestLoader tl, Integer key, String testDir) {
+    void testShellKnuth(TestLoader tl, int key, String testDir) {
         ShellSort shell = new ShellSort();
         StringBuilder sb = new StringBuilder();
         shell.init(tl.tests_in.get(key));
@@ -52,7 +52,7 @@ public class RunExternalTests {
         results.get(testDir).put("ShellKnuth" + key, sb.toString());
     }
 
-    void testShellSedgewick(TestLoader tl, Integer key, String testDir) {
+    void testShellSedgewick(TestLoader tl, int key, String testDir) {
         ShellSort shell = new ShellSort();
         StringBuilder sb = new StringBuilder();
         shell.init(tl.tests_in.get(key));
@@ -63,7 +63,7 @@ public class RunExternalTests {
         results.get(testDir).put("ShellSedgewick" + key, sb.toString());
     }
 
-    void testInsertSort(TestLoader tl, Integer key, String testDir) {
+    void testInsertSort(TestLoader tl, int key, String testDir) {
         if (key >= 1000000) return;
         InsertionSort insert = new InsertionSort();
         StringBuilder sb = new StringBuilder();
@@ -76,7 +76,7 @@ public class RunExternalTests {
 
     }
 
-    void testInsertBin(TestLoader tl, Integer key, String testDir) {
+    void testInsertBin(TestLoader tl, int key, String testDir) {
         if (key >= 1000000) return;
         InsertionSort insert = new InsertionSort();
         StringBuilder sb = new StringBuilder();
@@ -88,7 +88,7 @@ public class RunExternalTests {
         results.get(testDir).put("InsertBinary" + key, sb.toString());
     }
 
-    void testInsertShift(TestLoader tl, Integer key, String testDir) {
+    void testInsertShift(TestLoader tl, int key, String testDir) {
         if (key > 1000000) return;
         InsertionSort insert = new InsertionSort();
         StringBuilder sb = new StringBuilder();
@@ -100,7 +100,7 @@ public class RunExternalTests {
         results.get(testDir).put("InsertShift" + key, sb.toString());
     }
 
-    void testBubble(TestLoader tl, Integer key, String testDir) {
+    void testBubble(TestLoader tl, int key, String testDir) {
         if (key >= 1000000) return;
         BubbleSort bubble = new BubbleSort();
         StringBuilder sb = new StringBuilder();
@@ -112,7 +112,7 @@ public class RunExternalTests {
         results.get(testDir).put("Bubble" + key, sb.toString());
     }
 
-    void verify(TestLoader tl, Integer key, String result, String sorter) {
+    void verify(TestLoader tl, int key, String result, String sorter) {
         System.out.println(sorter + ": " + result.equals(tl.tests_out.get(key)));
     }
 

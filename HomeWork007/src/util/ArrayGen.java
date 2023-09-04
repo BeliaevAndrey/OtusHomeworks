@@ -7,7 +7,7 @@ public class ArrayGen {
     static int SEED = 12345;
 
 
-    public static Integer[] getArray(int length, String arrType) {
+    public static int[] getArray(int length, String arrType) {
         switch (arrType) {
             case "Random": return setRandom(length);
             case "Digits": return setRandom(length, true);
@@ -21,9 +21,9 @@ public class ArrayGen {
     /**
      * Build int[] array of random numbers or digits
      */
-    public static Integer[] setRandom(int length, boolean digits) {
+    public static int[] setRandom(int length, boolean digits) {
         Random rnd = new Random(SEED);
-        Integer[] array = new Integer[length];
+        int[] array = new int[length];
         int maxNum = digits ? 9 : length;
         for (int i = 0; i < length; i++) {
             array[i] = rnd.nextInt(maxNum);
@@ -34,16 +34,16 @@ public class ArrayGen {
     /**
      * Build int array of random numbers
      */
-    public static Integer[] setRandom(int length) {
+    public static int[] setRandom(int length) {
         return setRandom(length, false);
     }
 
     /**
      * Build sorted (99%) int array of random numbers
      */
-    public static Integer[] setSorted(int length) {
+    public static int[] setSorted(int length) {
         Random rnd = new Random(SEED);
-        Integer[] array = new Integer[length];
+        int[] array = new int[length];
         for (int i = 0; i < length; i++) {
             array[i] = i;
         }
@@ -62,8 +62,8 @@ public class ArrayGen {
     /**
      * Build reverse int array
      */
-    public static Integer[] setReverse(int lenght) {
-        Integer[] array = new Integer[lenght];
+    public static int[] setReverse(int lenght) {
+        int[] array = new int[lenght];
         for (int i = 0; i < lenght; i++) {
             array[i] = lenght - i;
         }

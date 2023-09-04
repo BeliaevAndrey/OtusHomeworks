@@ -14,7 +14,7 @@ public class SortingsSimpleTests {
     public static void main(String[] args) {
         SortingsSimpleTests sst = new SortingsSimpleTests(1000_000);
         String[] types = new String[]{"Random", "Digits", "Sorted", "Reversed"};
-        Integer[] array;
+        int[] array;
         App007 app007 = new App007();
         for (String arrayType : types) {
             System.out.println(arrayType);
@@ -43,7 +43,7 @@ public class SortingsSimpleTests {
         this.upperLimit = upperLimit;
     }
 
-    void testSelection(Integer[] array, int key) {
+    void testSelection(int[] array, int key) {
         Double end = null;
         System.out.print(" testSelection");
         if (upperLimit > 0 && key <= upperLimit) {
@@ -57,7 +57,7 @@ public class SortingsSimpleTests {
         System.out.printf(" %e ", end);
     }
 
-    void testHeapSort(Integer[] array, int key) {
+    void testHeapSort(int[] array, int key) {
         System.out.print(" testHeapSort");
         HeapSort sorter = new HeapSort();
         sorter.init(array);

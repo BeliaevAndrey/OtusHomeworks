@@ -16,7 +16,7 @@ public class SortingsSimpleTests {
     public static void main(String[] args) {
         SortingsSimpleTests sst = new SortingsSimpleTests(1000_000);
         String[] types = new String[]{"Random", "Digits", "Sorted", "Reversed"};
-        Integer[] array;
+        int[] array;
         for (String arrayType : types) {
             sst.results = new HashMap<>();
 
@@ -55,7 +55,7 @@ public class SortingsSimpleTests {
         this.upperLimit = upperLimit;
     }
 
-    void testBubble(Integer[] array, int key) {
+    void testBubble(int[] array, int key) {
         Double end = null;
         System.out.print(" testBubble");
         if (upperLimit > 0 && key < upperLimit) {
@@ -69,7 +69,7 @@ public class SortingsSimpleTests {
         System.out.printf(" %e ", end);
     }
 
-    void testInsertion(Integer[] array, int key) {
+    void testInsertion(int[] array, int key) {
         Double end = null;
         System.out.print(" testInsertion");
         if (upperLimit > 0 && key < upperLimit)  {
@@ -84,7 +84,7 @@ public class SortingsSimpleTests {
 
     }
 
-    void testInsertionShift(Integer[] array, int key) {
+    void testInsertionShift(int[] array, int key) {
         Double end = null;
         System.out.print(" testInsertionShift");
         if (upperLimit > 0 && key <= upperLimit)  {
@@ -98,7 +98,7 @@ public class SortingsSimpleTests {
         System.out.printf(" %e ", end);
     }
 
-    void testInsertionBinary(Integer[] array, int key) {
+    void testInsertionBinary(int[] array, int key) {
         Double end = null;
         System.out.print(" testInsertionShiftBinary");
         if (upperLimit > 0 && key < upperLimit)  {
@@ -112,7 +112,7 @@ public class SortingsSimpleTests {
         System.out.printf(" %e ", end);
     }
 
-    void testShell(Integer[] array, int key) {
+    void testShell(int[] array, int key) {
         System.out.print(" testShell");
         ShellSort sorter = new ShellSort();
         sorter.init(array);
@@ -123,7 +123,7 @@ public class SortingsSimpleTests {
         System.out.printf(" %e ", end);
     }
 
-    void testShellKnuth(Integer[] array, int key) {
+    void testShellKnuth(int[] array, int key) {
         System.out.print(" testShellKnuth");
         ShellSort sorter = new ShellSort();
         sorter.init(array);
@@ -134,7 +134,7 @@ public class SortingsSimpleTests {
         System.out.printf(" %e ", end);
     }
 
-    void testShellSedgewich(Integer[] array, int key) {
+    void testShellSedgewich(int[] array, int key) {
         System.out.print(" testShellSedgewich");
         ShellSort sorter = new ShellSort();
         sorter.init(array);

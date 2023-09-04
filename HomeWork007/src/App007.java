@@ -6,7 +6,7 @@ public class App007 {
 
     public static void main(String[] args) {
         int limit = (int) 1e5;
-        Integer[] arr = ArrayGen.setReverse(limit);
+        int[] arr = ArrayGen.setReverse(limit);
         App007 app = new App007();
         SelectionSort sel = new SelectionSort();
         HeapSort heapSort = new HeapSort();
@@ -28,7 +28,7 @@ public class App007 {
 
     }
 
-    boolean isAscending(Integer[] arr) {
+    boolean isAscending(int[] arr) {
         for (int i = 1; i < arr.length; i++) {
             if (arr[i - 1] > arr[i]) {
                 System.out.printf("%d %d %d %d", i-1, arr[i-1], i, arr[i]);

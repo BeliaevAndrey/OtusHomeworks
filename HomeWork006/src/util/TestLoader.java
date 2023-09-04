@@ -14,7 +14,7 @@ public class TestLoader {
 
     Path path;
 
-    public HashMap<Integer, Integer[]> tests_in = new HashMap<>();
+    public HashMap<Integer, int[]> tests_in = new HashMap<>();
     public HashMap<Integer, String> tests_out = new HashMap<>();
 
     private final String basicPath = "/large/data2/Home/Andrew/Documents/OTUS/Algorithms/006_20230828/sorting-tests/";
@@ -62,7 +62,7 @@ public class TestLoader {
             ) {
                 int test_size = Integer.parseInt(brIn.readLine());
                 String[] numArrayS = brIn.readLine().split(" ");
-                Integer[] numArrayI = new Integer[numArrayS.length];
+                int[] numArrayI = new int[numArrayS.length];
                 for (int i = 0; i < numArrayS.length; i++) {
                     numArrayI[i] = Integer.parseInt(numArrayS[i]);
                 }
