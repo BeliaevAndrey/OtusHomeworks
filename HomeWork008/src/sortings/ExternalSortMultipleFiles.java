@@ -24,7 +24,7 @@ public class ExternalSortMultipleFiles {
 
         try {
             esa.functionNT(N, T);
-            esa.fileReader("randFile.txt");
+            esa.numbersSeparation("randFile.txt");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -50,7 +50,7 @@ public class ExternalSortMultipleFiles {
         fos.close();
     }
 
-    void fileReader(String fileName) throws IOException {
+    void numbersSeparation(String fileName) throws IOException {
         String fileIn = Path.of(dataPath, fileName).toString();
         FileInputStream fis = new FileInputStream(fileIn);
         BufferedReader br = new BufferedReader(new InputStreamReader(fis));
