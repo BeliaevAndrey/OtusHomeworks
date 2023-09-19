@@ -1,18 +1,20 @@
+import sortings.BucketSortSeminar;
 import sortings.CountingSort;
-import sortings.BucketSortArraysBinSearch;
 import sortings.RadixSort;
 import util.ArrayGen;
 
 public class App009 {
 
     public static void main(String[] args) {
-        int limit = (int) 1e8;
-        int[] arr = ArrayGen.setReverse(limit);
+        int length = (int) 1e7;
+        int upperLim = 1000;
+        int[] arr = ArrayGen.setRandom(length, upperLim);
 
         App009 app = new App009();
 
+        BucketSortSeminar bucketSortList = new BucketSortSeminar();
+
         CountingSort countingSort = new CountingSort();
-        BucketSortArraysBinSearch bucketSort = new BucketSortArraysBinSearch();
         RadixSort radixSort = new RadixSort();
 
         System.out.println("CountingSort");
@@ -23,23 +25,23 @@ public class App009 {
         System.out.println(app.isAscending(arr));
         System.out.println(end1);
 
-        System.out.println("\nBucketSort");
-        arr = ArrayGen.setReverse(limit);
-        bucketSort.init(arr);
+        System.out.println("\nBucketSortList");
+        arr = ArrayGen.setRandom(length, upperLim);
+        bucketSortList.init(arr);
         start = System.nanoTime();
-        bucketSort.sort();
+        bucketSortList.Bucket();
         double end2 = (System.nanoTime() - start) / 1e9;
         System.out.println(app.isAscending(arr));
         System.out.println(end2);
 
         System.out.println("\nRadixSort");
-        arr = ArrayGen.setReverse(limit);
+        arr = ArrayGen.setRandom(length, upperLim);
         radixSort.init(arr);
         start = System.nanoTime();
         radixSort.sort();
-        double end3 = (System.nanoTime() - start) / 1e9;
+        double end4 = (System.nanoTime() - start) / 1e9;
         System.out.println(app.isAscending(arr));
-        System.out.println(end3);
+        System.out.println(end4);
 
 
     }
