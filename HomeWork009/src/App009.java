@@ -47,16 +47,10 @@ public class App009 {
     }
 
     boolean isAscending(int[] arr) {
-        boolean flag = true;
-        for (int i = 1; i < arr.length; i++) {
-            if (arr[i - 1] > arr[i]) {
-                System.out.printf(
-                        "(i-1): %d arr[i-1]: %d (i): %d arr[i]: %d\n",
-                        i - 1, arr[i - 1], i, arr[i]);
-                flag = false;
-            }
-        }
-        return flag;
+        for (int i = 1; i < arr.length; i++)
+            if (arr[i - 1] > arr[i])
+                return false;
+        return true;
     }
 
 }

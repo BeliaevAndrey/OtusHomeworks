@@ -5,9 +5,9 @@ import java.util.TreeMap;
 
 public class ViewSvc {
     public static void printHashMap(HashMap<Integer, TreeMap<String, Double>> results) {
-        String[] srtNames = new String[]{"Selection Sort", "Heap Sort"};
-        String format = "%-16s%-16s%-16s\n";
-        System.out.printf(format, "Array length", "Selection Sort", "Heap Sort");
+        String[] srtNames = new String[]{"Counting Sort", "Bucket Sort", "Radix Sort"};
+        String format = "%-16s%-16s%-16s%-16s\n";
+        System.out.printf(format, "Array length", "Counting Sort", "Bucket Sort", "Radix Sort");
 
         results.keySet().stream().sorted().forEach(key -> {
             System.out.printf("%-16d", key);

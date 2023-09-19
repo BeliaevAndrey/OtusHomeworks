@@ -8,7 +8,9 @@ import java.util.HashMap;
 import java.util.TreeMap;
 
 public class FileWriteSvc {
-    private Path path = Path.of(System.getProperty("user.dir"), "HomeWork007", "TestResults");
+    
+    private final String moduleDir = "HomeWork009";
+    private final Path path = Path.of(System.getProperty("user.dir"), "HomeWork009", "TestResults");
 
 
     void checkDir(Path path) {
@@ -37,7 +39,7 @@ public class FileWriteSvc {
 
     private static String makeString(HashMap<Integer, TreeMap<String, Double>> results) {
         StringBuilder sb = new StringBuilder();
-        sb.append("Array length,Heap Sort,Selection Sort\n");
+        sb.append("Array length,Bucket Sort,Counting Sort,Radix Sort\n");
         results.keySet().stream().sorted().forEach(key -> {
             sb.append(key).append(",");
             for (String sorter : results.get(key).keySet())
@@ -52,9 +54,11 @@ public class FileWriteSvc {
         String basicPath = System.getProperty("user.dir");
 
         for (String key : results.keySet()) {
-            fws.checkDir(Path.of(basicPath, "HomeWork007", "TestsResultsExternal", key));
+            fws.checkDir(Path.of(basicPath, fws.moduleDir, "TestsResultsExternal", key));
             for (String methodLen : results.get(key).keySet()) {
-                Path outPath = Path.of(basicPath, "HomeWork007", "TestsResultsExternal", key, "test" + methodLen + ".result");
+                Path outPath = Path.of(
+                        basicPath, fws.moduleDir,
+                        "TestsResultsExternal", key, "test" + methodLen + ".result");
                 try (BufferedWriter bw = Files.newBufferedWriter(outPath)) {
                     bw.append(results.get(key).get(methodLen));
                     bw.flush();

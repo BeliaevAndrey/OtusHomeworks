@@ -9,7 +9,7 @@ public class ArrayGen {
 
     public static int[] getArray(int length, String arrType) {
         switch (arrType) {
-            case "Random": return setRandom(length);
+            case "Random": return setRandom(length, 1000);
             case "Digits": return setRandom(length, true, length);
             case "Sorted": return setSorted(length);
             case "Reversed": return setReverse(length);
@@ -32,14 +32,14 @@ public class ArrayGen {
     }
 
     /**
-     * Build int array of random numbers
+     * Build int array of random numbers upper limit same as length
      */
     public static int[] setRandom(int length) {
         return setRandom(length, false, length);
     }
 
     /**
-     * Build int array of random numbers
+     * Build int array of random numbers with upper limit
      */
     public static int[] setRandom(int length, int limit) {
         return setRandom(length, false, limit);
