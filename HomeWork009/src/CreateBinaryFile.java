@@ -21,8 +21,9 @@ public class CreateBinaryFile {
         try (FileOutputStream fos = new FileOutputStream(outPath.toString());
              BufferedOutputStream bos = new BufferedOutputStream(fos);
              DataOutputStream dos = new DataOutputStream(bos)) {
-            for (int i = 0; i <= len; i += 1000) {
-                int[] buffer = fillBuffer(upperLim);
+            int step = 1000;
+            for (int i = 0; i <= len; i += step) {
+                int[] buffer = fillBuffer(upperLim, step);
                 for (int num : buffer) dos.writeShort(num);
                 dos.flush();
             }
@@ -31,10 +32,10 @@ public class CreateBinaryFile {
         }
     }
 
-    int[] fillBuffer(int upperLim) {
+    int[] fillBuffer(int upperLim, int bufLen) {
         Random rnd = new Random();
-        int[] buffer = new int[100];
-        for (int i = 0; i < 100; i++) {
+        int[] buffer = new int[bufLen];
+        for (int i = 0; i < bufLen; i++) {
             buffer[i] = rnd.nextInt(upperLim);
             System.out.print(buffer[i] + " ");
         }
