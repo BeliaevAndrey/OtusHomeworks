@@ -51,7 +51,6 @@ public class SortBinaryFile {
         System.out.println("Counting Sort Time spent : " + end3);
         sbf.writeFile("CountingSort_out.bin");
         sbf.readFile("CountingSort_out.bin");
-        System.out.println(sbf.validate());
         if (sbf.validate()) sbf.results.put("Counting Sort", end3);
         else sbf.results.put("Counting Sort", null);
         System.out.println(sbf.results.get("Counting Sort"));
