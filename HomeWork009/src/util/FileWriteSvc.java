@@ -13,20 +13,22 @@ public class FileWriteSvc {
     private final Path path = Path.of(System.getProperty("user.dir"), "HomeWork009", "TestResults");
 
 
-    void checkDir(Path path) {
+    boolean checkDir(Path path) {
         if (!Files.exists(path)) {
             try {
                 Files.createDirectory(path);
             } catch (IOException e) {
                 e.printStackTrace();
+                return false;
             }
             System.out.println("Created: " + path);
         }
+        return true;
     }
 
     public static void writeHashMap(HashMap<Integer, TreeMap<String, Double>> results, String fileName) {
         FileWriteSvc fws = new FileWriteSvc();
-        fws.checkDir(fws.path);
+        if (!fws.checkDir(fws.path)) return;
         String out = makeString(results);
         Path outFile = Path.of(fws.path.toString(), fileName);
         try (BufferedWriter bw = Files.newBufferedWriter(outFile)) {
@@ -52,7 +54,6 @@ public class FileWriteSvc {
     public static void writeExtTestsResults(HashMap<String, HashMap<String, String>> results) {
         FileWriteSvc fws = new FileWriteSvc();
         String basicPath = System.getProperty("user.dir");
-
         for (String key : results.keySet()) {
             fws.checkDir(Path.of(basicPath, fws.moduleDir, "TestsResultsExternal", key));
             for (String methodLen : results.get(key).keySet()) {
@@ -64,6 +65,7 @@ public class FileWriteSvc {
                     bw.flush();
                 } catch (IOException e) {
                     e.printStackTrace();
+                    throw new RuntimeException(e);
                 }
             }
         }

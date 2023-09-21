@@ -15,7 +15,7 @@ public class CountingSort {
 
     private int bufferAndFindMax() {
         int max = A[0];
-        for (int i = 1; i < N; i++) {
+        for (int i = 0; i < N; i++) {
             this.buffer[i] = A[i];
             if (A[i] > max)
                 max = A[i];
@@ -38,6 +38,4 @@ public class CountingSort {
             if (countArr[buffer[i]] > 0)
                 A[--countArr[buffer[i]]] = buffer[i];
     }
-
-
 }

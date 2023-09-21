@@ -1,12 +1,9 @@
 package sortings;
 
-import java.util.Arrays;
-import java.util.Random;
 
 public class BucketSortSeminar {
     int N;
     int[] A;
-
 
     public void init(int[] arr) {
         N = arr.length;
@@ -21,7 +18,7 @@ public class BucketSortSeminar {
         max++;
         BuckList[] bucket = new BuckList[N];
         for (int a : A) {
-            int nr = (int) ((long) a * (long) N / (long) max);
+            int nr = (int)((long) a * (long) N / (long) max);
             bucket[nr] = new BuckList(a, bucket[nr]);
             BuckList item = bucket[nr];
             while (item.next != null) {
@@ -30,6 +27,7 @@ public class BucketSortSeminar {
                 int x = item.value;
                 item.value = item.next.value;
                 item.next.value = x;
+                item = item.next;
             }
         }
         int j = 0;
