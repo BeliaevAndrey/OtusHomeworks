@@ -10,19 +10,22 @@ public class CreateBinaryFile {
     public static void main(String[] args) {
         CreateBinaryFile cbf = new CreateBinaryFile();
         int upperLim = 65535;
-        int numbersAmt = (int) 1e9;
+        int numbersAmt = 100_000_000;
         String fileName = "File1.bin";
         cbf.fileGenBufShort(numbersAmt, fileName, upperLim);
     }
 
     void fileGenBufShort(int len, String fileName, int upperLim) {
         Path outPath = Path.of(String.valueOf(basicPath), fileName);
-        if (!checkOrCreatePath()) return;
+        if (!checkOrCreatePath()) {
+            System.out.println("Path ERROR.");
+            return;
+        }
         try (FileOutputStream fos = new FileOutputStream(outPath.toString());
              BufferedOutputStream bos = new BufferedOutputStream(fos);
              DataOutputStream dos = new DataOutputStream(bos)) {
             int step = 1000;
-            for (int i = 0; i <= len; i += step) {
+            for (int i = 0; i < len; i += step) {
                 int[] buffer = fillBuffer(upperLim, step);
                 for (int num : buffer) dos.writeShort(num);
                 dos.flush();
@@ -37,26 +40,9 @@ public class CreateBinaryFile {
         int[] buffer = new int[bufLen];
         for (int i = 0; i < bufLen; i++) {
             buffer[i] = rnd.nextInt(upperLim);
-            System.out.print(buffer[i] + " ");
         }
-        System.out.println();
+        System.out.print(".");
         return buffer;
-    }
-
-
-    void fileReadShift(String fileName) {
-        Path inPath = Path.of(basicPath.toString(), fileName);
-        if (!Files.exists(inPath)) return;
-        try (FileInputStream fis = new FileInputStream(inPath.toString());
-             DataInputStream dis = new DataInputStream(fis)) {
-            while (dis.available() > 0) {
-                int num = dis.readShort() & 65535;
-                System.out.print(num + " ");
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     boolean checkOrCreatePath() {
