@@ -19,12 +19,10 @@ public class ExternalSortTwoFiles {
         String bufferA = "bufferA.txt";
         String bufferB = "bufferB.txt";
 
-        int N = (int) 1e3;
-        int T = 10000;
-        esb.functionNT(N, T);
         if (!esb.fileCheck(srcFilename)) {
-            System.out.println("F-n-F!");
-            return;
+            int N = (int) 1e3;
+            int T = 10000;
+            esb.functionNT(N, T);
         }
         esb.distribution(bufferA, bufferB, srcFilename);
     }
