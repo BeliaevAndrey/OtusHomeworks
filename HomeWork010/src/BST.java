@@ -77,50 +77,127 @@ public class BST {
 //        remove(root, 57);
 //    }
 
-    void remove(int x) {
-        x = 56; // TODO: bug point
-        boolean r_flag = false, l_flag = false;
-        Node parent = root;
-        Node node = root;
-        while (x != node.key) {
-            r_flag = l_flag = false;
-            parent = node;
-            if (x < node.key) {
-                if (node.L != null) {
-                    node = node.L;
-                    l_flag = true;
-                }
-            } else {
-                if (node.R != null) {
-                    node = node.R;
-                    r_flag = true;
-                }
-            }
-        }
-        if (node.L == null && node.R == null) {
-            if (l_flag) parent.L = null;
-            if (r_flag) parent.R = null;
-        } else if (node.R == null) {
-            parent.R = node.L;
-        } else if (node.L == null) {
-            parent.L = node.R;
-        } else {
-            parent = node;
-            System.out.println(parent + " <- PARENT-> " + parent.key);  // TODO: remove semaphore
-            node = node.L;
-            Node current = node;
-            while (current.R != null) {
-                node = current;
-                current = current.R;
-            }
-            parent.key = current.key;
-            node.R = current.L;
-        }
+//    void remove(int x) {
+//        boolean r_flag = false, l_flag = false;
+//        Node parent = root;
+//        Node node = root;
+//        while (x != node.key) {
+//            r_flag = l_flag = false;
+//            parent = node;
+//            if (x < node.key) {
+//                if (node.L != null) {
+//                    node = node.L;
+//                    l_flag = true;
+//                }
+//            } else {
+//                if (node.R != null) {
+//                    node = node.R;
+//                    r_flag = true;
+//                }
+//            }
+//        }
+//        if (node.L == null && node.R == null) {
+//            if (l_flag) parent.L = null;
+//            if (r_flag) parent.R = null;
+//        } else if (node.R == null) {
+//            parent.R = node.L;
+//        } else if (node.L == null) {
+//            parent.L = node.R;
+//        } else {
+//            parent = node;
+//            node = node.L;
+//            Node current = node;
+//            while (current.R != null) {
+//                node = current;
+//                current = current.R;
+//            }
+//            parent.key = current.key;
+//            node.R = current.L;
+//        }
+//    }
+void remove(int x) {
+//        x = 22;
+    System.out.println("REMOVING: " + x);
 
-
+    Node parent = root;
+    Node nodeToRemove = root;
+    while (x != nodeToRemove.key) {
+        parent = nodeToRemove;
+        if (x < nodeToRemove.key) nodeToRemove = nodeToRemove.L;
+        else nodeToRemove = nodeToRemove.R;
     }
 
+    if (nodeToRemove.L == null && nodeToRemove.R == null) {
+        if (nodeToRemove == parent.L) parent.L = null;
+        else parent.R = null;
+    }
 
+    if (nodeToRemove.L != null && nodeToRemove.R != null) {
+        if (nodeToRemove.L.R != null) {
+            Node node = nodeToRemove.L.R;
+            while (node.R != null) {
+                parent = node;
+                node = node.R;
+            }
+            nodeToRemove.key = node.key;
+            parent.R = node.L;
+        }
+//            else {
+//                nodeToRemove.key = nodeToRemove.L.key;
+//                nodeToRemove.L = nodeToRemove.L.L;
+//            }
+        return;
+    }
+
+    if (nodeToRemove.R == null && nodeToRemove.L != null) {
+        if (nodeToRemove.L.L != null && nodeToRemove.L.R != null) {
+            if (parent.R == null) {
+                parent.R = nodeToRemove.L;
+                return;
+            } else {
+                if (nodeToRemove == parent.R)
+                    parent.R = nodeToRemove.L;
+                else
+                    parent.L = nodeToRemove.L;
+                return;
+            }
+        }
+        if (nodeToRemove.L.R != null) {
+            nodeToRemove.key = nodeToRemove.L.R.key;
+            nodeToRemove.L.R = null;
+        } else {
+            nodeToRemove.key = nodeToRemove.L.key;
+            nodeToRemove.L = nodeToRemove.L.L;
+        }
+        return;
+    }
+
+    if (nodeToRemove.L == null && nodeToRemove.R != null) {
+        if (nodeToRemove.R.L != null) {
+            if (parent.R == nodeToRemove) {
+                parent.R = nodeToRemove.R;
+            } else {
+                nodeToRemove.key = nodeToRemove.R.L.key;
+                nodeToRemove.R.L = null;
+            }
+        } else {
+            nodeToRemove.key = nodeToRemove.R.key;
+            nodeToRemove.R = null;
+        }
+        return;
+    }
+
+    if (nodeToRemove.L != null) {
+        if (nodeToRemove.L.R != null) {
+            nodeToRemove.key = nodeToRemove.L.R.key;
+            nodeToRemove.L.R = null;
+        } else {
+            parent.L = nodeToRemove.L.L;
+        }
+        return;
+    }
+
+}
     static class Node {
         int key;
         Node L, R;
