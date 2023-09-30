@@ -115,89 +115,91 @@ public class BST {
 //            node.R = current.L;
 //        }
 //    }
-void remove(int x) {
-//        x = 22;
-    System.out.println("REMOVING: " + x);
-
+void removeRoot() {
     Node parent = root;
-    Node nodeToRemove = root;
-    while (x != nodeToRemove.key) {
-        parent = nodeToRemove;
-        if (x < nodeToRemove.key) nodeToRemove = nodeToRemove.L;
-        else nodeToRemove = nodeToRemove.R;
+    Node node = root.L;
+    while (node.R != null) {
+        parent = node;
+        node = node.R;
     }
-
-    if (nodeToRemove.L == null && nodeToRemove.R == null) {
-        if (nodeToRemove == parent.L) parent.L = null;
-        else parent.R = null;
-    }
-
-    if (nodeToRemove.L != null && nodeToRemove.R != null) {
-        if (nodeToRemove.L.R != null) {
-            Node node = nodeToRemove.L.R;
-            while (node.R != null) {
-                parent = node;
-                node = node.R;
-            }
-            nodeToRemove.key = node.key;
-            parent.R = node.L;
-        }
-//            else {
-//                nodeToRemove.key = nodeToRemove.L.key;
-//                nodeToRemove.L = nodeToRemove.L.L;
-//            }
-        return;
-    }
-
-    if (nodeToRemove.R == null && nodeToRemove.L != null) {
-        if (nodeToRemove.L.L != null && nodeToRemove.L.R != null) {
-            if (parent.R == null) {
-                parent.R = nodeToRemove.L;
-                return;
-            } else {
-                if (nodeToRemove == parent.R)
-                    parent.R = nodeToRemove.L;
-                else
-                    parent.L = nodeToRemove.L;
-                return;
-            }
-        }
-        if (nodeToRemove.L.R != null) {
-            nodeToRemove.key = nodeToRemove.L.R.key;
-            nodeToRemove.L.R = null;
-        } else {
-            nodeToRemove.key = nodeToRemove.L.key;
-            nodeToRemove.L = nodeToRemove.L.L;
-        }
-        return;
-    }
-
-    if (nodeToRemove.L == null && nodeToRemove.R != null) {
-        if (nodeToRemove.R.L != null) {
-            if (parent.R == nodeToRemove) {
-                parent.R = nodeToRemove.R;
-            } else {
-                nodeToRemove.key = nodeToRemove.R.L.key;
-                nodeToRemove.R.L = null;
-            }
-        } else {
-            nodeToRemove.key = nodeToRemove.R.key;
-            nodeToRemove.R = null;
-        }
-        return;
-    }
-
-    if (nodeToRemove.L != null) {
-        if (nodeToRemove.L.R != null) {
-            nodeToRemove.key = nodeToRemove.L.R.key;
-            nodeToRemove.L.R = null;
-        } else {
-            parent.L = nodeToRemove.L.L;
-        }
-        return;
-    }
-
+    root.key = node.key;
+    parent.R = node.L;
 }
+
+    Node searchParent(Node node, int x) {
+        if ((node.L != null && node.L.key == x) ||
+                (node.R != null && node.R.key == x)) {
+            return node;
+        }
+        if (node.key > x) return searchParent(node.L, x);
+        else return searchParent(node.R, x);
+
+    }
+
+    Node findLeftMax(Node node) {
+        node = node.L;
+        while (node.R != null)
+            node = node.R;
+        return node;
+    }
+
+    Node findRightMin(Node node) {
+        while (node.L != null)
+            node = node.L;
+        return node;
+    }
+
+    boolean nodeIsLeaf(Node node) {
+        return node.R == null && node.L == null;
+    }
+
+    void remove(int x) {
+        x = 30;
+        if (root.key == x) {
+            removeRoot();
+            return;
+        }
+        Node parent = searchParent(root, x);
+        Node nodeToRm = search(root, x);
+        if (nodeToRm.L == null && nodeToRm.R == null) {
+            if (parent.L == nodeToRm) {
+                System.out.println("0.1");  // TODO: RmS
+                parent.L = null;
+            }
+            if (parent.R == nodeToRm) {
+                System.out.println("0.2");  // TODO: RmS
+                parent.R = null;
+            }
+        } else if (nodeToRm.R != null && nodeToRm.L != null) {
+            System.out.print("2.2");  // TODO: RmS
+            Node substitution = findLeftMax(nodeToRm);  // FixMe: wrong way: for 30; need go right
+            nodeToRm.key = substitution.key;
+            if (nodeIsLeaf(substitution)) {
+                System.out.println(".1");  // TODO: RmS
+                nodeToRm.L = null;
+            } else {        // FixMe: wrong way: for 30
+                System.out.println(".2");  // TODO: RmS
+                nodeToRm.L = substitution.L;
+            }
+
+        } else if (nodeToRm.L != null && nodeToRm.R == null) {
+            if (parent.R == nodeToRm) {
+                System.out.println("1.1");  // TODO: RmS
+                parent.R = nodeToRm.L;
+            } else {
+                System.out.println("1.2");  // TODO: RmS
+                parent.L = nodeToRm.L;
+            }
+        } else if (nodeToRm.R != null && nodeToRm.L == null) {
+            System.out.println("2.1");  // TODO: RmS
+            if (!nodeIsLeaf(nodeToRm.R))
+                parent.R = nodeToRm.R;
+            else if (parent.L != null)
+                parent.L = nodeToRm.R;
+            else parent.R = nodeToRm.R;
+        }
+    }
+
     static class Node {
         int key;
         Node L, R;
