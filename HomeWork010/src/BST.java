@@ -25,7 +25,7 @@ public class BST {
         System.out.print("\n[");
         bst.dfs(bst.root);
         System.out.println("\b\b]");
-        bst.remove(40);
+        bst.remove(0);
         System.out.print("After removal:\n[");
         bst.dfs(bst.root);
         System.out.println("\b\b]");
@@ -77,7 +77,7 @@ public class BST {
 //        remove(root, 57);
 //    }
 
-//    void remove(int x) {
+    //    void remove(int x) {
 //        boolean r_flag = false, l_flag = false;
 //        Node parent = root;
 //        Node node = root;
@@ -115,24 +115,24 @@ public class BST {
 //            node.R = current.L;
 //        }
 //    }
-void removeRoot() {
-    Node parent = root;
-    Node node = root.L;
-    while (node.R != null) {
-        parent = node;
-        node = node.R;
+    void removeRoot() {
+        Node parent = root;
+        Node node = root.L;
+        while (node.R != null) {
+            parent = node;
+            node = node.R;
+        }
+        root.key = node.key;
+        parent.R = node.L;
     }
-    root.key = node.key;
-    parent.R = node.L;
-}
 
-    Node searchParent(Node node, int x) {
-        if ((node.L != null && node.L.key == x) ||
-                (node.R != null && node.R.key == x)) {
+    Node searchParent(Node node, Node searched) {
+        if ((node.L != null && node.L == searched) ||
+                (node.R != null && node.R == searched)) {
             return node;
         }
-        if (node.key > x) return searchParent(node.L, x);
-        else return searchParent(node.R, x);
+        if (node.key > searched.key) return searchParent(node.L, searched);
+        else return searchParent(node.R, searched);
 
     }
 
@@ -154,49 +154,60 @@ void removeRoot() {
     }
 
     void remove(int x) {
-        x = 30;
         if (root.key == x) {
             removeRoot();
             return;
         }
-        Node parent = searchParent(root, x);
         Node nodeToRm = search(root, x);
-        if (nodeToRm.L == null && nodeToRm.R == null) {
+        if (nodeToRm == null) {
+            return;
+        }
+        Node parent = searchParent(root, nodeToRm);
+        if (nodeIsLeaf(nodeToRm)) {
             if (parent.L == nodeToRm) {
-                System.out.println("0.1");  // TODO: RmS
                 parent.L = null;
             }
             if (parent.R == nodeToRm) {
-                System.out.println("0.2");  // TODO: RmS
                 parent.R = null;
             }
         } else if (nodeToRm.R != null && nodeToRm.L != null) {
-            System.out.print("2.2");  // TODO: RmS
-            Node substitution = findLeftMax(nodeToRm);  // FixMe: wrong way: for 30; need go right
-            nodeToRm.key = substitution.key;
+            Node substitution = findLeftMax(nodeToRm);
             if (nodeIsLeaf(substitution)) {
-                System.out.println(".1");  // TODO: RmS
-                nodeToRm.L = null;
-            } else {        // FixMe: wrong way: for 30
-                System.out.println(".2");  // TODO: RmS
-                nodeToRm.L = substitution.L;
+                if (nodeToRm.L == substitution) {
+                    nodeToRm.key = substitution.key;
+                    nodeToRm.L = null;
+                } else {
+                    parent = searchParent(nodeToRm, substitution);
+                    nodeToRm.key = substitution.key;
+                    parent.R = substitution.L;
+                }
+            } else {
+                if (nodeToRm.L == substitution) {
+                    nodeToRm.key = substitution.key;
+                    nodeToRm.L = substitution.L;
+                } else {
+                    parent = searchParent(nodeToRm, substitution);
+                    nodeToRm.key = substitution.key;
+                    parent.R = substitution.L;
+                }
+
             }
 
         } else if (nodeToRm.L != null && nodeToRm.R == null) {
             if (parent.R == nodeToRm) {
-                System.out.println("1.1");  // TODO: RmS
                 parent.R = nodeToRm.L;
             } else {
-                System.out.println("1.2");  // TODO: RmS
                 parent.L = nodeToRm.L;
             }
         } else if (nodeToRm.R != null && nodeToRm.L == null) {
-            System.out.println("2.1");  // TODO: RmS
-            if (!nodeIsLeaf(nodeToRm.R))
+            if (!nodeIsLeaf(nodeToRm.R)) {
                 parent.R = nodeToRm.R;
-            else if (parent.L != null)
+            } else if (parent.L != null) {
                 parent.L = nodeToRm.R;
-            else parent.R = nodeToRm.R;
+            } else {
+                System.out.println(".3");
+                parent.R = nodeToRm.R;
+            }
         }
     }
 
