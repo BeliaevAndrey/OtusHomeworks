@@ -8,8 +8,9 @@ import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 import java.util.Random;
 
+
 public class ExternalSortES3 {
-    int mergeCalls = 0;
+
     int buffLen = 100;  // pre-sort buffer length
 
     String dataPath = "HomeWork008/dataES3";
@@ -17,34 +18,33 @@ public class ExternalSortES3 {
 
     public void init(String filename) {
         srcFilename = filename;
+        int N = (int) 5e3;
+        int T = 10000;
+        if (!fileCheck(srcFilename)) {
+            functionNT(N, T);
+//            System.out.println("File not found!");
+//            return;
+        }
+
     }
 
     public void sort() {
         QuickSort qs = new QuickSort();
         MergeSort ms = new MergeSort();
-
         String buffer = "bufferC.txt";
-
-        int N = (int) 5e3;
-        int T = 10000;
-        if (!fileCheck(srcFilename)) {
-//            functionNT(N, T);
-            System.out.println("File not found!");
-            return;
-        }
         preSortAndDistribute(srcFilename, buffer, qs);
     }
 
 
-    void preSortAndDistribute(String fileSrc, String fileDst, ISorter sorter) {
+    private void preSortAndDistribute(String fileSrc, String fileDst, ISorter sorter) {
 
         Path source = Path.of(dataPath, fileSrc);
         Path lftDst = Path.of(dataPath, "lft_" + fileDst);
         Path rgtDst = Path.of(dataPath, "rgt_" + fileDst);
 
         try (BufferedReader br = Files.newBufferedReader(source);
-             BufferedWriter bwLft = Files.newBufferedWriter(lftDst, StandardOpenOption.CREATE, StandardOpenOption.APPEND);
-             BufferedWriter bwRgt = Files.newBufferedWriter(rgtDst, StandardOpenOption.CREATE, StandardOpenOption.APPEND);
+             BufferedWriter bwLft = Files.newBufferedWriter(lftDst, StandardOpenOption.CREATE); //, StandardOpenOption.APPEND);
+             BufferedWriter bwRgt = Files.newBufferedWriter(rgtDst, StandardOpenOption.CREATE) //, StandardOpenOption.APPEND);
         ) {
             int fileSw = 0;
             BufferedWriter bw = bwLft;
@@ -70,14 +70,14 @@ public class ExternalSortES3 {
         mergeFiles("lft_" + fileDst, "rgt_" + fileDst, "bufferA.txt", "bufferB.txt");
     }
 
-    void mergeFiles(String leftFileIn, String rightFileIn, String leftFileOut, String rightFileOut) {
-        ++mergeCalls;
+    private void mergeFiles(String leftFileIn, String rightFileIn, String leftFileOut, String rightFileOut) {
 
         Path lftSrc = Path.of(dataPath, leftFileIn);
         Path rgtSrc = Path.of(dataPath, rightFileIn);
 
         Path lftDst = Path.of(dataPath, leftFileOut);
         Path rgtDst = Path.of(dataPath, rightFileOut);
+
         try {
             if (Files.size(lftSrc) < 2) {
                 writeResults(rgtSrc);
@@ -95,7 +95,7 @@ public class ExternalSortES3 {
         try (BufferedWriter bwLft = Files.newBufferedWriter(lftDst);
              BufferedWriter bwRgt = Files.newBufferedWriter(rgtDst);
              BufferedReader brLft = Files.newBufferedReader(lftSrc);
-             BufferedReader brRgt = Files.newBufferedReader(rgtSrc);
+             BufferedReader brRgt = Files.newBufferedReader(rgtSrc)
         ) {
             int srcSw = 0;
             int dstSw = 0;
@@ -103,7 +103,7 @@ public class ExternalSortES3 {
             BufferedReader br = brLft;
             BufferedWriter bw = bwLft;
 
-            // pre-distribution (isn't there a better way to begin?)
+            // pre-distribution
             int flag = Integer.parseInt(br.readLine());
             if (!br.ready()) srcSw = (srcSw + 1) % 2;
             br = srcSw == 0 ? brLft : brRgt;
@@ -164,8 +164,7 @@ public class ExternalSortES3 {
         mergeFiles(leftFileOut, rightFileOut, leftFileIn, rightFileIn);
     }
 
-    void writeResults(Path rstSource, boolean keepBuffers) {
-
+    private void writeResults(Path rstSource) {
         Path rstDest = Path.of(dataPath, "results.txt");
 
         try {
@@ -174,7 +173,6 @@ public class ExternalSortES3 {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        if (keepBuffers) return;
 
         try {
             Files.deleteIfExists(Path.of(dataPath, "bufferA.txt"));
@@ -183,13 +181,17 @@ public class ExternalSortES3 {
             Files.deleteIfExists(Path.of(dataPath, "rgt_bufferC.txt"));
         } catch (IOException e) {
             e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
 
-    void writeResults(Path rstSource) {
-        writeResults(rstSource, false);
+
+    private boolean fileCheck(String fileName) {
+        return Files.exists(Path.of(dataPath, fileName));
     }
 
+
+    /*Utility section*/
 
     void functionNT(int N, int T) {
         try (BufferedWriter bw = new BufferedWriter(
@@ -207,11 +209,6 @@ public class ExternalSortES3 {
         }
     }
 
-    boolean fileCheck(String fileName) {
-        return Files.exists(Path.of(dataPath, fileName));
-    }
-
-
     void functionNTLinearMixed(int N) {
         Random rnd = new Random();
         StringBuilder sb = new StringBuilder();
@@ -219,7 +216,6 @@ public class ExternalSortES3 {
 
         for (int i = 0; i < N; i++) {
             arr[i] = i;
-//            sb.append(arr[i]).append(i < N - 1 ? "\n" : "");
         }
         for (int i = 0; i < N; i++) {
             int k = i + rnd.nextInt(N - i);
@@ -228,7 +224,6 @@ public class ExternalSortES3 {
             arr[k] = x;
             sb.append(arr[i]).append(i < N - 1 ? "\n" : "");
         }
-//        System.out.println(sb);
         try (BufferedWriter bw = new BufferedWriter(
                 Files.newBufferedWriter(
                         Path.of(dataPath, "randFile.txt")))) {
@@ -238,14 +233,5 @@ public class ExternalSortES3 {
             e.printStackTrace();
             throw new RuntimeException(e);
         }
-//        pseudoPause();
-    }
-
-
-    void pseudoPause() {
-        System.out.print("Press enter...");
-        try {
-            System.in.read();
-        } catch (IOException e) {/*skip*/}
     }
 }
