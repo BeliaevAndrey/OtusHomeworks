@@ -15,7 +15,7 @@ public class App008 {
         int[] arr = ArrayGen.getArray(len, "Random");
         ms.init(arr);
         long startMS = System.nanoTime();
-        ms.mergeSort();
+        ms.sort();
         double endMS = (System.nanoTime() - startMS) / 1e9;
         System.out.println(app.isAscending(arr) + " " + endMS);
 
@@ -23,7 +23,7 @@ public class App008 {
         arr = ArrayGen.getArray(len, "Random");
         qs.init(arr);
         long startQS = System.nanoTime();
-        qs.quick();
+        qs.sort();
         double endQS = (System.nanoTime() - startQS) / 1e9;
         System.out.println(app.isAscending(arr) + " " + endQS);
 

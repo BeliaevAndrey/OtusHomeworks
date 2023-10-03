@@ -7,14 +7,14 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Random;
 
-public class ExternalSortTwoFiles {
+public class ExternalSortES2 {
     int mergeCalls = 0;
 
     String dataPath = "HomeWork008/dataES2";
 
 
     public static void main(String[] args) {
-        ExternalSortTwoFiles esb = new ExternalSortTwoFiles();
+        ExternalSortES2 esb = new ExternalSortES2();
         String srcFilename = "randFile.txt";
         String bufferA = "bufferA.txt";
         String bufferB = "bufferB.txt";
@@ -101,7 +101,6 @@ public class ExternalSortTwoFiles {
             String line = brCurrent.readLine();
             int flag = Integer.parseInt(line);
             while ((line = brCurrent.readLine()) != null) {
-//                System.out.println(line);
                 int num = Integer.parseInt(line);
                 if (num <= flag) {
                     bw.append(String.valueOf(num)).append("\n");

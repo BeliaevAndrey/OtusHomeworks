@@ -7,16 +7,11 @@ public class BST {
     int[] sorted;
     int index;
     int len;
-//    boolean isSorted = false;
 
     public BST() {
         root = null;
     }
 
-//    public void initAndSort(int len) {
-//        this.len = len;
-//        sort();
-//    }
 
     public void init(int[] array) {
         for (int e : array) {
@@ -25,17 +20,14 @@ public class BST {
     }
 
     public void sort() {
-        this.sorted = new int[len];
         this.index = 0;
         this.sorted = new int[len];
         dfs(root);
-//        isSorted = true;
     }
 
     public void insert(int key) {
         root = insert(root, key);
         this.len++;
-//        this.isSorted = false;
         this.sorted = null;
     }
 
@@ -129,15 +121,15 @@ public class BST {
             root.L.R = root.R;
             root = root.L;
         } else if (root.R != null && root.R.L == null) {
-            root.R.L = root.L;
-            root = root.L;
+            if (root.L != null) {
+                root.R.L = root.L;
+                root = root.L;
+            }
+            else root = root.R;
         } else {
-
             Node node;
             if (root.L != null) {
                 node = root.L;
-
-
                 Node parent = node;
                 while (node.R != null) {
                     parent = node;

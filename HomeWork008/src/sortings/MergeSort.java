@@ -1,7 +1,7 @@
 package sortings;
 
 
-public class MergeSort {
+public class MergeSort implements ISorter{
     int[] arr;
     int N;
 
@@ -11,7 +11,7 @@ public class MergeSort {
         N = array.length;
     }
 
-    public void mergeSort() {
+    public void sort() {
         mSort(0, arr.length - 1);
     }
 
@@ -23,7 +23,7 @@ public class MergeSort {
         merge(L, M, R);
     }
 
-    void merge(int L, int M, int R) {
+    private void merge(int L, int M, int R) {
         int[] T = new int[R - L + 1];
         int a = L;
         int b = M + 1;

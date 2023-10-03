@@ -1,6 +1,6 @@
 package sortings;
 
-public class QuickSort {
+public class QuickSort implements ISorter{
 
 
     int[] arr;
@@ -11,7 +11,7 @@ public class QuickSort {
         N = array.length;
     }
 
-    public void quick() {
+    public void sort() {
         qSort(0, N - 1);
     }
 

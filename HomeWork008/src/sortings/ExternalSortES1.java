@@ -6,16 +6,16 @@ import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 import java.util.Random;
 
-public class ExternalSortMultipleFiles {
+public class ExternalSortES1 {
 
     int maxValue = Integer.MIN_VALUE;
     int minValue = Integer.MAX_VALUE;
 
-    String dataPath = "HomeWork008/data";
+    String dataPath = "HomeWork008/dataES1";
 
 
     public static void main(String[] args) {
-        ExternalSortMultipleFiles esa = new ExternalSortMultipleFiles();
+        ExternalSortES1 esa = new ExternalSortES1();
 
         int N = 1000;
         int T = 100000;
