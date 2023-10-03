@@ -27,7 +27,7 @@ public class ExternalSortES2 {
         esb.distribution(bufferA, bufferB, srcFilename);
     }
 
-    void distribution(String leftFilename, String rightFilename, String fileSrc) {
+    private void distribution(String leftFilename, String rightFilename, String fileSrc) {
 
         Path source = Path.of(dataPath, fileSrc);
         Path left = Path.of(dataPath, leftFilename);
@@ -76,7 +76,7 @@ public class ExternalSortES2 {
         mergeFiles(leftFilename, rightFilename);
     }
 
-    void mergeFiles(String leftFilename, String rightFilename) {
+    private void mergeFiles(String leftFilename, String rightFilename) {
         mergeCalls++;
         Path dest = Path.of(dataPath, "bufferC.txt");
         Path left = Path.of(dataPath, leftFilename);
@@ -133,7 +133,7 @@ public class ExternalSortES2 {
         distribution(leftFilename, rightFilename, "bufferC.txt");
     }
 
-    void writeResults(boolean keepBuffers) {
+    private void writeResults() {
         Path rstSource = Path.of(dataPath, "bufferC.txt");
         Path rstDest = Path.of(dataPath, "results.txt");
 
@@ -144,7 +144,6 @@ public class ExternalSortES2 {
             e.printStackTrace();
         }
 
-        if (keepBuffers) return;
 
         try {
             Files.deleteIfExists(Path.of(dataPath, "bufferA.txt"));
@@ -154,10 +153,9 @@ public class ExternalSortES2 {
         }
     }
 
-    void writeResults() {
-        writeResults(false);
+    boolean fileCheck(String fileName) {
+        return Files.exists(Path.of(dataPath, fileName));
     }
-
 
     void functionNT(int N, int T) {
         try (BufferedWriter bw = new BufferedWriter(
@@ -173,11 +171,6 @@ public class ExternalSortES2 {
             e.printStackTrace();
             throw new RuntimeException(e);
         }
-    }
-
-
-    boolean fileCheck(String fileName) {
-        return Files.exists(Path.of(dataPath, fileName));
     }
 
 }

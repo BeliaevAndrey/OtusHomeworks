@@ -50,7 +50,7 @@ public class ExternalSortES1 {
         fos.close();
     }
 
-    void numbersSeparation(String fileName) throws IOException {
+    private void numbersSeparation(String fileName) throws IOException {
         String fileIn = Path.of(dataPath, fileName).toString();
         FileInputStream fis = new FileInputStream(fileIn);
         BufferedReader br = new BufferedReader(new InputStreamReader(fis));
@@ -72,7 +72,7 @@ public class ExternalSortES1 {
         br.close();
     }
 
-    void mergeFiles() throws IOException {
+    private void mergeFiles() throws IOException {
         Path resultFile = Path.of(dataPath, "result.txt");
         FileOutputStream fos = new FileOutputStream(resultFile.toString());
         for (int i = minValue; i <= maxValue; i++) {
@@ -87,7 +87,7 @@ public class ExternalSortES1 {
         fos.close();
     }
 
-    boolean checkPath() {
+    private boolean checkPath() {
         if (Files.exists(Path.of(dataPath)))
             return true;
         try {
