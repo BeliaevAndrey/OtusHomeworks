@@ -7,7 +7,7 @@ import util.ViewSvc;
 
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.TreeMap;
+
 
 public class ESSimpleTests {
 
@@ -17,7 +17,7 @@ public class ESSimpleTests {
         ESSimpleTests ess = new ESSimpleTests();
         ess.results = new HashMap<>();
 
-        for (int N = 100; N < 1e6; N *= 10)
+        for (int N = 100; N <= 1e6; N *= 10)
             for (int T = 10; T <= N; T += N - 10)
                 ess.results.put(String.format("(%d, %d)", N, T), new HashMap<>());
 
@@ -43,7 +43,7 @@ public class ESSimpleTests {
         }
 
         files.keySet().stream().sorted().forEach(key -> {
-            System.out.println("ES1: " + key);
+            System.out.println("\nES1: " + key);
             String fileName = files.get(key);
             String outFile = fileName.replace("src", "rst");
             sortES1.init(fileName, outFile);
@@ -61,7 +61,7 @@ public class ESSimpleTests {
         String dataPath = "HomeWork008/dataES2";
         HashMap<String, String> files = new HashMap<>();
         ExternalSortES2 sortES2 = new ExternalSortES2();
-        for (int N = 100; N <= 1e4; N *= 10) {      // 'java.lang.StackOverflowError' when upper limit >= 1e5
+        for (int N = 100; N <= 1e5; N *= 10) {      // 'java.lang.StackOverflowError' when upper limit >= 1e5
             for (int T = 10; T <= N; T += N - 10) {
                 FunctionNT fnt = new FunctionNT();
                 String fileName = String.format("srcES2_N_%07d_T_%07d.txt", N, T);
@@ -72,7 +72,7 @@ public class ESSimpleTests {
         }
 
         files.keySet().stream().sorted().forEach(key -> {
-            System.out.println("ES2: " + key);
+            System.out.println("\nES2: " + key);
             String fileName = files.get(key);
             String outFile = fileName.replace("src", "rst");
             sortES2.init(fileName, outFile);
@@ -91,7 +91,7 @@ public class ESSimpleTests {
         String dataPath = "HomeWork008/dataES3";
         HashMap<String, String> files = new HashMap<>();
         ExternalSortES3 sortES3 = new ExternalSortES3();
-        for (int N = 100; N <= 1e5; N *= 10) {
+        for (int N = 100; N <= 1e6; N *= 10) {
             for (int T = 10; T <= N; T += N - 10) {
                 FunctionNT fnt = new FunctionNT();
                 String fileName = String.format("srcES3_N_%07d_T_%07d.txt", N, T);
@@ -102,7 +102,7 @@ public class ESSimpleTests {
         }
 
         files.keySet().stream().sorted().forEach(key -> {
-            System.out.println("ES3: " + key);
+            System.out.println("\nES3: " + key);
             String fileName = files.get(key);
             String outFile = fileName.replace("src", "rst");
             sortES3.init(fileName, outFile);

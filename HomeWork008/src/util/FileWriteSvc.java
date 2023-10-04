@@ -40,12 +40,15 @@ public class FileWriteSvc {
     private static String makeString(HashMap<String, HashMap<String, Double>> results) {
         StringBuilder sb = new StringBuilder();
         sb.append("(N, T),ES1,ES2,ES3\n");
+        String[] sorters = new String[]{"ES1", "ES2", "ES3"};
+
         results.keySet().stream().sorted().forEach(key -> {
             sb.append(key).append(",");
-            for (String sorter : results.get(key).keySet())
+            for (String sorter : sorters)
                 sb.append(results.get(key).get(sorter)).append(",");
             sb.replace(sb.length() - 1, sb.length(), "\n");
         });
+
         return sb.toString();
     }
 

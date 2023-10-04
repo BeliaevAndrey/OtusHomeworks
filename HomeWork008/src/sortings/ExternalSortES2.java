@@ -8,7 +8,7 @@ import java.nio.file.Path;
 
 public class ExternalSortES2 {
 
-    int mergeCalls = 0;
+    int mergeCalls;
     String dataPath = "HomeWork008/dataES2";
     String srcFilename;
     String dstFilename;
@@ -16,6 +16,7 @@ public class ExternalSortES2 {
     public void init(String srcFilename, String dstFilename) {
         this.srcFilename = srcFilename;
         this.dstFilename = dstFilename;
+        mergeCalls = 0;
         delBufferFiles();
     }
 
@@ -49,10 +50,10 @@ public class ExternalSortES2 {
                 if (flag >= num) {
                     last = num;
                     bw.append(String.valueOf(num)).append("\n");
-                    bw.flush();
+//                    bw.flush();
                 } else {
                     bw.append(String.valueOf(flag)).append("\n");
-                    bw.flush();
+//                    bw.flush();
 
                     last = flag;
                     flag = num;

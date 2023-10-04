@@ -9,7 +9,7 @@ import java.nio.file.StandardOpenOption;
 
 
 public class ExternalSortES3 {
-    int mergeCalls = 0;
+    int mergeCalls;
     int buffLen = 100;  // pre-sort buffer length
 
     String dataPath = "HomeWork008/dataES3";
@@ -19,6 +19,7 @@ public class ExternalSortES3 {
     public void init(String srcFilename, String dstFilename) {
         this.srcFilename = srcFilename;
         this.dstFilename = dstFilename;
+        mergeCalls = 0;
         delBufferFiles();
     }
 
@@ -123,6 +124,7 @@ public class ExternalSortES3 {
                 if (num < last) {
                     dstSw = (dstSw + 1) % 2;
                     bw = dstSw == 0 ? bwLft : bwRgt;
+                    bw.flush();
                 }
                 if (num <= flag) {
                     bw.append(String.valueOf(num)).append("\n");
@@ -133,7 +135,6 @@ public class ExternalSortES3 {
                     srcSw = (srcSw + 1) % 2;
                     br = srcSw == 0 ? brLft : brRgt;
                 }
-                bw.flush();
             }
             bw.append(String.valueOf(flag)).append("\n");
             bw.flush();
