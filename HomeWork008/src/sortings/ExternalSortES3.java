@@ -6,26 +6,20 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
-import java.util.Random;
 
 
 public class ExternalSortES3 {
-
+    int mergeCalls = 0;
     int buffLen = 100;  // pre-sort buffer length
 
     String dataPath = "HomeWork008/dataES3";
     String srcFilename;
+    String dstFilename;
 
-    public void init(String filename) {
-        srcFilename = filename;
-        int N = (int) 5e3;
-        int T = 10000;
-        if (!fileCheck(srcFilename)) {
-            functionNT(N, T);
-//            System.out.println("File not found!");
-//            return;
-        }
-
+    public void init(String srcFilename, String dstFilename) {
+        this.srcFilename = srcFilename;
+        this.dstFilename = dstFilename;
+        delBufferFiles();
     }
 
     public void sort() {
@@ -43,8 +37,8 @@ public class ExternalSortES3 {
         Path rgtDst = Path.of(dataPath, "rgt_" + fileDst);
 
         try (BufferedReader br = Files.newBufferedReader(source);
-             BufferedWriter bwLft = Files.newBufferedWriter(lftDst, StandardOpenOption.CREATE); //, StandardOpenOption.APPEND);
-             BufferedWriter bwRgt = Files.newBufferedWriter(rgtDst, StandardOpenOption.CREATE) //, StandardOpenOption.APPEND);
+             BufferedWriter bwLft = Files.newBufferedWriter(lftDst, StandardOpenOption.CREATE);
+             BufferedWriter bwRgt = Files.newBufferedWriter(rgtDst, StandardOpenOption.CREATE)
         ) {
             int fileSw = 0;
             BufferedWriter bw = bwLft;
@@ -71,7 +65,9 @@ public class ExternalSortES3 {
     }
 
     private void mergeFiles(String leftFileIn, String rightFileIn, String leftFileOut, String rightFileOut) {
-
+        mergeCalls++;
+        if (mergeCalls % 100 == 0) System.out.print(" ES3 " + mergeCalls);
+        if (mergeCalls % 800 == 0) System.out.println();
         Path lftSrc = Path.of(dataPath, leftFileIn);
         Path rgtSrc = Path.of(dataPath, rightFileIn);
 
@@ -165,7 +161,7 @@ public class ExternalSortES3 {
     }
 
     private void writeResults(Path rstSource) {
-        Path rstDest = Path.of(dataPath, "results.txt");
+        Path rstDest = Path.of(dataPath, dstFilename);
 
         try {
             Files.deleteIfExists(rstDest);
@@ -173,7 +169,15 @@ public class ExternalSortES3 {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        delBufferFiles();
+    }
 
+
+    private boolean fileCheck(String fileName) {
+        return Files.exists(Path.of(dataPath, fileName));
+    }
+
+    private void delBufferFiles() {
         try {
             Files.deleteIfExists(Path.of(dataPath, "bufferA.txt"));
             Files.deleteIfExists(Path.of(dataPath, "bufferB.txt"));
@@ -185,53 +189,4 @@ public class ExternalSortES3 {
         }
     }
 
-
-    private boolean fileCheck(String fileName) {
-        return Files.exists(Path.of(dataPath, fileName));
-    }
-
-
-    /*Utility section*/
-
-    void functionNT(int N, int T) {
-        try (BufferedWriter bw = new BufferedWriter(
-                Files.newBufferedWriter(
-                        Path.of(dataPath, "randFile.txt")))
-        ) {
-            Random rnd = new Random();
-            for (int i = 0; i < N; i++) {
-                bw.append(String.valueOf(rnd.nextInt(T))).append("\n");
-            }
-            bw.flush();
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw new RuntimeException(e);
-        }
-    }
-
-    void functionNTLinearMixed(int N) {
-        Random rnd = new Random();
-        StringBuilder sb = new StringBuilder();
-        int[] arr = new int[N];
-
-        for (int i = 0; i < N; i++) {
-            arr[i] = i;
-        }
-        for (int i = 0; i < N; i++) {
-            int k = i + rnd.nextInt(N - i);
-            int x = arr[i];
-            arr[i] = arr[k];
-            arr[k] = x;
-            sb.append(arr[i]).append(i < N - 1 ? "\n" : "");
-        }
-        try (BufferedWriter bw = new BufferedWriter(
-                Files.newBufferedWriter(
-                        Path.of(dataPath, "randFile.txt")))) {
-            bw.write(sb.toString());
-            bw.flush();
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw new RuntimeException(e);
-        }
-    }
 }

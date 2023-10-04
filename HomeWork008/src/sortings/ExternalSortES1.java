@@ -4,7 +4,7 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
-import java.util.Random;
+
 
 public class ExternalSortES1 {
 
@@ -12,46 +12,27 @@ public class ExternalSortES1 {
     int minValue = Integer.MAX_VALUE;
 
     String dataPath = "HomeWork008/dataES1";
+    String srcFilename;
+    String dstFilename;
 
+    public void init(String srcFilename, String dstFilename) {
+        this.srcFilename = srcFilename;
+        this.dstFilename = dstFilename;
+    }
 
-    public static void main(String[] args) {
-        ExternalSortES1 esa = new ExternalSortES1();
-
-        int N = 1000;
-        int T = 100000;
-
-        if (!esa.checkPath()) return;
-
+    public void sort() {
         try {
-            esa.functionNT(N, T);
-            esa.numbersSeparation("randFile.txt");
+            numbersSeparation();
+            mergeFiles();
         } catch (IOException e) {
             e.printStackTrace();
-        }
-        System.out.printf("min=%d max=%d", esa.minValue, esa.maxValue);
-        try {
-            esa.mergeFiles();
-        } catch (IOException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
 
 
-    void functionNT(int N, int T) throws IOException {
-        FileOutputStream fos = new FileOutputStream(
-                Path.of(dataPath, "randFile.txt").toString());
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos));
-        Random rnd = new Random();
-        for (int i = 0; i < N; i++) {
-            bw.append(String.valueOf(rnd.nextInt(T))).append("\n");
-        }
-        bw.flush();
-        bw.close();
-        fos.close();
-    }
-
-    private void numbersSeparation(String fileName) throws IOException {
-        String fileIn = Path.of(dataPath, fileName).toString();
+    private void numbersSeparation() throws IOException {
+        String fileIn = Path.of(dataPath, srcFilename).toString();
         FileInputStream fis = new FileInputStream(fileIn);
         BufferedReader br = new BufferedReader(new InputStreamReader(fis));
         String line;
@@ -73,7 +54,7 @@ public class ExternalSortES1 {
     }
 
     private void mergeFiles() throws IOException {
-        Path resultFile = Path.of(dataPath, "result.txt");
+        Path resultFile = Path.of(dataPath, dstFilename);
         FileOutputStream fos = new FileOutputStream(resultFile.toString());
         for (int i = minValue; i <= maxValue; i++) {
             Path fileName = Path.of(dataPath, i + ".txt");

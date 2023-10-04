@@ -5,26 +5,24 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Random;
 
 public class ExternalSortES2 {
+
     int mergeCalls = 0;
-
     String dataPath = "HomeWork008/dataES2";
+    String srcFilename;
+    String dstFilename;
 
+    public void init(String srcFilename, String dstFilename) {
+        this.srcFilename = srcFilename;
+        this.dstFilename = dstFilename;
+        delBufferFiles();
+    }
 
-    public static void main(String[] args) {
-        ExternalSortES2 esb = new ExternalSortES2();
-        String srcFilename = "randFile.txt";
+    public void sort() {
         String bufferA = "bufferA.txt";
         String bufferB = "bufferB.txt";
-
-        if (!esb.fileCheck(srcFilename)) {
-            int N = (int) 1e3;
-            int T = 10000;
-            esb.functionNT(N, T);
-        }
-        esb.distribution(bufferA, bufferB, srcFilename);
+        distribution(bufferA, bufferB, srcFilename);
     }
 
     private void distribution(String leftFilename, String rightFilename, String fileSrc) {
@@ -68,16 +66,13 @@ public class ExternalSortES2 {
             throw new RuntimeException(e);
         }
 
-        if (mergeCalls > 2100) {
-            System.out.printf("%d TOO MUCH merge recalls", mergeCalls);
-            return;
-        }
-
         mergeFiles(leftFilename, rightFilename);
     }
 
     private void mergeFiles(String leftFilename, String rightFilename) {
         mergeCalls++;
+        if (mergeCalls % 100 == 0) System.out.print(" ES2 " + mergeCalls);
+        if (mergeCalls % 800 == 0) System.out.println();
         Path dest = Path.of(dataPath, "bufferC.txt");
         Path left = Path.of(dataPath, leftFilename);
         Path right = Path.of(dataPath, rightFilename);
@@ -135,7 +130,7 @@ public class ExternalSortES2 {
 
     private void writeResults() {
         Path rstSource = Path.of(dataPath, "bufferC.txt");
-        Path rstDest = Path.of(dataPath, "results.txt");
+        Path rstDest = Path.of(dataPath, dstFilename);
 
         try {
             Files.deleteIfExists(rstDest);
@@ -143,30 +138,19 @@ public class ExternalSortES2 {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
-        try {
-            Files.deleteIfExists(Path.of(dataPath, "bufferA.txt"));
-            Files.deleteIfExists(Path.of(dataPath, "bufferB.txt"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        delBufferFiles();
     }
 
     boolean fileCheck(String fileName) {
         return Files.exists(Path.of(dataPath, fileName));
     }
 
-    void functionNT(int N, int T) {
-        try (BufferedWriter bw = new BufferedWriter(
-                Files.newBufferedWriter(
-                        Path.of(dataPath, "randFile.txt")))
-        ) {
-            Random rnd = new Random();
-            for (int i = 0; i < N; i++) {
-                bw.append(String.valueOf(rnd.nextInt(T))).append("\n");
-            }
-            bw.flush();
+
+    private void delBufferFiles() {
+        try {
+            Files.deleteIfExists(Path.of(dataPath, "bufferA.txt"));
+            Files.deleteIfExists(Path.of(dataPath, "bufferB.txt"));
+            Files.deleteIfExists(Path.of(dataPath, "bufferC.txt"));
         } catch (IOException e) {
             e.printStackTrace();
             throw new RuntimeException(e);
