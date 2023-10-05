@@ -45,16 +45,4 @@ public class MergeSort implements ISorter{
         }
     }
 
-    public boolean isAscending() {
-        boolean flag = true;
-        for (int i = 1; i < arr.length; i++) {
-            String format = "%5s%5s%12s%12s\n";
-            if (arr[i - 1] > arr[i]) {
-                if (flag) System.out.printf(format, "i - 1", "i", "arr[i-1]", "arr[i]");
-                System.out.printf(format, (i - 1), i, arr[i - 1], arr[i]);
-                flag = false;
-            }
-        }
-        return flag;
-    }
 }

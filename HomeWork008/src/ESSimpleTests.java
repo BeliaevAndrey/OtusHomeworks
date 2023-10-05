@@ -24,7 +24,7 @@ public class ESSimpleTests {
         ess.checkES1();
         ess.checkES3();
         ess.checkES2();
-        FileWriteSvc.writeTreeMap(ess.results, "ExternalSortsTestResults.csv");
+        FileWriteSvc.writeHashMap(ess.results, "ExternalSortsTestResults.csv");
     }
 
     void checkES1() {
