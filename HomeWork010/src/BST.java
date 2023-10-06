@@ -1,6 +1,3 @@
-import java.util.Arrays;
-
-
 public class BST {
 
     Node root;
@@ -35,9 +32,8 @@ public class BST {
         if (node == null) {
             return new Node(key);
         }
-        if (key < node.key) {
+        if (key < node.key)
             node.L = insert(node.L, key);
-        }
         if (key > node.key)
             node.R = insert(node.R, key);
         return node;
@@ -64,108 +60,96 @@ public class BST {
         dfs(node.R);
     }
 
-    public void remove(int x) {
-        Node nodeToRm = search(root, x);
-        if (nodeToRm == null) return;
 
-        if (nodeToRm == root) {
+    void remove(int x) {
+        Node node = search(root, x);
+        if (node == null) return;
+        Node parent = searchParent(root, node);
+        if (parent == null) {
             removeRoot();
-        } else {
-            if (nodeToRm.isLeaf()) {
-                Node parent = searchParent(root, nodeToRm);
-                removeNode(nodeToRm, parent);
-            } else if (nodeToRm.L == null) {
-                Node parent = searchParent(root, nodeToRm);
-                removeNode(nodeToRm, parent);
-            } else if (nodeToRm.R == null) {
-                Node parent = searchParent(root, nodeToRm);
-                removeNode(nodeToRm, parent);
-            } else if (nodeToRm.L != null) {
-                if (nodeToRm.L.isLeaf()) {
-                    nodeToRm.key = nodeToRm.L.key;
-                    nodeToRm.L = null;
-                } else {
-                    Node node = nodeToRm.L;
-                    Node parent = nodeToRm;
-                    while (node.R != null) {
-                        parent = node;
-                        node = node.R;
-                    }
-                    nodeToRm.key = node.key;
-                    removeNode(node, parent);
-                }
-            } else if (nodeToRm.R != null) {
-                if (nodeToRm.R.isLeaf()) {
-                    nodeToRm.key = nodeToRm.R.key;
-                    nodeToRm.R = null;
-                } else {
-                    Node node = nodeToRm.R;
-                    Node parent = nodeToRm;
-                    while (node.L != null) {
-                        parent = node;
-                        node = node.L;
-                    }
-                    nodeToRm.key = node.key;
-                    removeNode(node, parent);
-                }
-            }
-        }
+        } else
+            removeNode(parent, node);
         this.len--;
         this.sorted = null;
     }
 
-    private void removeRoot() {
-        if (root.isLeaf()) {
+    Node searchParent(Node startNode, Node endNode) {
+        if (startNode.L == null && startNode.R == null) return null;
+        if (startNode.L != null) {
+            if (startNode.L == endNode) return startNode;
+            if (startNode.key > endNode.key) return searchParent(startNode.L, endNode);
+        }
+        if (startNode.R != null) {
+            if (startNode.R == endNode) return startNode;
+            if (startNode.key < endNode.key) return searchParent(startNode.R, endNode);
+        }
+        return null;
+    }
+
+    void removeRoot() {
+        if (root.L == null && root.R == null) {
             root = null;
-        } else if (root.L != null && root.L.R == null) {
-            root.L.R = root.R;
+            return;
+        }
+        if (root.L == null) {
+            root = root.R;
+            return;
+        }
+        if (root.R == null) {
             root = root.L;
-        } else if (root.R != null && root.R.L == null) {
-            if (root.L != null) {
-                root.R.L = root.L;
-                root = root.L;
+            return;
+        }
+        if (root.L != null) {
+            Node newRoot = root.L;
+            Node np = root;
+            while (newRoot.R != null) {
+                np = newRoot;
+                newRoot = newRoot.R;
             }
-            else root = root.R;
+            root.key = newRoot.key;
+            np.R = newRoot.L;
         } else {
-            Node node;
-            if (root.L != null) {
-                node = root.L;
-                Node parent = node;
-                while (node.R != null) {
-                    parent = node;
-                    node = node.R;
+            Node newRoot = root.R;
+            Node np = root;
+            while (newRoot.L != null) {
+                np = newRoot;
+                newRoot = newRoot.L;
+            }
+            root.key = newRoot.key;
+            np.L = newRoot.R;
+        }
+    }
+
+    void removeNode(Node parent, Node nodeToRemove) {
+        if (nodeToRemove.L == null && nodeToRemove.R == null)
+            if (nodeToRemove == parent.L) parent.L = null;
+            else parent.R = null;
+        else {
+            if (nodeToRemove.L != null) {
+                Node newNode = nodeToRemove.L;
+                Node np = nodeToRemove;
+                while (newNode.R != null) {
+                    np = newNode;
+                    newNode = newNode.R;
                 }
-                root.key = node.key;
-                removeNode(node, parent);
-            } else root = root.R;
+                nodeToRemove.key = newNode.key;
+                if (np.R == newNode)
+                    np.R = newNode.L;
+                else np.L = newNode.L;
+            } else {
+                Node newNode = nodeToRemove.R;
+                Node np = nodeToRemove;
+                while (newNode.L != null) {
+                    np = newNode;
+                    newNode = newNode.L;
+                }
+                nodeToRemove.key = newNode.key;
+                if (np.L == newNode)
+                    np.L = newNode.R;
+                else np.R = newNode.R;
+            }
         }
     }
-
-
-    private void removeNode(Node nodeToRm, Node parent) {
-        if (parent.R == nodeToRm) {
-            if (nodeToRm.isLeaf())
-                parent.R = null;
-            else if (nodeToRm.R == null) {
-                parent.R = nodeToRm.L;
-            } else parent.R = nodeToRm.R;
-        } else if (parent.L == nodeToRm) {
-            if (nodeToRm.isLeaf())
-                parent.L = null;
-            else if (nodeToRm.R == null) {
-                parent.L = nodeToRm.L;
-            } else parent.L = nodeToRm.R;
-        }
-    }
-
-    private Node searchParent(Node start, Node searched) {
-        if ((start.L != null && start.L == searched) ||
-                (start.R != null && start.R == searched)) return start;
-        else if (start.R != null && searched.key > start.key) return searchParent(start.R, searched);
-        else if (start.L != null && searched.key < start.key) return searchParent(start.L, searched);
-        else return null;
-    }
-
 
     public int[] getSorted() {
         if (this.sorted == null)
@@ -173,19 +157,9 @@ public class BST {
         return sorted;
     }
 
-    public int getLen() {
-        return len;
-    }
-
-    public String getSortedString() {
-        if (this.sorted != null)
-            return Arrays.toString(this.sorted);
-        return "Not sorted yet";
-    }
-
     static class Node {
         int key;
-        Node L, R;
+        BST.Node L, R;
 
         public Node(int key) {
             this.key = key;
@@ -196,7 +170,6 @@ public class BST {
         boolean isLeaf() {
             return L == null && R == null;
         }
-
     }
 
 }
