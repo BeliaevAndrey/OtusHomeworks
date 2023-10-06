@@ -42,7 +42,7 @@ public class BSTSimpleTests {
     void startTesting(BST tree, int[] arr, String treeName) {
 
         testInit(tree, arr, treeName);
-        
+
         long start = System.nanoTime();
         int[] sortedTree = tree.getSorted();
         double getSortedTime = (System.nanoTime() - start) / 1e9;
