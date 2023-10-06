@@ -7,7 +7,7 @@ public class App010 {
     public static void main(String[] args) {
         BST bst1 = new BST();
 //        BST bst2 = new BST();
-        int length1 = (int) 1e2;
+        int length1 = (int) 1e6;
 //        int length2 = (int) 1e6;
 
         int[] arr1 = setShuffle(length1);

@@ -1,9 +1,9 @@
 public class BST {
 
-    Node root;
-    int[] sorted;
-    int index;
-    int len;
+    private Node root;
+    private int[] sorted;
+    private int index;
+    private int len;
 
     public BST() {
         root = null;
@@ -61,7 +61,7 @@ public class BST {
     }
 
 
-    void remove(int x) {
+    public void remove(int x) {
         Node node = search(root, x);
         if (node == null) return;
         Node parent = searchParent(root, node);
@@ -73,7 +73,7 @@ public class BST {
         this.sorted = null;
     }
 
-    Node searchParent(Node startNode, Node endNode) {
+    private Node searchParent(Node startNode, Node endNode) {
         if (startNode.L == null && startNode.R == null) return null;
         if (startNode.L != null) {
             if (startNode.L == endNode) return startNode;
@@ -86,7 +86,7 @@ public class BST {
         return null;
     }
 
-    void removeRoot() {
+    private void removeRoot() {
         if (root.L == null && root.R == null) {
             root = null;
             return;
@@ -120,7 +120,7 @@ public class BST {
         }
     }
 
-    void removeNode(Node parent, Node nodeToRemove) {
+    private void removeNode(Node parent, Node nodeToRemove) {
         if (nodeToRemove.L == null && nodeToRemove.R == null)
             if (nodeToRemove == parent.L) parent.L = null;
             else parent.R = null;
@@ -155,6 +155,10 @@ public class BST {
         if (this.sorted == null)
             this.sort();
         return sorted;
+    }
+
+    public int getLen() {
+        return len;
     }
 
     static class Node {

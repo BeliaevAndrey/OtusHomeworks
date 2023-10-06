@@ -1,0 +1,10 @@
+Array type,Shuffle,Ascending
+Array length,50000000,1000000
+Fill Time (s),65.349746287,0.330892763
+GetSorted Time (s),2.823905106,0.03749384
+GetSorted Check,true,true
+Insert Time (s),4.32331844,17.370098802
+Search Time (s),2.846847218,11.07555476
+Search Check,true,true
+Remove Time (s),3.805755643,0.003091445
+Check,true,true
