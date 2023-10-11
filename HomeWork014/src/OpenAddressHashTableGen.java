@@ -14,10 +14,17 @@ public class OpenAddressHashTableGen<T, E> {
         int kh = getKeyHash(key);
         int i = 0;
         int address = getAddress(kh, i);
-        while (slots[address] != null) address = getAddress(kh, ++i);
+        while (slots[address] != null) {
+            if (slots[address].key.equals(key)) {
+                slots[address].value = value;
+                if (slots[address].isStub()) slots[address].stub = false;
+                return;
+            }
+            address = getAddress(kh, ++i);
+        }
         slots[address] = new OANode<>(key, value);
         length++;
-        if (length > slots.length / 2) rehash();
+        if (length > (slots.length >> 1)) rehash();
     }
 
     public E get(T key) {
@@ -25,13 +32,22 @@ public class OpenAddressHashTableGen<T, E> {
         int i = 0;
         int address = getAddress(kh, i);
         while (slots[address] != null) {
-            if (slots[address].key.equals(key)) return slots[address].value;
+            if (slots[address].key.equals(key)) {
+                return slots[address].isStub() ? null : slots[address].value;
+            }
             address = getAddress(kh, ++i);
         }
         return null;
     }
 
-    public void remove(int key) {
+    public void remove(T key) {
+        int kh = getKeyHash(key);
+        int i = 0;
+        int address = getAddress(kh, i);
+        while (slots[address] != null) {
+            if (slots[address].key.equals(key)) slots[address] = new OANode<>(key);
+            address = getAddress(kh, ++i);
+        }
     }
 
     private void rehash() {
@@ -39,7 +55,7 @@ public class OpenAddressHashTableGen<T, E> {
         OANode<T, E>[] oldSlots = slots;
         slots = new OANode[slots.length * 2 + 1];
         for (OANode<T, E> node : oldSlots)
-            if (node!= null)
+            if (node != null && !node.isStub())
                 put(node.key, node.value);
     }
 
@@ -49,17 +65,28 @@ public class OpenAddressHashTableGen<T, E> {
 
     private int getKeyHash(T key) {
         int hk = Objects.hashCode(key);
-        return hk >0 ? hk : -hk;
+        return hk > 0 ? hk : -hk;
     }
 
 
     static class OANode<T, E> {
-        T key;
-        E value;
+        private final T key;
+        private E value;
+        private boolean stub;
 
         public OANode(T key, E value) {
             this.key = key;
             this.value = value;
+            stub = false;
+        }
+
+        public OANode(T key) {
+            this.key = key;
+            this.stub = true;
+        }
+
+        public boolean isStub() {
+            return stub;
         }
     }
 
