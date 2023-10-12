@@ -13,6 +13,7 @@ public class OpenAddressHashTableGen<T, E> {
     public void put(T key, E value) {
         int kh = getKeyHash(key);
         int i = 0;
+        int reserve = -1;
         int address = getAddress(kh, i);
         while (slots[address] != null) {
             if (slots[address].key.equals(key)) {
@@ -20,9 +21,10 @@ public class OpenAddressHashTableGen<T, E> {
                 if (slots[address].isStub()) slots[address].stub = false;
                 return;
             }
+            if (slots[address].isStub() && reserve < 0) reserve = address;
             address = getAddress(kh, ++i);
         }
-        slots[address] = new OANode<>(key, value);
+        slots[reserve > 0 ? reserve : address] = new OANode<>(key, value);
         length++;
         if (length > (slots.length >> 1)) rehash();
     }

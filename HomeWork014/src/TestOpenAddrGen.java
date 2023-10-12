@@ -26,7 +26,7 @@ public class TestOpenAddrGen {
         for (int i = 0; i < wordPack.length; i++) {
             String key = String.format("%08d", ((long) i * i + 17));
             String word = oaht.get(key);
-            if (!word.equals(wordPack[i])) System.out.println("FAIL: " + key + " " + i);;
+            if (!word.equals(wordPack[i])) System.out.println("FAIL: " + key + " " + i);
         }
         double endGet = (System.nanoTime() - startGet) / 1e9;
 
@@ -44,10 +44,11 @@ public class TestOpenAddrGen {
         for (int i = 0; i < wordPack.length; i++) {
             String key = String.format("%08d", i * i + 17);
             String word = oaht.get(key);
-            System.out.print(key + " " + i + " " + word + " == ");
-            System.out.print(wordPack[i] + " ");
+            System.out.print(key + " " + i + " " + word + " == " + wordPack[i] + " -> ");
             System.out.println(word.equals(wordPack[i]));
         }
+
+        System.out.println();
 
         for (int i = 15; i <= 20; i++) {
             String key = String.format("%08d", i * i + 17);
