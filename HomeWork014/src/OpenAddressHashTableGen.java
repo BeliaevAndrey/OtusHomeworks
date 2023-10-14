@@ -1,14 +1,27 @@
 import java.util.Objects;
 
+
 public class OpenAddressHashTableGen<T, E> {
 
     OANode<T, E>[] slots;
     int length;
 
+    boolean flag = false;  // For quadratic probing
     public OpenAddressHashTableGen() {
         this.slots = new OANode[11];
         length = 0;
     }
+
+    /*
+    * Quadratic probing equation:
+    * hash(k)=(hash′(k)+ (−1)^i * i^2) mod M, M≡3 mod 4
+    * */
+    public OpenAddressHashTableGen(boolean flag) {     // For quadratic probing
+        this.slots = new OANode[11];
+        length = 0;
+        this.flag = flag;
+    }
+
 
     public void put(T key, E value) {
         int kh = getKeyHash(key);
@@ -55,14 +68,28 @@ public class OpenAddressHashTableGen<T, E> {
     private void rehash() {
         length = 0;
         OANode<T, E>[] oldSlots = slots;
-        slots = new OANode[slots.length * 2 + 1];
+        if (flag)           // For quadratic probing
+            slots = new OANode[calcNewLen()];
+        else                // For linear probing
+            slots = new OANode[oldSlots.length * 2 + 1];
         for (OANode<T, E> node : oldSlots)
             if (node != null && !node.isStub())
                 put(node.key, node.value);
     }
 
     private int getAddress(int keyHash, int shift) {
+        if (flag)           // For quadratic probing
+            return (keyHash + (-1 + 2 * (shift & 1)) * (shift * shift)) % slots.length;
         return (keyHash % slots.length + shift) % slots.length;
+    }
+
+
+    // For quadratic probing
+    private int calcNewLen() {
+        int M = slots.length * 2;
+        while (M % 4 != 3)
+            M += 1;
+        return M;
     }
 
     private int getKeyHash(T key) {
