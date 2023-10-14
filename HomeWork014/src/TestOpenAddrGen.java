@@ -1,6 +1,9 @@
 import util.DraftHT;
 
 public class TestOpenAddrGen {
+
+    int testArrLen = (int) 5e7;
+
     public static void main(String[] args) {
         TestOpenAddrGen toag = new TestOpenAddrGen();
         System.out.println("Test put/get, Linear probing: ");
@@ -16,7 +19,7 @@ public class TestOpenAddrGen {
         OpenAddressHashTableGen<String, String> oaht = new OpenAddressHashTableGen<>();
         DraftHT dht = new DraftHT();
 
-        String[] wordPack = dht.getWordPack((int) 5e7);
+        String[] wordPack = dht.getWordPack(testArrLen);
 
         long startPut = System.nanoTime();
         for (int i = 0; i < wordPack.length; i++) {
@@ -39,7 +42,7 @@ public class TestOpenAddrGen {
         OpenAddressHashTableGen<String, String> oaht = new OpenAddressHashTableGen<>(true);
         DraftHT dht = new DraftHT();
 
-        String[] wordPack = dht.getWordPack((int) 5e7);
+        String[] wordPack = dht.getWordPack(testArrLen);
 
         long startPut = System.nanoTime();
         for (int i = 0; i < wordPack.length; i++) {
