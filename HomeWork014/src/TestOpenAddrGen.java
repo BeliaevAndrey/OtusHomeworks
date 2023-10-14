@@ -3,8 +3,10 @@ import util.DraftHT;
 public class TestOpenAddrGen {
     public static void main(String[] args) {
         TestOpenAddrGen toag = new TestOpenAddrGen();
-        System.out.println("Test put/get: ");
+        System.out.println("Test put/get, Linear probing: ");
         toag.testPutGet();
+        System.out.println("Test put/get, Quadratic probing: ");
+        toag.testPutGetQuadratic();
         System.out.println("Test remove: ");
         toag.testRemove();
 
@@ -12,6 +14,29 @@ public class TestOpenAddrGen {
 
     void testPutGet() {
         OpenAddressHashTableGen<String, String> oaht = new OpenAddressHashTableGen<>();
+        DraftHT dht = new DraftHT();
+
+        String[] wordPack = dht.getWordPack((int) 5e7);
+
+        long startPut = System.nanoTime();
+        for (int i = 0; i < wordPack.length; i++) {
+            oaht.put((String.format("%08d", ((long) i * i + 17))), wordPack[i]);
+        }
+        double endPut = (System.nanoTime() - startPut) / 1e9;
+
+        long startGet = System.nanoTime();
+        for (int i = 0; i < wordPack.length; i++) {
+            String key = String.format("%08d", ((long) i * i + 17));
+            String word = oaht.get(key);
+            if (!word.equals(wordPack[i])) System.out.println("FAIL: " + key + " " + i);
+        }
+        double endGet = (System.nanoTime() - startGet) / 1e9;
+
+        System.out.printf("Put time: %f\nGet time: %f\n\n", endPut, endGet);
+    }
+
+    void testPutGetQuadratic() {
+        OpenAddressHashTableGen<String, String> oaht = new OpenAddressHashTableGen<>(true);
         DraftHT dht = new DraftHT();
 
         String[] wordPack = dht.getWordPack((int) 5e7);
