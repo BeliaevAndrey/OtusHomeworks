@@ -2,7 +2,7 @@ import util.DraftHT;
 
 public class TestOpenAddrGen {
 
-    int testArrLen = (int) 5e7;
+    final int testArrLen = (int) 5e7;
 
     public static void main(String[] args) {
         TestOpenAddrGen toag = new TestOpenAddrGen();
