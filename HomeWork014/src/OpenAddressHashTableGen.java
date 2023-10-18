@@ -79,7 +79,7 @@ public class OpenAddressHashTableGen<T, E> {
 
     private int getAddress(int keyHash, int shift) {
         if (flag)           // For quadratic probing
-            return (keyHash + (-1 + 2 * (shift & 1)) * (shift * shift)) % slots.length;
+            return (keyHash + (1 - 2 * (shift & 1)) * (shift * shift)) % slots.length;
         return (keyHash % slots.length + shift) % slots.length;
     }
 
