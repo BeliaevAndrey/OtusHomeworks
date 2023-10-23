@@ -1,47 +1,3 @@
-/*
-
-Splay (расширение)
-Основная операция дерева. Заключается в перемещении вершины в корень при помощи
-последовательного выполнения трёх операций: Zig, Zig-Zig и Zig-Zag.
-Обозначим вершину, которую хотим переместить в корень за x, её родителя — p,
-а родителя p (если существует) — g.
-
-Zig: выполняется, когда p является корнем. Дерево поворачивается по ребру между x и p.
-Существует лишь для разбора крайнего случая и выполняется только один раз в конце,
-когда изначальная глубина x была нечётна.
-
-          P                           X
-        /   \                      /     \
-       X     C    =------>        A       P
-     /   \                              /   \
-    A     B                            B     C
-
-
-Zig-zig
-выполняется, когда и x, и p являются левыми (или правыми) сыновьями. Дерево поворачивается по
-ребру между g и p, а потом — по ребру между p и x.
-
-          G                      X                  X
-        /   \                 /     \             /   \
-       P     D               P       G           A      P
-     /   \        =-->     /  \     /  \   =->        /  \
-    X     C               A    B   C    D            B    G
-  /   \                                                  /  \
- A     B                                                C    D
-
-Zig-Zag: выполняется, когда x является правым сыном, а p — левым (или наоборот).
-Дерево поворачивается по ребру между p и x, а затем — по ребру между x и g.
-
-          G                      X
-        /   \                 /     \
-       P     D               P       G
-     /   \        =-->     /  \     /  \
-    A     X               A    B   C    D
-        /   \
-       C     D
-
-*/
-
 
 public class SplayTree {
     Node currentRoot;
@@ -83,7 +39,7 @@ public class SplayTree {
     }
 
 
-    // =========================================
+
     Node zig(Node root) {   // right rotate
         Node child = root.L;
         root.L = child.R;
@@ -101,7 +57,8 @@ public class SplayTree {
 
     Node search(int key) {
         if (currentRoot.key == key) return currentRoot;
-        return splay(currentRoot, key);
+        currentRoot = splay(currentRoot, key);
+        return currentRoot;
     }
 
     void insert(int key) {
@@ -121,6 +78,7 @@ public class SplayTree {
         currentRoot = newNode;
     }
 
+    // ===================================
     Node delete() {
         return null;
     }
