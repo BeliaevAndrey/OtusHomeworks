@@ -16,5 +16,8 @@ public class STTester {
         st.insert(60);
         st.printTree();
         System.out.println();
+        System.out.println(st.search(10).key);
+        System.out.println(st.search(150).key);
+
     }
 }

@@ -99,8 +99,9 @@ public class SplayTree {
     }
 
 
-    Node search() {
-        return null;
+    Node search(int key) {
+        if (currentRoot.key == key) return currentRoot;
+        return splay(currentRoot, key);
     }
 
     void insert(int key) {
