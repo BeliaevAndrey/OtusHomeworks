@@ -16,6 +16,7 @@ Zig: выполняется, когда p является корнем. Дер�
      /   \                              /   \
     A     B                            B     C
 
+
 Zig-zig
 выполняется, когда и x, и p являются левыми (или правыми) сыновьями. Дерево поворачивается по
 ребру между g и p, а потом — по ребру между p и x.
@@ -43,21 +44,23 @@ Zig-Zag: выполняется, когда x является правым сы
 
 
 public class SplayTree {
-    Node root;
+    Node currentRoot;
 
     public SplayTree(int key) {
-        this.root = new Node(key);
+        this.currentRoot = new Node(key);
     }
 
 // ========================================
 
-    Node splay(int key) {
+    Node splay(Node root, int key) {
         if (root == null || root.key == key) return root;
 
         if (root.key > key) {
             if (root.L == null) return root;
             if (root.L.key > key) {
                 // move root.L to root and return root
+                currentRoot = zig(root);
+                root.L.L = splay(root.L.L, key);
             } else {
 
             }
@@ -67,20 +70,29 @@ public class SplayTree {
         }
 
         return null;
-
     }
 
 
-// =========================================
-    Node zig(){
+    // =========================================
+    Node zig(Node root) {   // right rotate
+        Node child = root.L;
+        root.L = child.R;
+        child.R = root;
+        return child;
+    }
+
+    Node zag(Node root) {   // left rotate (?)
+        Node child = root.R;
+        root.R = child.L;
+        child.L = root;
+        return child;
+    }
+
+    Node zigZig() {
         return null;
     }
 
-    Node zigZig(){
-        return null;
-    }
-
-    Node zigZag(){
+    Node zigZag() {
         return null;
     }
 
@@ -104,7 +116,7 @@ public class SplayTree {
         return null;
     }
 
-/* ********************************************* */
+    /* ********************************************* */
     static class Node {
         int key;
 
