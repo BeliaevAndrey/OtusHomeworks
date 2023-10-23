@@ -53,23 +53,33 @@ public class SplayTree {
 // ========================================
 
     Node splay(Node root, int key) {
-        if (root == null || root.key == key) return root;
+        if (root == null || root.key == key) {
+            return root;
+        }
 
         if (root.key > key) {
             if (root.L == null) return root;
             if (root.L.key > key) {
-                // move root.L to root and return root
-                currentRoot = zig(root);
                 root.L.L = splay(root.L.L, key);
-            } else {
-
+                root = zig(root);
+            } else if (root.L.key < key) {
+                root.L.R = splay(root.L.R, key);
+                if (root.L.R != null)
+                    root.L = zag(root.L);
             }
-        }
-        if (root.key < key) {
+            return (root.L == null) ? root : zig(root);
+        } else {
             if (root.R == null) return root;
+            if (root.R.key > key) {
+                root.R.L = splay(root.R.L, key);
+                if (root.R.L != null)
+                    root.R = zig(root.R);
+            } else if (root.R.key < key) {
+                root.R.R = splay(root.R.R, key);
+                root = zag(root);
+            }
+            return (root.R == null) ? root : zag(root);
         }
-
-        return null;
     }
 
 
@@ -88,20 +98,26 @@ public class SplayTree {
         return child;
     }
 
-    Node zigZig() {
-        return null;
-    }
-
-    Node zigZag() {
-        return null;
-    }
 
     Node search() {
         return null;
     }
 
-    Node insert() {
-        return null;
+    void insert(int key) {
+        if (currentRoot == null) currentRoot = new Node(key);
+        currentRoot = splay(currentRoot, key);
+        if (currentRoot.key == key) return;
+        Node newNode = new Node(key);
+        if (currentRoot.key > key) {
+            newNode.R = currentRoot;
+            newNode.L = currentRoot.L;
+            currentRoot.L = null;
+        } else {
+            newNode.L = currentRoot;
+            newNode.R = currentRoot.R;
+            currentRoot.R = null;
+        }
+        currentRoot = newNode;
     }
 
     Node delete() {
@@ -115,6 +131,19 @@ public class SplayTree {
     Node split() {
         return null;
     }
+
+    private void printTree(Node root) {
+        if (root == null) return;
+        System.out.print(root.key + " ");
+        printTree(root.L);
+        printTree(root.R);
+    }
+
+    public void printTree() {
+        if (currentRoot == null) return;
+        printTree(currentRoot);
+    }
+
 
     /* ********************************************* */
     static class Node {
