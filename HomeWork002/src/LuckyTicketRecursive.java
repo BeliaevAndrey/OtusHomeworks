@@ -8,7 +8,7 @@ public class LuckyTicketRecursive {
     public static void main(String[] args) {
         LuckyTicketRecursive luckyTicketV2 = new LuckyTicketRecursive();
         for (int i = 1; i < 11; i++) {
-            System.out.printf("%3d: %-25.0f\n", i, luckyTicketV2.findAmountVer2(i));
+            System.out.printf("%3d: %-25.0f%n", i, luckyTicketV2.findAmountVer2(i));
         }
     }
 
