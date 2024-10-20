@@ -1,6 +1,4 @@
-package presents;
-
-import java.util.Arrays;
+package presents.VerticesEdgesLists;
 
 public class Vertex {
 

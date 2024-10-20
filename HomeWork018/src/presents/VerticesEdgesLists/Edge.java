@@ -1,4 +1,4 @@
-package presents;
+package presents.VerticesEdgesLists;
 
 // ====================================================
 public class Edge {

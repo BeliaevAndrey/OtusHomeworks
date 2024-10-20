@@ -2,7 +2,7 @@
  * Структура данных для представления графа.
  * Граф представляется в виде множества (массива, списка) вершин и множества рёбер.
  */
-package presents;
+package presents.VerticesEdgesLists;
 
 import java.util.Arrays;
 
