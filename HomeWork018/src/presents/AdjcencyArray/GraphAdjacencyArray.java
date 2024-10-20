@@ -10,12 +10,9 @@ public class GraphAdjacencyArray {
         vertAmt = aMatrix.length;
         adjArray = new int[vertAmt][];
         for (int i = 0; i < vertAmt; i++) {
-
             int width = 0, k = 0;
-
             for (int j = 0; j < vertAmt; j++) width += (aMatrix[i][j] == 1 ? 1 : 0);
             adjArray[i] = new int[width];
-
             for (int j = 0; j < vertAmt; j++)
                 if (aMatrix[j][i] == 1) adjArray[i][k++] = (j + 1);
         }
