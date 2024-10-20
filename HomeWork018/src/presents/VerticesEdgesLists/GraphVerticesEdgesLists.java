@@ -1,10 +1,11 @@
+package presents.VerticesEdgesLists;
+
+import java.util.Arrays;
+
 /**
  * Структура данных для представления графа.
  * Граф представляется в виде множества (массива, списка) вершин и множества рёбер.
  */
-package presents.VerticesEdgesLists;
-
-import java.util.Arrays;
 
 public class GraphVerticesEdgesLists {
 
@@ -23,13 +24,12 @@ public class GraphVerticesEdgesLists {
     @Override
     public String toString() {
         return String.format("V = { %s }\nE = { %s }",
-                Arrays.toString(getVertices()),
-                Arrays.toString(getEdges()))
-                        .replaceAll("]", "")
-                        .replaceAll("\\[", "");
+                        Arrays.toString(getVertices()),
+                        Arrays.toString(getEdges()))
+                .replaceAll("]", "")
+                .replaceAll("\\[", "");
     }
 }
-
 
 
 

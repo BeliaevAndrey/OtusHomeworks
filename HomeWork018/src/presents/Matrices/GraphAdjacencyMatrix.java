@@ -1,5 +1,9 @@
 package presents.Matrices;
 
+/**
+ * Структура данных для представления графа.
+ * Представляется граф в виде матрицы смежности.
+ */
 public class GraphAdjacencyMatrix {
 
     private int[][] aMatrix;
