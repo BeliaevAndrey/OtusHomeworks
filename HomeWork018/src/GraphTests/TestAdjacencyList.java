@@ -1,8 +1,9 @@
 package GraphTests;
 
-import presents.VerticesEdgesLists.GraphEdgeList;
+import presents.VerticesEdgesLists.GraphAdjacencyList;
 
-public class TestEdgeList {
+
+public class TestAdjacencyList {
 
     public static void main(String[] args) {
         int[][] adjMatrix = {
@@ -15,8 +16,8 @@ public class TestEdgeList {
                 {0, 1, 0, 0, 0, 0, 0}
         };
 
-        GraphEdgeList gel = new GraphEdgeList();
-        gel.buildFromAdjacencyMatrix(adjMatrix);
-        gel.printEdgesList();
+        GraphAdjacencyList gal = new GraphAdjacencyList();
+        gal.buildFromAdjacencyMatrix(adjMatrix);
+        gal.printSelf();
     }
 }
