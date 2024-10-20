@@ -1,5 +1,10 @@
 package presents.AdjcencyArray;
 
+/**
+ * Структура данных для представления графа.
+ * Граф представлен в виде массива смежности (зубчатый массив).
+ */
+
 public class GraphAdjacencyArray {
 
     int[][] adjArray;

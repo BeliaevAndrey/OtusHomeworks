@@ -1,5 +1,11 @@
 package presents.AdjcencyArray;
 
+
+/**
+ * Структура данных для представления графа.
+ * Граф представлен в виде вектора смежности.
+ */
+
 public class GraphAdjacencyVector {
 
     private int[][] adjVector;
