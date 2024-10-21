@@ -22,7 +22,6 @@ public class GraphIndexedStructure  implements GraphPresent {
 
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
-                System.out.printf("[%d, %d]\n", i, j);
                 if (aMatrix[j][i] == 1) {
                     addVertex(j + 1);
                 }
@@ -53,18 +52,22 @@ public class GraphIndexedStructure  implements GraphPresent {
         Arrays.stream(verticesIndex).forEach(v -> System.out.printf("%d ", v));
         System.out.print("\nStructure: ");
         Arrays.stream(adjacentVertices).forEach(v -> System.out.printf("%d ", v));
-        System.out.println();
+        System.out.println("\n");
 
         int j = 0, i =0;
         for (; i < verticesIndex.length - 1; i++) {
+
             System.out.printf("%d: ", i + 1);
-            for (j = verticesIndex[i]; j < verticesIndex[i+1]; j++) {
+            for (j = verticesIndex[i]; j < verticesIndex[i+1]; j++)
                 System.out.printf("%d, ", adjacentVertices[j]);
-            }
             System.out.println();
         }
+
         System.out.printf("%d: ", i + 1);
         for (; j < adjacentVertices.length; j++) System.out.printf("%d, ", adjacentVertices[j]);
+
+        System.out.println();
     }
+
 
 }

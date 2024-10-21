@@ -1,5 +1,34 @@
 ## Домашнее задание
 
+
+* Нарисовать двудольный граф А(3,4) с 5 рёбрами. Приложить фото/скрин.
+
+![](picture/Bigraph_A_3_4_5.png)
+
+* Создать структуру данных для его представления и заполнить её.
+  * перечисление множеств:
+    - src/presents/VerticesEdgesLists/GraphVerticesEdgesLists.java
+  * матрица смежности
+    - src/presents/Matrices/GraphAdjacencyMatrix.java
+  * матрица инцидентности
+    - src/presents/Matrices/GraphIncidenceMatrix.java
+  * перечень рёбер
+    - src/presents/VerticesEdgesLists/GraphEdgeList.java
+  * векторы смежности
+    - src/presents/AdjcencyArray/GraphAdjacencyVector.java
+  * массивы смежности
+    - src/presents/AdjcencyArray/GraphAdjacencyArray.java
+  * списки смежности
+    - src/presents/VerticesEdgesLists/GraphAdjacencyList.java
+  * структура с оглавлением
+    - src/presents/Matrices/GraphIndexedStructure.java
+
+
+
+<hr>
+
+## Домашнее задание
+
 ### Нарисовать и сохранить граф
 ### Цель:
 
@@ -41,5 +70,3 @@
 <hr>
 
 **_Двудольный граф А(3,4) с 5 рёбрами:_**
-
-![](picture/Bigraph_A_3_4_5.png)
