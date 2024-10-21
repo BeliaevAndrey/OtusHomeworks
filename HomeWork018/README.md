@@ -7,7 +7,7 @@
 
 * Создать структуру данных для его представления и заполнить её.
   * перечисление множеств:
-    - src/presents/VerticesEdgesLists/GraphVerticesEdgesLists.java
+    - 
   * матрица смежности
     - src/presents/Matrices/GraphAdjacencyMatrix.java
   * матрица инцидентности
