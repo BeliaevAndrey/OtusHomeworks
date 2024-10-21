@@ -1,12 +1,21 @@
 package presents.Matrices;
 
+import presents.Implements.GraphPresent;
+
 import java.util.Arrays;
 
-public class GraphIndexedStructure {
+
+/**
+ * Структура данных для представления графа.
+ * Представляется граф в виде структуры с оглавлением.
+ */
+
+public class GraphIndexedStructure  implements GraphPresent {
 
     int[] verticesIndex;
     int[] adjacentVertices;
 
+    @Override
     public void buildFromAdjacencyMatrix(int[][] aMatrix) {
         int size = aMatrix.length;
         verticesIndex = new int[size];
@@ -38,6 +47,7 @@ public class GraphIndexedStructure {
     }
 
 
+    @Override
     public void printSelf() {
         System.out.print("Index: ");
         Arrays.stream(verticesIndex).forEach(v -> System.out.printf("%d ", v));
@@ -55,8 +65,6 @@ public class GraphIndexedStructure {
         }
         System.out.printf("%d: ", i + 1);
         for (; j < adjacentVertices.length; j++) System.out.printf("%d, ", adjacentVertices[j]);
-
-
     }
 
 }

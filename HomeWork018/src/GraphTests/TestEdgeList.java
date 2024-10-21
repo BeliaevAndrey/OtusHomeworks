@@ -17,6 +17,6 @@ public class TestEdgeList {
 
         GraphEdgeList gel = new GraphEdgeList();
         gel.buildFromAdjacencyMatrix(adjMatrix);
-        gel.printEdgesList();
+        gel.printSelf();
     }
 }

@@ -1,16 +1,19 @@
 package presents.VerticesEdgesLists;
 
 
+import presents.Implements.GraphPresent;
+
 /**
  * Структура данных для представления графа.
  * Граф представлен в виде перечня рёбер.
  */
 
-public class GraphEdgeList {
+public class GraphEdgeList  implements GraphPresent {
 
     private Edge[] edges;
     private int edgeAmt;
 
+    @Override
     public void buildFromAdjacencyMatrix(int[][] aMatrix) {
         for (int i = 0; i < aMatrix.length; i++)
             for (int j = i; j < aMatrix.length; j++)
@@ -31,7 +34,8 @@ public class GraphEdgeList {
         }
     }
 
-    public void printEdgesList() {
+    @Override
+    public void printSelf() {
         for (Edge e : edges) {
             System.out.println(e);
         }

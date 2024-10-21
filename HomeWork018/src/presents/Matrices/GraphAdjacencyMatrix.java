@@ -1,5 +1,6 @@
 package presents.Matrices;
 
+
 /**
  * Структура данных для представления графа.
  * Представляется граф в виде матрицы смежности.
@@ -31,7 +32,7 @@ public class GraphAdjacencyMatrix {
 
     public int getSize() { return size; }
 
-    public void printAMatrix() {
+    public void printSelf() {
         System.out.print("   |");
         for (int i = 0; i < size; i++) {
             System.out.printf("%3d", i + 1);

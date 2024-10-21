@@ -1,5 +1,7 @@
 package presents.VerticesEdgesLists;
 
+import presents.Implements.GraphPresent;
+
 import java.util.Arrays;
 
 /**
@@ -28,6 +30,10 @@ public class GraphVerticesEdgesLists {
                         Arrays.toString(getEdges()))
                 .replaceAll("]", "")
                 .replaceAll("\\[", "");
+    }
+
+    public void printSelf() {
+        System.out.println(this);
     }
 }
 

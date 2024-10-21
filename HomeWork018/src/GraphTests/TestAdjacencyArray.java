@@ -17,7 +17,7 @@ public class TestAdjacencyArray {
 
         GraphAdjacencyArray gaArr = new GraphAdjacencyArray();
         gaArr.buildFromAdjacencyMatrix(adjMatrix);
-        gaArr.printAArray();
+        gaArr.printSelf();
 
     }
 }

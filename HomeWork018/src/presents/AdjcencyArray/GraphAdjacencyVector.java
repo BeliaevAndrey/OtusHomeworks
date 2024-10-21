@@ -1,18 +1,21 @@
 package presents.AdjcencyArray;
 
 
+import presents.Implements.GraphPresent;
+
 /**
  * Структура данных для представления графа.
  * Граф представлен в виде вектора смежности.
  */
 
-public class GraphAdjacencyVector {
+public class GraphAdjacencyVector implements GraphPresent {
 
     private int[][] adjVector;
 
     private int vertAmt;
     private int maxDegree;
 
+    @Override
     public void buildFromAdjacencyMatrix(int[][] aMatrix) {
         vertAmt = aMatrix.length;
 
@@ -34,7 +37,8 @@ public class GraphAdjacencyVector {
 
     public int[][] getAdjVector() { return adjVector; }
 
-    public void printAVector() {
+    @Override
+    public void printSelf() {
         for (int i = 0; i < vertAmt; i++) {
             System.out.printf("%-3d|", i + 1);
             for (int j = 0; j < maxDegree; j++) {

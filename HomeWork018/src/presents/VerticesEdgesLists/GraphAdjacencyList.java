@@ -1,13 +1,15 @@
 package presents.VerticesEdgesLists;
 
+import presents.Implements.GraphPresent;
 import structures.CustomLinkedList;
 
 import java.util.Arrays;
 
-public class GraphAdjacencyList {
+public class GraphAdjacencyList  implements GraphPresent {
 
     private CustomLinkedList<Vertex>[] adjList;
 
+    @Override
     public void buildFromAdjacencyMatrix(int[][] aMatrix) {
         int size = aMatrix.length;
         adjList = new CustomLinkedList[size];

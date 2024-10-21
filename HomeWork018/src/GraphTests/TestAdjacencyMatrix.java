@@ -29,7 +29,7 @@ public class TestAdjacencyMatrix {
 
         GraphAdjacencyMatrix gam = new GraphAdjacencyMatrix();
         gam.buildFromAdjacencyVector(adjacencyVec);
-        gam.printAMatrix();
+        gam.printSelf();
 
     }
 }

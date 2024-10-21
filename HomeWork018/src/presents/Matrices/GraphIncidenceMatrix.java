@@ -1,21 +1,21 @@
 package presents.Matrices;
 
 
+import presents.Implements.GraphPresent;
+
 /**
  * Структура данных для представления графа.
  * Представляется граф в виде матрицы инцидентности.
  */
-public class GraphIncidenceMatrix {
+public class GraphIncidenceMatrix  implements GraphPresent {
 
     private int[][] incMatrix;
 
     private int vertAmt = 0;
     private int edgeAmt = 0;
 
-    public GraphIncidenceMatrix() {}
-
-
-    public void buildFromAdjacentMatrix(int[][] aMatrix) {
+    @Override
+    public void buildFromAdjacencyMatrix(int[][] aMatrix) {
         vertAmt = aMatrix.length;
 
         for (int i = 0; i < vertAmt; i++)
@@ -37,7 +37,8 @@ public class GraphIncidenceMatrix {
         }
     }
 
-    public void printIncidenceMatrix() {
+    @Override
+    public void printSelf() {
         System.out.print("   |");
         for (int i = 0; i < edgeAmt; i++) {
             System.out.printf("%5c", 65 + i);

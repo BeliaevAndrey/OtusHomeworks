@@ -17,7 +17,7 @@ public class TestIncidenceMatrix {
         };
 
         GraphIncidenceMatrix gim = new GraphIncidenceMatrix();
-        gim.buildFromAdjacentMatrix(adjMatrix);
-        gim.printIncidenceMatrix();
+        gim.buildFromAdjacencyMatrix(adjMatrix);
+        gim.printSelf();
     }
 }

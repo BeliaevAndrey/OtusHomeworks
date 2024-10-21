@@ -18,7 +18,7 @@ public class TestAdjacencyVector {
 
         GraphAdjacencyVector gaVec = new GraphAdjacencyVector();
         gaVec.buildFromAdjacencyMatrix(adjMatrix);
-        gaVec.printAVector();
+        gaVec.printSelf();
 
     }
 }

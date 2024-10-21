@@ -1,16 +1,19 @@
 package presents.AdjcencyArray;
 
+import presents.Implements.GraphPresent;
+
 /**
  * Структура данных для представления графа.
  * Граф представлен в виде массива смежности (зубчатый массив).
  */
 
-public class GraphAdjacencyArray {
+public class GraphAdjacencyArray implements GraphPresent {
 
     int[][] adjArray;
 
     int vertAmt;
 
+    @Override
     public void buildFromAdjacencyMatrix(int[][] aMatrix) {
         vertAmt = aMatrix.length;
         adjArray = new int[vertAmt][];
@@ -26,7 +29,8 @@ public class GraphAdjacencyArray {
 
     public int[][] getAdjArray() { return adjArray; }
 
-    public void printAArray() {
+    @Override
+    public void printSelf() {
         for (int i = 0; i < vertAmt; i++) {
             System.out.printf("%-3d|", i + 1);
             for (int j = 0; j < adjArray[i].length; j++) {
