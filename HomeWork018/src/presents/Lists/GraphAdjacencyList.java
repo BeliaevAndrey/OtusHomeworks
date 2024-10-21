@@ -1,4 +1,4 @@
-package presents.VerticesEdgesLists;
+package presents.Lists;
 
 import presents.Implements.GraphPresent;
 import structures.CustomLinkedList;

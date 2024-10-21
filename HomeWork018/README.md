@@ -7,19 +7,19 @@
 
 * Создать структуру данных для его представления и заполнить её.
   * перечисление множеств:
-    - 
+    - src/presents/Lists/GraphVerticesEdgesLists.java
   * матрица смежности
     - src/presents/Matrices/GraphAdjacencyMatrix.java
   * матрица инцидентности
     - src/presents/Matrices/GraphIncidenceMatrix.java
   * перечень рёбер
-    - src/presents/VerticesEdgesLists/GraphEdgeList.java
+    - src/presents/Lists/GraphEdgeList.java
   * векторы смежности
-    - src/presents/AdjcencyArray/GraphAdjacencyVector.java
+    - src/presents/AdjacencyArray/GraphAdjacencyVector.java
   * массивы смежности
-    - src/presents/AdjcencyArray/GraphAdjacencyArray.java
+    - src/presents/AdjacencyArray/GraphAdjacencyArray.java
   * списки смежности
-    - src/presents/VerticesEdgesLists/GraphAdjacencyList.java
+    - src/presents/Lists/GraphAdjacencyList.java
   * структура с оглавлением
     - src/presents/Matrices/GraphIndexedStructure.java
 

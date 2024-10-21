@@ -1,6 +1,6 @@
 package GraphTests;
 
-import presents.VerticesEdgesLists.GraphAdjacencyList;
+import presents.Lists.GraphAdjacencyList;
 
 
 public class TestAdjacencyList {

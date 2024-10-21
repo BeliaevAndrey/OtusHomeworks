@@ -1,8 +1,8 @@
 package GraphTests;
 
-import presents.VerticesEdgesLists.Edge;
-import presents.VerticesEdgesLists.GraphVerticesEdgesLists;
-import presents.VerticesEdgesLists.Vertex;
+import presents.Lists.Edge;
+import presents.Lists.GraphVerticesEdgesLists;
+import presents.Lists.Vertex;
 import structures.CustomLinkedList;
 
 

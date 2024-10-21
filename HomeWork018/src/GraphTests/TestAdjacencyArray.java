@@ -1,6 +1,6 @@
 package GraphTests;
 
-import presents.AdjcencyArray.GraphAdjacencyArray;
+import presents.AdjacencyArray.GraphAdjacencyArray;
 
 public class TestAdjacencyArray {
 

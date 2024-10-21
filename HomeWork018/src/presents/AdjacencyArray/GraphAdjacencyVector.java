@@ -1,4 +1,4 @@
-package presents.AdjcencyArray;
+package presents.AdjacencyArray;
 
 
 import presents.Implements.GraphPresent;

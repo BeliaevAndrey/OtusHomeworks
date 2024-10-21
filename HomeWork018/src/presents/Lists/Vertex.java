@@ -1,4 +1,4 @@
-package presents.VerticesEdgesLists;
+package presents.Lists;
 
 public class Vertex {
 

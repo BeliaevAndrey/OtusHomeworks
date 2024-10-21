@@ -1,6 +1,4 @@
-package presents.VerticesEdgesLists;
-
-import presents.Implements.GraphPresent;
+package presents.Lists;
 
 import java.util.Arrays;
 

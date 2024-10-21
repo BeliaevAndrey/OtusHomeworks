@@ -1,6 +1,6 @@
 package GraphTests;
 
-import presents.VerticesEdgesLists.GraphEdgeList;
+import presents.Lists.GraphEdgeList;
 
 public class TestEdgeList {
 
