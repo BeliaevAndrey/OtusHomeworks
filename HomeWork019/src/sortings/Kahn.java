@@ -26,10 +26,10 @@ public class Kahn {
 
     public boolean tplSort() {
 
-        reset();            // set vertex states to State.none
+        reset();                    // set vertex states to State.none
         path.clear();
-        boolean isAny;      // vertices with non-0 indegree
-        int dltAmt;         // deleted amount
+        boolean isAny;              // vertices with non-0 indegree
+        int dltAmt;                 // deleted vertices amount
         do {
             isAny = false;
             dltAmt = 0;
@@ -41,11 +41,11 @@ public class Kahn {
                 }
                 for (int j = 0; j < gSize; j++) {
                     if (vertexStates[j] != State.cplt)
-                        sum += gMatrix[j][i];   // sum over column
+                        sum += gMatrix[j][i];           // sum over column
                 }
                 if (sum == 0) {
-                    vertexStates[i] = State.cplt;     // vertex complete
-                    path.add(i + 1);            // add vertex num to path
+                    vertexStates[i] = State.cplt;       // vertex complete
+                    path.add(i + 1);                    // add vertex num to path
                     isAny = true;
                     break;
                 }
