@@ -1,4 +1,7 @@
-package graphs;
+package tests;
+
+import graphs.Graph;
+import sortings.Kahn;
 
 public class KahnTest {
     public static void main(String[] args) {
@@ -16,17 +19,18 @@ public class KahnTest {
         Graph graph = new Graph(matrix, size);
 
         Kahn kahn = new Kahn(graph);
-        
+
+        System.out.println("Kahn algorithm: ");
         if (kahn.tplSort())
         {
-            System.out.println("Топологическая сортировка: ");
-            for (int i = 0; i < kahn.path.size(); i++) {
-                System.out.print(kahn.path.get(i) + " ");
+            System.out.println("Topological sort: ");
+            for (int i = 0; i < kahn.getPath().size(); i++) {
+                System.out.print(kahn.getPath().get(i) + " ");
             }
             System.out.println();
         }
         else
-            System.out.println("Топологическая сортировка невозможна!");
+            System.out.println("Topological sort not available!");
 
     }
 }

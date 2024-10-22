@@ -1,5 +1,7 @@
-package graphs;
+package tests;
 
+import graphs.Graph;
+import sortings.Demukron;
 import util.GraphUtl;
 
 public class DemukronTest {
@@ -51,12 +53,20 @@ public class DemukronTest {
         };
     */
         int[][] matrixAdj = utl.vectorAjcToMatrixAjc(vecAdj);
-        utl.printMatrix(matrixAdj);
+//        utl.printMatrix(matrixAdj);
         Graph graph = new Graph(matrixAdj, matrixAdj.length);
         Demukron demukron = new Demukron(graph);
 
-        System.out.println(demukron.tplSort());
-        demukron.printPath();
+
+        System.out.println("Demukron algorithm: ");
+        if (demukron.tplSort())
+        {
+            System.out.println("Topological sort: ");
+            demukron.printPath();
+        }
+        else
+            System.out.println("Topological sort not available!");
+
 
     }
 }

@@ -10,31 +10,31 @@ public class Graph {
     private enum State {none, seen, cplt}
 
 
-    private int[][] matrixAdj;
-    private int size;
-    private State[] vertex;
-    private CustomStack edges;
+    private final int[][] matrixAdj;
+    private final int size;
+    private final State[] vertexStates;
+    private final CustomStack<Edge> edges;
 
-    private CustomLinkedList<Integer> path;
+    private final CustomLinkedList<Integer> path;
 
-    Graph(int[][] matrixAdj, int size) {
+    public Graph(int[][] matrixAdj, int size) {
         this.matrixAdj = matrixAdj;
         this.size = size;
-        vertex = new State[size];
+        vertexStates = new State[size];
         path = new CustomLinkedList<>();
-        edges = new CustomStack();
+        edges = new CustomStack<>();
     }
 
-    private void reset() {for (int i = 0; i < size; i++) vertex[i] = State.none;}
+    private void reset() {for (int i = 0; i < size; i++) vertexStates[i] = State.none;}
 
     /**
      *  Depth-first search starter
      */
-    public boolean dfs(int begin, int end, boolean isRecurse) {
+    public boolean dfs(int begin, int end, boolean isRecursive) {
 
         reset();         // set vertex states to State.none
         boolean z;
-        if (isRecurse) z = recDFS(begin, end);
+        if (isRecursive) z = recDFS(begin, end);
         else z = cycleDFS(begin, end);
         if (!z) return false;
         setPath(begin, end);
@@ -47,14 +47,12 @@ public class Graph {
      *  Depth-first search -- recursive version
      */
     boolean recDFS(int begin, int end) {
-        vertex[begin] = State.seen;
+        vertexStates[begin] = State.seen;
         if (begin == end)
             return true;
         for (int i = 0; i < size; i++) {
-            if (vertex[i] != State.none)
-                continue;
-            if (matrixAdj[begin][i] == 0)
-                continue;
+            if (vertexStates[i] != State.none) continue;
+            if (matrixAdj[begin][i] == 0) continue;
             Edge edge = new Edge(begin, i);
             edges.push(edge);
             if (recDFS(i, end))
@@ -69,21 +67,21 @@ public class Graph {
      *  Depth-first search -- cyclic version
      */
     boolean cycleDFS(int begin, int end) {
-        CustomStack stack = new CustomStack();
+        CustomStack<Integer> stack = new CustomStack<>();
         stack.push(begin);
         boolean found = false;
         while (!stack.isEmpty()) {
-            int z = (int) stack.pop();
-            vertex[z] = State.cplt;
+            int z = stack.pop();
+            vertexStates[z] = State.cplt;
             for (int i = size - 1; i >= 0; i--) {
             if (matrixAdj[z][i] == 0) continue;
-            if (vertex[i] == State.cplt) continue;
+            if (vertexStates[i] == State.cplt) continue;
             Edge edge = new Edge(z, i);
             edges.push(edge);
             if (i == end) found = true;
-            if (vertex[i] == State.seen) continue;
+            if (vertexStates[i] == State.seen) continue;
             stack.push(i);
-            vertex[i] = State.seen;
+            vertexStates[i] = State.seen;
             }
         }
         return found;
@@ -95,7 +93,7 @@ public class Graph {
         int goal = end;
         path.add(goal + 1);
         while (!edges.isEmpty()) {
-            Edge e = (Edge) edges.pop();
+            Edge e = edges.pop();
             if (e.getEnd() != goal) continue;
             goal = e.getBegin();
             path.add(goal + 1);
@@ -106,8 +104,7 @@ public class Graph {
     /** Breadth-first search;
      *  appropriate for searching the shortest path
      */
-    public boolean bfs(int begin, int end)
-    {
+    public boolean bfs(int begin, int end) {
         reset();
         CustomQueue<Integer> queue = new CustomQueue<>();
         queue.enqueue(begin);
@@ -115,10 +112,10 @@ public class Graph {
         while (!queue.isEmpty())
         {
             int z = queue.dequeue();
-            vertex[z] = State.cplt;
+            vertexStates[z] = State.cplt;
             for (int i = 0; i < size; i++) {
                 if (matrixAdj[z][i] == 0) continue;
-                if (vertex[i] != State.none) continue;
+                if (vertexStates[i] != State.none) continue;
                 Edge edge = new Edge(z, i);
                 edges.push(edge);
                 if (i == end)
@@ -127,7 +124,7 @@ public class Graph {
                     break;
                 }
                 queue.enqueue(i);
-                vertex[i] = State.seen;
+                vertexStates[i] = State.seen;
             }
             if (found) break;
         }
@@ -160,7 +157,7 @@ class Edge {
         this.end = end;
     }
 
-    // region Privates
+    // region setters/getters
 
     public void setBegin(int begin) {this.begin = begin;}
 

@@ -2,54 +2,54 @@ package structures;
 
 import java.util.EmptyStackException;
 
-public class CustomStack implements IStack{
+public class CustomStack<T> implements IStack<T>{
 
-    private Object[] objects;
+    private Node<T>[] nodes;
 
     private int count = -1;
     private int capacity = 10;
 
     public CustomStack() {
-        objects = new Object[capacity];
+        nodes = new Node[capacity];
     }
 
     private void resize() {
-        Object[] tmp = new Object[capacity + 10];
+        Node<T>[] tmp = new Node[capacity + 10];
         capacity += 10;
-        for (int i = 0; i <= count; i++) tmp[i] = objects[i];
-        objects = tmp;
+        for (int i = 0; i <= count; i++) tmp[i] = nodes[i];
+        nodes = tmp;
     }
 
     private void truncate() {
-        Object[] tmp = new Object[capacity - 10];
+        Node<T>[] tmp = new Node[capacity - 10];
         capacity -= 10;
-        for (int i = 0; i <= count; i++) tmp[i] = objects[i];
-        objects = tmp;
+        for (int i = 0; i <= count; i++) tmp[i] = nodes[i];
+        nodes = tmp;
     }
 
 
 
     @Override
-    public Object pop() {
+    public T pop() {
         if (count == -1) throw new EmptyStackException();
-        Object out = objects[count];
-        objects[count] = null;
+        T out = nodes[count].data;
+        nodes[count] = null;
         count--;
         if (capacity == count + 11) truncate();
         return out;
     }
 
     @Override
-    public Object peek() {
+    public T peek() {
         if (count == -1) throw new EmptyStackException();
-        return objects[count];
+        return nodes[count].data;
     }
 
     @Override
-    public Object push(Object o) {
+    public T push(T obj) {
         if (count + 1 == capacity) { resize(); }
-        objects[++count] = o;
-        return o;
+        nodes[++count] = new Node(obj);
+        return obj;
     }
 
     @Override
@@ -57,7 +57,17 @@ public class CustomStack implements IStack{
         return count == -1;
     }
 
+    @Override
+    public int size() { return count; }
+
     public void clear() {
-        while (!isEmpty()) pop();
+//        while (!isEmpty()) pop();
+        this.nodes = new Node[capacity];
+        count = -1;
+    }
+
+    private static class Node<E> {
+        E data;
+        Node(E data) { this.data = data; }
     }
 }
