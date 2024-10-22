@@ -58,10 +58,9 @@ public class CustomStack<T> implements IStack<T>{
     }
 
     @Override
-    public int size() { return count; }
+    public int size() { return count + 1; }
 
     public void clear() {
-//        while (!isEmpty()) pop();
         this.nodes = new Node[capacity];
         count = -1;
     }

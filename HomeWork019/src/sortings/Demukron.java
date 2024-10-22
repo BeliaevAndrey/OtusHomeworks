@@ -54,6 +54,9 @@ public class Demukron {
         return true;
     }
 
+
+    public CustomLinkedList<Integer> getPath() { return path; }
+
     public void printPath() {
         int len = path.size();
         for (int i = 0; i < len; i++) {

@@ -24,9 +24,7 @@ public class KahnTest {
         if (kahn.tplSort())
         {
             System.out.println("Topological sort: ");
-            for (int i = 0; i < kahn.getPath().size(); i++) {
-                System.out.print(kahn.getPath().get(i) + " ");
-            }
+            kahn.printPath();
             System.out.println();
         }
         else

@@ -34,9 +34,7 @@ public class Tarjan {
                 if (!dfs(i, localStack)) return false;
             }
         }
-        System.out.println(localStack.size());
         while (!localStack.isEmpty()) path.add(localStack.pop());
-        System.out.println(path.size());
         return true;
     }
 
@@ -51,6 +49,14 @@ public class Tarjan {
         vertexStates[vrtInd] = State.cplt;
         stack.push(vrtInd + 1);
         return true;
+    }
+
+    public void printPath() {
+        int len = path.size();
+        for (int i = 0; i < len; i++) {
+            System.out.printf((i < len - 1 ? "%d, " : "%d\n"),  path.get(i));
+        }
+
     }
 
     // region setters/getters
