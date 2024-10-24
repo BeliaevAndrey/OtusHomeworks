@@ -28,19 +28,70 @@ public class DemukronTest {
     */
 
 
+    /*
+    1  | 3    13   0    0
+    2  | 13   0    0    0
+    3  | 0    0    0    0
+    4  | 3    0    0    0
+    5  | 3    9    10   0
+    6  | 11   12   4    0
+    7  | 11   0    0    0
+    8  | 2    4    6    7
+    9  | 1    14   0    0
+    10 | 1    7    12   0
+    11 | 3    0    0    0
+    12 | 0    0    0    0
+    13 | 3    0    0    0
+    14 | 6    0    0    0
+
+
+    1  | 3    13   0    0
+    2  | 13   0    0    0
+    3  | 0    0    0    0
+    4  | 3    0    0    0
+    5  | 3    9    10   0
+    6  | 4    11   12   13
+    7  | 11   0    0    0
+    8  | 2    4    6    7
+    9  | 1    14   0    0
+    10 | 1    7    12   0
+    11 | 3    0    0    0
+    12 | 0    0    0    0
+    13 | 3    0    0    0
+    14 | 6    0    0    0
+    */
+
     public static void main(String[] args) {
 
         GraphUtl utl = new GraphUtl();
 
 
         int[][] vecAdj = {
-                {2, 4},
-                {6, 0},
-                {2, 0},
-                {6, 0},
-                {0, 0},
-                {5, 0}
-        };
+                {  3  ,  13 ,  0  , 0 },        /* 01 */
+                {  13 ,  0  ,  0  , 0 },        /* 02 */
+                {  0  ,  0  ,  0  , 0 },        /* 03 */
+                {  3  ,  0  ,  0  , 0 },        /* 04 */
+                {  3  ,  9  ,  10 , 0 },        /* 05 */
+                {  4  ,  11 ,  12 , 13},        /* 06 */
+                {  11 ,  0  ,  0  , 0 },        /* 07 */
+                {  2  ,  4  ,  6  , 7 },        /* 08 */
+                {  1  ,  14 ,  0  , 0 },        /* 09 */
+                {  1  ,  7  ,  12 , 0 },        /* 10 */
+                {  3  ,  0  ,  0  , 0 },        /* 11 */
+                {  0  ,  0  ,  0  , 0 },        /* 12 */
+                {  3  ,  0  ,  0  , 0 },        /* 13 */
+                {  6  ,  0  ,  0  , 0 }};       /* 14 */
+
+
+//        int[][] vecAdj = {
+//                {2, 4},
+//                {6, 0},
+//                {2, 0},
+//                {6, 0},
+//                {0, 0},
+//                {5, 0}
+//        };
+
     /* sample matrix from seminar materials:
 
         int[][] matrix = {
@@ -52,21 +103,39 @@ public class DemukronTest {
                 {0, 0, 0, 0, 1, 0}
         };
     */
+
         int[][] matrixAdj = utl.vectorAjcToMatrixAjc(vecAdj);
-//        utl.printMatrix(matrixAdj);
+        utl.printMatrix(matrixAdj);
+        System.out.printf("\n%s\n", "=".repeat(80));
         Graph graph = new Graph(matrixAdj, matrixAdj.length);
         Demukron demukron = new Demukron(graph);
 
 
         System.out.println("Demukron algorithm: ");
-        if (demukron.tplSort())
-        {
+        if (demukron.tplSort()) {
             System.out.println("Topological sort: ");
             demukron.printPath();
-        }
-        else
+            demukron.printLevels();
+        } else
             System.out.println("Topological sort not available!");
 
 
     }
 }
+
+/*
+0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0
+0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0
+0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0
+0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0
+0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0
+0, 1, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0
+1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1
+1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0
+0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0
+ */

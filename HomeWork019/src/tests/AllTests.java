@@ -31,7 +31,8 @@ public class AllTests {
         };
 
         int[][] matrixAdj = utl.vectorAjcToMatrixAjc(vecAdj);   // convert vector to adjacency matrix
-//        utl.printMatrix(matrixAdj);
+        utl.printMatrix(matrixAdj);
+        System.out.println();
         Graph graph = new Graph(matrixAdj, matrixAdj.length);
 
         // Kahn test 1
@@ -80,32 +81,27 @@ public class AllTests {
 
     public void testDigraph2() {
 
-            /* Digraph from conspectus
-            2  | 0  0  0          // 1 | 0  0  0
-            3  | 8  10 0          // 2 | 5  7  0
-            5  | 11 0  0          // 3 | 8  0  0
-            7  | 11 8  0          // 4 | 8  5  0
-            8  | 9  0  0          // 5 | 6  0  0
-            9  | 0  0  0          // 6 | 0  0  0
-            10 | 0  0  0          // 7 | 0  0  0
-            11 | 2  9  10         // 8 | 1  6  7
-            */
+        int[][] vecAdj = {
+                {  3  ,  13 ,  0  , 0 },
+                {  13 ,  0  ,  0  , 0 },
+                {  0  ,  0  ,  0  , 0 },
+                {  3  ,  0  ,  0  , 0 },
+                {  3  ,  9  ,  10 , 0 },
+                {  4  ,  11 ,  12 , 13},
+                {  11 ,  0  ,  0  , 0 },
+                {  2  ,  4  ,  6  , 7 },
+                {  1  ,  14 ,  0  , 0 },
+                {  1  ,  7  ,  12 , 0 },
+                {  3  ,  0  ,  0  , 0 },
+                {  0  ,  0  ,  0  , 0 },
+                {  3  ,  0  ,  0  , 0 },
+                {  6  ,  0  ,  0  , 0 }};
 
         GraphUtl utl = new GraphUtl();
 
-        int[][] vecAdj2 = {
-                {0,  0,  0},
-                {5,  7,  0},
-                {8,  0,  0},
-                {8,  5,  0},
-                {6,  0,  0},
-                {0,  0,  0},
-                {0,  0,  0},
-                {1,  6,  7}
-        };
-
-        int[][] matrixAdj = utl.vectorAjcToMatrixAjc(vecAdj2);
-//        utl.printMatrix(matrixAdj);
+        int[][] matrixAdj = utl.vectorAjcToMatrixAjc(vecAdj);
+        utl.printMatrix(matrixAdj);
+        System.out.println();
         Graph graph = new Graph(matrixAdj, matrixAdj.length);
 
         int[] payload = new int[] { 2, 3, 5, 7, 8, 9, 10, 11 };
@@ -117,14 +113,13 @@ public class AllTests {
         System.out.println("Kahn algorithm: ");
         if (kahn.tplSort()) {
             System.out.println("Topological sort: ");
-//            kahn.printPath();
-            for (int i = 0; i < kahn.getPath().size(); i++) {
-                System.out.printf("%d, ", payload[kahn.getPath().get(i) - 1]);
-            }
+            kahn.printPath();
+
             System.out.println();
         } else {
             System.out.println("Topological sort not available!");
         }
+
         // Demukron test 2
         Demukron demukron = new Demukron(graph);
 
@@ -132,11 +127,8 @@ public class AllTests {
         if (demukron.tplSort())
         {
             System.out.println("Topological sort: ");
-//            demukron.printPath();
-            for (int i = 0; i < demukron.getPath().size(); i++) {
-                System.out.printf("%d, ", payload[demukron.getPath().get(i) - 1]);
-            }
-            System.out.println();
+            demukron.printPath();
+
         }
         else
             System.out.println("Topological sort not available!");
@@ -150,10 +142,7 @@ public class AllTests {
         if (tarjan.tplSort())
         {
             System.out.println("Topological sort: ");
-//            tarjan.printPath();
-            for (int i = 0; i < tarjan.getPath().size(); i++) {
-                System.out.printf("%d, ", payload[tarjan.getPath().get(i) - 1]);
-            }
+            tarjan.printPath();
             System.out.println();
         }
         else

@@ -2,66 +2,139 @@ package sortings;
 
 import graphs.Graph;
 import structures.CustomLinkedList;
+import structures.CustomStack;
 
+import java.util.Arrays;
 
 public class Demukron {
 
-    private final Graph graph;
-    private final int gSize;
-    private final int[][] aMatrix;              // adjacent matrix
+    enum State {none, seen, cplt}
 
-    private CustomLinkedList<Integer> path;     // path through topologically sorted vertices
+    private final int[][] aMatrix;
+
+    private final int size;
+
+    CustomLinkedList<Integer> path;
+
+    int[][] level;
+    int[][] levelZ;
+    int levelsAmt = 0;
 
     public Demukron(Graph graph) {
-        this.graph = graph;
-        this.gSize = graph.getSize();
+        this.size = graph.getSize();
         this.aMatrix = graph.getMatrixAdj();
         path = new CustomLinkedList<>();
     }
 
-
     public boolean tplSort() {
-        path.clear();
-        int[] inDegrees = new int[gSize];               // in-degrees
-        boolean[] visited = new boolean[gSize];         // visited vertices
-        int sum = 0;                                    // sum over matrix
-        for (int i = 0; i < gSize; i++) {
-            inDegrees[i] = 0;
-            for (int j = 0; j < gSize; j++) {
-                inDegrees[i] += aMatrix[j][i];          // count in-degrees of vertices
-                sum += aMatrix[j][i];                   // sum over matrix
+        int total = 0;
+        boolean[] visited = new boolean[size];
+        int[] indegrees = new int[size];
+        int[] vertices = new int[size];
+
+        for (int i = 0; i < size; i++) {
+            vertices[i] = i + 1;
+            for (int j = 0; j < size; j++) {
+                indegrees[i] += aMatrix[j][i];
+                total += aMatrix[j][i];
             }
         }
-        do {
-            boolean isAny = false;
-            for (int i = 0; i < gSize; i++) {
-                if (visited[i]) continue;               // skip vertex (column) if visited
-                if (inDegrees[i] > 0) continue;         // skip if non-0 indegree
-                visited[i] = true;                      // mark visited
-                isAny = true;                           // non-0 indegree vertex
-                path.add(i + 1);                        // add to path
-                for (int j = 0; j < gSize; j++) {
-                    inDegrees[j] -= aMatrix[i][j];
-                    sum -= aMatrix[i][j];
-                }
-                break;                                  // vertex found, breaking cycle
-            }
-            if (!isAny) return false;                   // non-0 indegree vertices not found => can't be sorted
-        } while (sum > 0);
-        for (int i = 0; i < gSize; i++) {
-            if (!visited[i]) path.add(i + 1);           // add non-visited vertices
+
+        level = new int[size][];
+        CustomStack<Integer> lvl = new CustomStack<>();
+        int k = 0;
+
+        k = buildLevel(indegrees, vertices, k);
+        total = rowSubtraction(indegrees, visited, total);
+        total = rowSubtraction(indegrees, visited, total);
+
+
+        while (total > 0) {
+
+            k = buildLevel(indegrees, vertices, k);
+            total = rowSubtraction(indegrees, visited, total);
+
+            if (total == -1) return false;
         }
+
+        for (int i = 0; i < size; i++)
+            if (!visited[i]) {
+                lvl.push(i + 1);
+                path.add(i + 1);
+            }
+
+        k = setLevels(lvl, k);
+        levelsAmt = k;
         return true;
     }
 
+    private int rowSubtraction(int[] indegrees, boolean[] visited, int total) {
 
-    public CustomLinkedList<Integer> getPath() { return path; }
+        boolean found = false;
+        for (int i = 0; i < size; i++) {
+            if (visited[i]) continue;
+            if (indegrees[i] > 0) continue;
+
+            visited[i] = true;
+            found = true;
+            path.add(i + 1);
+            printPath();
+            for (int j = 0; j < size; j++) {
+                indegrees[j] -= aMatrix[i][j];
+                total -= aMatrix[i][j];
+            }
+
+            break;
+        }
+        return found ? total : -1;
+    }
+
+    int buildLevel(int[] indegrees, int[] vertices, int k) {
+        CustomStack<Integer> lvl = new CustomStack<>();
+        System.out.println(Arrays.toString(indegrees));
+        int ff;
+        for (int i = 0; i < size; i++) {
+            if (indegrees[i] == 0 && vertices[i] > 0) {
+
+                ff = vertices[i];
+//                if (ff == 9 || ff == 10 || ff == 2)
+                System.out.printf("\t\ti: %3d | v: %3d | k: %3d\n", i, ff, k);
+                lvl.push(vertices[i]);
+                vertices[i] = -1;
+                indegrees[i] = -1;
+            }
+        }
+        if (!lvl.isEmpty()) k = setLevels(lvl, k);
+        return k;
+    }
+
+    public void printLevels() {
+        for (int i = 0; i < levelsAmt; i++) {
+            System.out.printf("level %d: ", i);
+            for (int j = 0; j < level[i].length; j++) {
+                if (level[i][j] > 0) System.out.printf("%d ", level[i][j]);
+            }
+            System.out.println();
+        }
+    }
+
+    private int setLevels(CustomStack<Integer> lvl, int k) {
+        level[k] = new int[lvl.size()];
+        for (int i = lvl.size(); i > 0; i--) {
+            level[k][i - 1] = lvl.pop();
+        }
+        k++;
+        return k;
+    }
+
+    public CustomLinkedList<Integer> getPath() {return path;}
 
     public void printPath() {
         int len = path.size();
         for (int i = 0; i < len; i++) {
-            System.out.printf((i < len - 1 ? "%d, " : "%d\n"),  path.get(i));
+            System.out.printf((i < len - 1 ? "%d, " : "%d\n"), path.get(i));
         }
     }
+
 
 }
