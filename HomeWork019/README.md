@@ -17,7 +17,7 @@
 
 _(из презентации)_<br><br><br>
 
-![](pictures/digraph3_Belousov_Tkachev.drawio.png)
+![](pictures/digraph3_conspect.drawio.png)
 
 _(из приложенных материалов)_<br><br><br>
 
