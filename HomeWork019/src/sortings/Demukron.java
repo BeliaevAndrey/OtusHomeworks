@@ -71,6 +71,7 @@ public class Demukron {
     private int rowSubtraction(int[] indegrees, boolean[] visited, int total) {
 
         boolean found = false;
+
         for (int i = 0; i < size; i++) {
             if (visited[i]) continue;
             if (indegrees[i] > 0) continue;
@@ -78,7 +79,6 @@ public class Demukron {
             visited[i] = true;
             found = true;
             path.add(i + 1);
-            printPath();
             for (int j = 0; j < size; j++) {
                 indegrees[j] -= aMatrix[i][j];
                 total -= aMatrix[i][j];
@@ -90,23 +90,30 @@ public class Demukron {
     }
 
     int buildLevel(int[] indegrees, int[] vertices, int k) {
+
         CustomStack<Integer> lvl = new CustomStack<>();
-        System.out.println(Arrays.toString(indegrees));
-        int ff;
+
         for (int i = 0; i < size; i++) {
             if (indegrees[i] == 0 && vertices[i] > 0) {
-
-                ff = vertices[i];
-//                if (ff == 9 || ff == 10 || ff == 2)
-                System.out.printf("\t\ti: %3d | v: %3d | k: %3d\n", i, ff, k);
                 lvl.push(vertices[i]);
                 vertices[i] = -1;
                 indegrees[i] = -1;
             }
         }
+
         if (!lvl.isEmpty()) k = setLevels(lvl, k);
+
         return k;
     }
+    private int setLevels(CustomStack<Integer> lvl, int k) {
+        level[k] = new int[lvl.size()];
+        for (int i = lvl.size(); i > 0; i--) {
+            level[k][i - 1] = lvl.pop();
+        }
+        k++;
+        return k;
+    }
+
 
     public void printLevels() {
         for (int i = 0; i < levelsAmt; i++) {
@@ -118,14 +125,6 @@ public class Demukron {
         }
     }
 
-    private int setLevels(CustomStack<Integer> lvl, int k) {
-        level[k] = new int[lvl.size()];
-        for (int i = lvl.size(); i > 0; i--) {
-            level[k][i - 1] = lvl.pop();
-        }
-        k++;
-        return k;
-    }
 
     public CustomLinkedList<Integer> getPath() {return path;}
 

@@ -12,7 +12,7 @@ public class AllTests {
         AllTests allTests = new AllTests();
 
         allTests.testDigraph1();
-        System.out.println("=".repeat(40));
+        System.out.printf("%s\n\n", "=".repeat(80));
         allTests.testDigraph2();
 
     }
@@ -58,6 +58,7 @@ public class AllTests {
             System.out.println("Topological sort: ");
             demukron.printPath();
             System.out.println();
+            demukron.printLevels();
         }
         else
             System.out.println("Topological sort not available!");
@@ -114,7 +115,6 @@ public class AllTests {
         if (kahn.tplSort()) {
             System.out.println("Topological sort: ");
             kahn.printPath();
-
             System.out.println();
         } else {
             System.out.println("Topological sort not available!");
@@ -128,6 +128,8 @@ public class AllTests {
         {
             System.out.println("Topological sort: ");
             demukron.printPath();
+            System.out.println();
+            demukron.printLevels();
 
         }
         else
