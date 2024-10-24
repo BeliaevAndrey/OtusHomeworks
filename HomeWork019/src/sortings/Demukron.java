@@ -8,16 +8,15 @@ import java.util.Arrays;
 
 public class Demukron {
 
-    enum State {none, seen, cplt}
 
-    private final int[][] aMatrix;
+    private final int[][] aMatrix;      // adjacency matrix
 
-    private final int size;
+    private final int size;             // graph size
 
-    CustomLinkedList<Integer> path;
+    CustomLinkedList<Integer> path;     // list for topologically sorted vertices
 
-    int[][] level;
-    int[][] levelZ;
+    int[][] level;      // resulting array
+
     int levelsAmt = 0;
 
     public Demukron(Graph graph) {
@@ -27,43 +26,42 @@ public class Demukron {
     }
 
     public boolean tplSort() {
-        int total = 0;
-        boolean[] visited = new boolean[size];
-        int[] indegrees = new int[size];
-        int[] vertices = new int[size];
+        int total = 0;                              // sum over adjacency matrix
+        boolean[] visited = new boolean[size];      // visited vertexes array
+        int[] indegrees = new int[size];            // indegrees array
+        int[] vertices = new int[size];             // vertices array
 
         for (int i = 0; i < size; i++) {
             vertices[i] = i + 1;
             for (int j = 0; j < size; j++) {
-                indegrees[i] += aMatrix[j][i];
-                total += aMatrix[j][i];
+                indegrees[i] += aMatrix[j][i];      // calc. indegrees array
+                total += aMatrix[j][i];             // calc. overall sum
             }
         }
 
         level = new int[size][];
-        CustomStack<Integer> lvl = new CustomStack<>();
-        int k = 0;
+        CustomStack<Integer> lvl = new CustomStack<>();     // level vertex stack
+        int k = 0;                                          // level counter
 
         k = buildLevel(indegrees, vertices, k);
         total = rowSubtraction(indegrees, visited, total);
         total = rowSubtraction(indegrees, visited, total);
 
-
         while (total > 0) {
 
-            k = buildLevel(indegrees, vertices, k);
-            total = rowSubtraction(indegrees, visited, total);
+            k = buildLevel(indegrees, vertices, k);             // collect vertices at level; get next level number
+            total = rowSubtraction(indegrees, visited, total);  // subtract row from indegrees array
 
             if (total == -1) return false;
         }
 
-        for (int i = 0; i < size; i++)
+        for (int i = 0; i < size; i++)          // add rest vertices
             if (!visited[i]) {
                 lvl.push(i + 1);
                 path.add(i + 1);
             }
 
-        k = setLevels(lvl, k);
+        k = setLevels(lvl, k);                  // write rest to "level" array
         levelsAmt = k;
         return true;
     }
@@ -76,15 +74,15 @@ public class Demukron {
             if (visited[i]) continue;
             if (indegrees[i] > 0) continue;
 
-            visited[i] = true;
-            found = true;
-            path.add(i + 1);
+            visited[i] = true;                      // mark vertex as visited
+            found = true;                           // set 0-indegree vertex found
+            path.add(i + 1);                        // add to path
             for (int j = 0; j < size; j++) {
-                indegrees[j] -= aMatrix[i][j];
-                total -= aMatrix[i][j];
+                indegrees[j] -= aMatrix[i][j];      // consequent subtraction of a row
+                total -= aMatrix[i][j];             // decrease overall counter
             }
 
-            break;
+            break;      // vertex found => break inner cycle
         }
         return found ? total : -1;
     }
