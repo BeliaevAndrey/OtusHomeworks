@@ -6,14 +6,14 @@ import sortings.Kahn;
 import sortings.Tarjan;
 import util.GraphUtl;
 
-public class AllTests {
+public class RunAllTests {
 
     public static void main(String[] args) {
-        AllTests allTests = new AllTests();
+        RunAllTests runAllTests = new RunAllTests();
 
-        allTests.testDigraph1();
+        runAllTests.testDigraph1();
         System.out.printf("%s\n\n", "=".repeat(80));
-        allTests.testDigraph2();
+        runAllTests.testDigraph2();
 
     }
 

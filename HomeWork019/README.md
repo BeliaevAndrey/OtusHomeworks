@@ -2,6 +2,15 @@
 
 ### Алгоритм Демукрона
 
+* алгоритм Демукрона:
+  * src/sortings/Demukron.java
+* алгоритм Кана:
+  * src/sortings/Kahn.java
+* алгоритм Тарьяна:
+  * src/sortings/Tarjan.java
+* алгоритм Косарайю:
+  * src/Kosaraju/Kosaraju.java
+
 Для проверки топологической сортировки использовались графы:
 
 ![](pictures/digraph.drawio.png)
@@ -10,7 +19,7 @@ _(из презентации)_<br><br><br>
 
 ![](pictures/digraph3_Belousov_Tkachev.drawio.png)
 
-_(из приложенных материалов)_<br><br>
+_(из приложенных материалов)_<br><br><br>
 
 Для проверки алгоритма Косарайю  сортировки использовался граф из презентации:
 ![](pictures/DigraphForKosaraju.drawio.png)

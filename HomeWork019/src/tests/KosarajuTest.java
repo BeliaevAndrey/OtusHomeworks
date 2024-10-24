@@ -33,13 +33,16 @@ public class KosarajuTest {
 
         int[][] adjMatrix = utl.vectorAjcToMatrixAjc(adjVector);
 
-//        utl.printMatrix(adjMatrix);
+        utl.printMatrix(adjMatrix);
+        System.out.println();
 
         Kosaraju kosaraju = new Kosaraju(adjMatrix);
         kosaraju.kosarajuSearch();
 
 
         CustomLinkedList<CustomLinkedList<Integer>> components = kosaraju.getCompAll();
+        System.out.println("Kosaraju algorithm.");
+        System.out.println("Strongly connected components:");
         int len = components.size();
         for (int i = 0; i < len; i++) {
             CustomLinkedList<Integer> component = components.get(i);
