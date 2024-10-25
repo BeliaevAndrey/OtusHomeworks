@@ -1,6 +1,6 @@
 package structures;
 
-public class CustomQueue<T> implements IQueue<T> {
+public class CustomQueue<T extends Comparable<T>> implements IQueue<T> {
 
     CustomLinkedList<T> storage;
 

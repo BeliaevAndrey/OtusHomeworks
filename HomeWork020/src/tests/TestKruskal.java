@@ -2,15 +2,14 @@ package tests;
 
 import graph.Edge;
 import graph.Graph;
-import spanningTree.Prim;
+import spanningTree.Kruskal;
 import structures.CustomLinkedList;
 import util.GraphUtl;
 
-public class TestPrim {
-
-
+public class TestKruskal {
 
     public static void main(String[] args) {
+
 
         int[][] adjacencyMatrix = {
                 { 0, 2, 2, 0, 1, 0, 3 },
@@ -29,17 +28,20 @@ public class TestPrim {
 
         utl.printMatrix(adjacencyMatrix);
         System.out.println();
-        Prim prim = new Prim(graph);
+        Kruskal kruskal = new Kruskal(graph);
 
-        prim.spanningTree(0);
+        kruskal.spanningTree();
 
-        System.out.println("Prim algorithm.");
+
+
+        System.out.println("Kruskal algorithm.");
         System.out.println("Spanning tree: ");
-        CustomLinkedList<Edge> edges = prim.getEdges();
+        CustomLinkedList<Edge> edges = kruskal.getEdges();
         for (int i = 0; i < edges.size(); i++) {
             System.out.println(edges.get(i));
         }
-        System.out.printf("Spanning tree weight: %d\n", prim.getMinWeight());
+        System.out.printf("Spanning tree weight: %d\n", kruskal.getMinWeight());
     }
 
 }
+

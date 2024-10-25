@@ -45,8 +45,7 @@ public class testBSF {
         System.out.println("Spanning tree: ");
         CustomLinkedList<Edge> edges = st.getEdges();
         for (int i = 0; i < edges.size(); i++) {
-            Edge e = edges.get(i);
-            System.out.printf("%d - %d\n", e.begin + 1, e.end + 1);
+            System.out.println(edges.get(i));
         }
         System.out.println();
     }

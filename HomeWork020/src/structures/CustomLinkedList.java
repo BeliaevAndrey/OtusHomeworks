@@ -1,6 +1,6 @@
 package structures;
 
-public class CustomLinkedList<T> {
+public class CustomLinkedList<T extends Comparable<T>> {
     Node<T> head;
     private int size;
 
@@ -82,12 +82,36 @@ public class CustomLinkedList<T> {
         this.head = tmp.head;
     }
 
-    class Node<E> {
+    public void sort() {
+        for (int i = 0; i < size - 1; i++) {
+            int pos = i;
+            for (int j = i; j < size; j++) {
+                if (search(j).compareTo(search(pos)) < 0) pos = j;
+            }
+            if (pos != i) swapData(i, pos);
+        }
+    }
+
+    void swapData(int l, int r) {
+        T tmp = get(l);
+        search(l).data = search(r).data;
+        search(r).data = tmp;
+    }
+
+
+
+
+    static class Node<E extends Comparable<E>> implements Comparable<Node<E>> {
         Node<E> next;
         E data;
 
         public Node(E data) {
             this.data = data;
+        }
+
+        @Override
+        public int compareTo(Node<E> o) {
+            return data.compareTo(o.data);
         }
     }
 }
