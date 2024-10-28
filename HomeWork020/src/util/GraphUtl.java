@@ -30,12 +30,14 @@ public class GraphUtl {
 
 
     public void printMatrix(int[][] aMatrix) {
+        System.out.println("Adjacency matrix:");
         for (int[] matrix : aMatrix) {
             for (int i : matrix) {
                 System.out.printf("%d\t", i);
             }
             System.out.println();
         }
+        System.out.println();
     }
 
     public boolean compareMatrices(int[][] m1, int[][] m2) {
