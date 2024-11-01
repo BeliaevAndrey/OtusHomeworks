@@ -19,6 +19,26 @@ public class TestDijkstra {
                 {14, 0, 2, 0, 9, 0}
         };
 
+        int[][] aMatrix2 = {
+                {0, 7, 7, 0, 0, 0, 0, 0},
+                {7, 0, 1, 4, 0, 0, 0, 0},
+                {7, 1, 0, 0, 5, 0, 9, 0},
+                {0, 4, 0, 0, 0, 7, 0, 5},
+                {0, 0, 5, 0, 0, 0, 1, 0},
+                {0, 0, 0, 7, 0, 0, 2, 0},
+                {0, 0, 9, 0, 1, 2, 0, 3},
+                {0, 0, 0, 5, 0, 0, 3, 0},
+        };
+
+        testDijkstra(aMatrix, 1, 4);
+        System.out.println("=".repeat(80));
+        System.out.println("=".repeat(80));
+        testDijkstra(aMatrix2, 0, 7);
+
+    }
+
+
+    static void testDijkstra(int[][] aMatrix, int start, int end) {
         Graph graph = new Graph(aMatrix, aMatrix.length);
         Dijkstra dijkstra = new Dijkstra(graph);
 
@@ -45,7 +65,7 @@ public class TestDijkstra {
         }
 
 
-        int start = 1, end = 4;
+//        int start = 1, end = 4;
         Edge[] path = dijkstra.findPath(start, end);
 
         System.out.printf("\nPath form %d to %d:\n", start, end);
