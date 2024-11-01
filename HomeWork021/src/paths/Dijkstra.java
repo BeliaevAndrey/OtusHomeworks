@@ -2,7 +2,6 @@ package paths;
 
 import graph.Edge;
 import graph.Graph;
-import structures.CustomLinkedList;
 import structures.CustomStack;
 
 public class Dijkstra {
