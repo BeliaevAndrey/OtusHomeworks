@@ -23,8 +23,8 @@ public class TestBellmanFord {
 
         System.out.println("Bellman-Ford algorithm.");
         System.out.println("Minimal paths:");
-        System.out.print("\nStart\t| Vertices\nvertex\t| sequence\n");
-        System.out.println("-".repeat(40));
+        System.out.print("\nStart\t| Path lesser\nvertex\t| costs sequence\n");
+        System.out.println("-".repeat(30));
         for (int vertex = 0; vertex < bf.getSize(); vertex++) {
             int[] ways = bf.findPaths(vertex);
             System.out.printf("%4d \t|", vertex + 1);
