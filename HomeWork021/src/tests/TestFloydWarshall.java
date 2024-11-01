@@ -42,10 +42,8 @@ public class TestFloydWarshall {
         Graph graph = new Graph(aMatrix, aMatrix.length);
         FloydWarshall fw = new FloydWarshall(graph);
 
-
         GraphUtl utl = new GraphUtl();
         utl.printMatrix(aMatrix);
-
 
         int[][] ways = fw.findPaths();
 

@@ -2,6 +2,7 @@ package tests;
 
 import graph.Graph;
 import paths.BellmanFord;
+import util.GraphUtl;
 
 public class TestBellmanFord {
 
@@ -40,6 +41,8 @@ public class TestBellmanFord {
         Graph graph = new Graph(aMatrix, aMatrix.length);
         BellmanFord bf = new BellmanFord(graph);
 
+        GraphUtl utl = new GraphUtl();
+        utl.printMatrix(aMatrix);
 
         System.out.println("Bellman-Ford algorithm.");
         System.out.println("Minimal paths:");
