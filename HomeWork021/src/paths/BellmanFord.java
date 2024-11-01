@@ -12,7 +12,6 @@ public class BellmanFord {
     private final int[][] matrix;
     private final int size;
     private final int totalWeight;
-    private final CustomLinkedList<Edge> edgesList;
 
     // endregion
 
@@ -20,55 +19,31 @@ public class BellmanFord {
     public BellmanFord(Graph graph) {
         matrix = graph.getMatrixAdj();
         size = graph.getSize();
-        edgesList = new CustomLinkedList<>();
         totalWeight = graph.findTotalWeight();
     }
 
     public int[] findPaths(int vertex) {
-        int[] ways = new int[size];
+        int[] paths = new int[size];        // path costs array
         for (int i = 0; i < size; i++) {
-            if (i == vertex)
-                ways[i] = 0;
-            else if (matrix[vertex][i] == 0)
-                ways[i] = totalWeight;
-            else
-                ways[i] = matrix[vertex][i];
+            if (i == vertex) paths[i] = 0;
+            else if (matrix[vertex][i] == 0) paths[i] = totalWeight;    // instead infinity
+            else paths[i] = matrix[vertex][i];
         }
 
         for (int k = 0; k < size - 1; k++) {
             for (int i = 0; i < size; i++) {
                 if (i == vertex) continue;
                 for (int j = 0; j < size; j++) {
-                    if (i == j) continue;
-                    if (j == vertex) continue;
-                    if (matrix[i][j] == 0) continue;
-                    if ((ways[i] + matrix[i][j]) < ways[j]) ways[j] = ways[i] + matrix[i][j];
+                    if (i == j) continue;               // skip loops (main diagonal)
+                    if (j == vertex) continue;          // skip self
+                    if (matrix[i][j] == 0) continue;    // skip empty
+
+                    if ((paths[i] + matrix[i][j]) < paths[j]) paths[j] = paths[i] + matrix[i][j];
                 }
             }
         }
-        return ways;
+        return paths;
     }
-
-
-    // ========================================================================
-    // === Extra ==============================================================
-
-    void listEdges() {
-        for (int i = 0; i < size; i++) {
-            for (int j = 0; j < size; j++) {
-                if (i == j) continue;
-                if (matrix[i][j] == 0) continue;
-                edgesList.add(new Edge(i, j, matrix[i][j]));
-            }
-        }
-    }
-
-    void printEL() {
-        for (int i = 0; i < edgesList.size(); i++) {
-            System.out.println(edgesList.get(i));
-        }
-    }
-
 
     public int getSize() {return size;}
 }
