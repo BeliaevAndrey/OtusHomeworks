@@ -1,5 +1,24 @@
 ## Домашнее задание
 
+
+Графы, использовавшийся для проверки:<br> 
+
+<img src="pictures/graph01.drawio.png" width="500" alt="Граф 1" />
+<img src="pictures/graph02_dijkstra.drawio.png" width="500" alt="Граф 2" />
+<img src="pictures/graph03.drawio.png" width="500" alt="Граф 3" />
+
+**Файлы:**
+* Алгоритм Дейкстры
+  * src/paths/Dijkstra.java
+* Алгоритм Флойда-Уоршалла
+  * src/paths/FloydWarshall.java
+
+
+<hr>
+<hr>
+
+## Домашнее задание
+
 ### Реализовать алгоритм Дейкстры
 ### Цель:
 

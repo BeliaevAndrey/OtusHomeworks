@@ -47,7 +47,7 @@ public class TestDijkstra {
 
         int[][] costs = dijkstra.findAllPathCosts();
 
-
+        System.out.println("Dijkstra algorithm");
         System.out.println("Costs for all vertices:\nStart  | Paths\nvertex | costs");
         System.out.println("-".repeat(5 + dijkstra.getSize() * 5));
         System.out.print(" ".repeat(7));
