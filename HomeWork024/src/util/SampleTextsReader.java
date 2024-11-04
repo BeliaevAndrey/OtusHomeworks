@@ -19,7 +19,7 @@ public class SampleTextsReader {
     public SampleTextsReader() {
         path = Path.of(System.getProperty("user.dir"), "HomeWork024", "TestData");
         if (!Files.isDirectory(path))
-            throw new IllegalMonitorStateException("Path not found/Not a directory");
+            throw new IllegalStateException("Path not found/Not a directory");
         count = 0;
         samples = new HashMap<>();
         getFiles();
@@ -31,7 +31,7 @@ public class SampleTextsReader {
 
     private void getFiles() {
         ArrayList<Path> testPaths = new ArrayList<>();
-        try (DirectoryStream<Path> ds = Files.newDirectoryStream(path);) {
+        try (DirectoryStream<Path> ds = Files.newDirectoryStream(path)) {
             ds.forEach(testPaths::add);
         } catch (IOException e) {
             System.out.println(e.getMessage());
