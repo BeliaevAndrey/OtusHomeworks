@@ -61,4 +61,8 @@ public class BoyerMoore implements ISearcher {
     }
 
     public int getCompares() { return compares; }
+
+    @Override
+    public String getHeader() { return header; }
+
 }

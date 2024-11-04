@@ -51,4 +51,8 @@ public class BoyerMooreHorspool implements ISearcher {
 
 
     public int getCompares() {return compares;}
+
+    @Override
+    public String getHeader() { return header; }
+
 }

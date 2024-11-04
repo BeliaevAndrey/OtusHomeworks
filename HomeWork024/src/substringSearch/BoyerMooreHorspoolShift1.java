@@ -2,6 +2,7 @@ package substringSearch;
 
 public class BoyerMooreHorspoolShift1 implements ISearcher {
 
+    public final String header = "Boyer-Moore-Horspool algorithm; shift=1";
     private String text;
     private String mask;
     int lenText;
@@ -46,4 +47,8 @@ public class BoyerMooreHorspoolShift1 implements ISearcher {
     }
 
     public int getCompares() { return compares; }
+
+    @Override
+    public String getHeader() { return header; }
+
 }

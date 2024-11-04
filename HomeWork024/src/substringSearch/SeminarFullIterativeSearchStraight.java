@@ -39,4 +39,8 @@ public class SeminarFullIterativeSearchStraight implements ISearcher {
 
     @Override
     public int getCompares() {return compares;}
+
+    @Override
+    public String getHeader() { return header; }
+
 }

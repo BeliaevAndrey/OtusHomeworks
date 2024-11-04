@@ -8,4 +8,6 @@ public interface ISearcher {
     void prepare();
 
     int getCompares();
+
+    String getHeader();
 }
