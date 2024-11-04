@@ -14,7 +14,7 @@ public class TestResultWriter {
     public void writeResults(ArrayList<String> results) {
         if (path == null) throw new RuntimeException("Uninitialized writer!");
 
-        String header = "Title,position,compares amount,repeats,mean time (s/repeats)\n";
+        String header = "Title,Sample number,Pattern number,Position,Check OK,Compares amount,Repeats,Mean time (s/repeats)\n";
         Path filePath = Path.of(path.toString(), fileName);
 
         try (BufferedWriter bw = Files.newBufferedWriter(
