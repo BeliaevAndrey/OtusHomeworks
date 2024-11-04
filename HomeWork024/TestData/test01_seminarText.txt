@@ -1,0 +1,7 @@
+# Sample 1 from seminar
+<sample>
+KOLKOKAKOLOKOLL
+</sample>
+<pattern>
+KOLOKOL
+</pattern>

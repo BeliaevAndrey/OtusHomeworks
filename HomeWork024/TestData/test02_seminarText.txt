@@ -1,0 +1,7 @@
+# Sample 2 from seminar
+<sample>
+BC-ABC-BC-AC-ABCBC-ABC-BC-C-ABC-ABC-BC-C-ABC
+</sample>
+<pattern>
+BC-ABC-BC-C-ABC
+</pattern>
