@@ -2,7 +2,7 @@ package substringSearch;
 
 public class FullIterativeSearchReverse implements ISearcher {
 
-    public final String header = "Iterative search suffix shift 1 algorithm";
+    public final String header = "Iterative search suffix shift algorithm";
 
     private int compares;
     private String text;
@@ -24,7 +24,12 @@ public class FullIterativeSearchReverse implements ISearcher {
 
         for (int i = lenMask; i <= lenText; i++) {
             int pos = i - 1, j = lenMask - 1;
-            for (; j >= 0 && compare(text.charAt(pos), mask.charAt(j)); j--, pos--) ;
+            for (; j >= 0; j--, pos--) {
+                if (!compare(text.charAt(pos), mask.charAt(j))) {
+                    i += lenMask - j - 1;               // shift by suffix length
+                    break;
+                }
+            }
             if (j < 0) return i - lenMask;
         }
         return -1;

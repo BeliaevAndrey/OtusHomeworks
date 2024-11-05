@@ -2,7 +2,7 @@ package substringSearch;
 
 public class SeminarFullIterativeSearchStraight implements ISearcher {
 
-    public final String header = "Seminar implementation Iterative search prefix shift algorithm";
+    public final String header = "Seminar implementation Iterative search algorithm straight";
 
     private int compares;
     private String text;

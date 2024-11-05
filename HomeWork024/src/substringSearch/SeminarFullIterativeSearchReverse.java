@@ -2,7 +2,7 @@ package substringSearch;
 
 public class SeminarFullIterativeSearchReverse implements ISearcher {
 
-    public final String header = "Seminar implementation Iterative search suffix shift algorithm";
+    public final String header = "Seminar implementation Iterative search algorithm reverse";
 
     private int compares;
     private String text;

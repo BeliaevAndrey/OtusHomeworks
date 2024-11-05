@@ -2,7 +2,7 @@ package substringSearch;
 
 public class FullIterativeSearchStraight implements ISearcher {
 
-    public final String header = "Iterative search prefix shift 1 algorithm";
+    public final String header = "Iterative search prefix shift algorithm";
 
     private int compares;
     private String text;
@@ -26,6 +26,7 @@ public class FullIterativeSearchStraight implements ISearcher {
             int pos = i, j = 0;
             for (; j < lenMask; j++, pos++) {
                 if (!compare(text.charAt(pos), mask.charAt(j))) {
+                    i += j;                        // shift by prefix length
                     break;
                 }
             }
