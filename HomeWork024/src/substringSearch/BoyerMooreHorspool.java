@@ -41,12 +41,13 @@ public class BoyerMooreHorspool implements ISearcher {
     }
 
     public void prepare() {
-        int size = 128;
+        int size = 128;                     // ASCII table length
         shifts = new int[size];
         for (int i = 0; i < size; i++)
-            shifts[i] = lenMask;
+            shifts[i] = lenMask;            // set default shift as pattern length
         for (int i = 0; i < lenMask - 1; i++)
             shifts[mask.charAt(i)] = lenMask - i - 1;
+            // set shifts for pattern symbols as difference of their position and pattern length
     }
 
 
