@@ -71,8 +71,8 @@ public class TestTrieCompareHT {
                 resultOAHT.get("Delete time"));
 
 
-        String thead = "%s;%s;%s;%s;%s;%s;%s";
-        String tbody = "%s;%f;%.0f;%f;%.0f;%f;%f";
+        String thead = "%s,%s,%s,%s,%s,%s,%s";
+        String tbody = "%s,%f,%.0f,%f,%.0f,%f,%f";
         String[] results = new String[3];
         results[0] = String.format(
                 thead,
