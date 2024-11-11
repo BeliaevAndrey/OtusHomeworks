@@ -1,4 +1,4 @@
-package enhlishDictPrefixTree;
+package englishDictPrefixTree;
 
 public class App {
 

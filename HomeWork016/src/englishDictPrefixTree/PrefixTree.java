@@ -1,4 +1,4 @@
-package enhlishDictPrefixTree;
+package englishDictPrefixTree;
 
 import java.util.Locale;
 
