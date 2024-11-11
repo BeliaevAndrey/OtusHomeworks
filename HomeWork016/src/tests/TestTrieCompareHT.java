@@ -4,6 +4,7 @@ import OAHashTable.OpenAddressHashTableGen;
 import util.GenerateRandomWordsArr;
 import Trie.Trie;
 import util.FReader;
+import util.WriteResults;
 
 import java.util.HashMap;
 
@@ -67,6 +68,37 @@ public class TestTrieCompareHT {
                 resultOAHT.get("Delete time"));
 
 
+        String thead = "%s;%s;%s;%s;%s;%s;%s";
+        String tbody = "%s;%f;%.0f;%f;%.0f;%f;%f";
+        String[] results = new String[3];
+        results[0] = String.format(
+                thead,
+                "Structure", "Put time", "Searched words amt", "Search time",
+                "Searched words amt", "Search time", "Delete time"
+        );
+        results[1] = String.format(
+                tbody,
+                "Trie",
+                resultTrie.get("Put time"),
+                resultTrie.get("Searched words A"),
+                resultTrie.get("Search time A"),
+                resultTrie.get("Searched words B"),
+                resultTrie.get("Search time B"),
+                resultTrie.get("Delete time")
+        );
+        results[2] = String.format(
+                tbody,
+                "Hash Table",
+                resultOAHT.get("Put time"),
+                resultOAHT.get("Searched words A"),
+                resultOAHT.get("Search time A"),
+                resultOAHT.get("Searched words B"),
+                resultOAHT.get("Search time B"),
+                resultOAHT.get("Delete time")
+        );
+
+        WriteResults wr = new WriteResults();
+        wr.writeResultsTable(results);
     }
 
     void testHashTable(String[] dict) {
@@ -95,6 +127,7 @@ public class TestTrieCompareHT {
         for (String key : keys) {
             String s = oaHTable.get(key);
             if (s != null) successOAHT++;
+            else nullsOAHT++;
         }
         double end = (double) (System.nanoTime() - start) / 1e9;
 
@@ -152,6 +185,7 @@ public class TestTrieCompareHT {
         for (String key : keys) {
             s = book.get(key);
             if (s != null) successTrie++;
+            else nullsTrie++;
         }
         double end = (double) (System.nanoTime() - start) / 1e9;
 
