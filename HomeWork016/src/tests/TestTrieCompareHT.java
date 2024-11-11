@@ -7,6 +7,7 @@ import util.FReader;
 import util.WriteResults;
 
 import java.util.HashMap;
+import java.util.Locale;
 
 
 public class TestTrieCompareHT {
@@ -46,6 +47,8 @@ public class TestTrieCompareHT {
         System.out.printf("%20s%20s\n", "successTrie", "successOAHT");
         System.out.printf("%20d%20d\t%s\n", successTrie, successOAHT, successTrie == successOAHT);
         System.out.printf("%20d%20d\t%s\n", nullsTrie, nullsOAHT, nullsTrie == nullsOAHT);
+
+        Locale.setDefault(Locale.US);
 
         String head = "%20s|%20s|%20s|%20s|%20s|%20s|%20s\n";
         String body = "%20s|%20f|%20.0f|%20f|%20.0f|%20f|%20f\n";
