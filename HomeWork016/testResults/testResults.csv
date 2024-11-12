@@ -1,3 +1,0 @@
-Structure,Put time,Searched words amt,Search time,Searched words amt,Search time,Delete time
-Trie,0.028376,45921,0.017429,100000000,2.451237,0.010801
-Hash Table,0.030704,45921,0.008068,100000000,5.060662,3.463015
