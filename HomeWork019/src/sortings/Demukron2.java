@@ -28,7 +28,7 @@ public class Demukron2 {
         Graph g = new Graph(matrix, matrix.length);
         Demukron2 demukron2 = new Demukron2(g);
         System.out.println("Demukron algorithm: ");
-        if (!demukron2.tplSort0())
+        if (!demukron2.tplSort())
             System.out.println("Topological sort not available!");
         else {
             System.out.println("\nSorted sequence:");
@@ -66,7 +66,7 @@ public class Demukron2 {
         Graph g = new Graph(matrix2, matrix2.length);
         Demukron2 demukron2 = new Demukron2(g);
         System.out.println("Demukron algorithm: ");
-        if (!demukron2.tplSort0())
+        if (!demukron2.tplSort())
             System.out.println("Topological sort not available!");
         else {
             System.out.println("\nSorted sequence:");
@@ -108,7 +108,7 @@ public class Demukron2 {
     }
 
 
-    public boolean tplSort0() {
+    public boolean tplSort() {
 
         int k = 0;
         int[] indegrees = new int[gSize];
