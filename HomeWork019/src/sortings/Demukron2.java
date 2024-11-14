@@ -97,17 +97,6 @@ public class Demukron2 {
         path = new CustomLinkedList<>();
     }
 
-    public void printLevels() {
-        for (int i = 0; i < levelsAmt; i++) {
-            System.out.printf("level %d: ", i);
-            for (int j = 0; j < level[i].length; j++) {
-                if (level[i][j] > 0) System.out.printf("%d, ", level[i][j]);
-            }
-            System.out.println();
-        }
-    }
-
-
     public boolean tplSort() {
 
         int k = 0;
@@ -135,7 +124,7 @@ public class Demukron2 {
                 lvl.enqueue(i + 1);
             }
         }
-        k = setLevels(lvl, k);                  // write rest to "level" array
+        k = setLevels(lvl, k);
         levelsAmt = k;
         return true;
     }
@@ -161,17 +150,7 @@ public class Demukron2 {
     int buildLevel(int[] vertices, int[] indegrees, int k) {
         CustomQueue<Integer> lvl = new CustomQueue<>();
 
-        if (k == 0) {
-            System.out.print("     | ");
-            Arrays.stream(vertices).forEach(x -> System.out.printf("%4d", x));
-            System.out.println("\n" + "-".repeat(65));
-        }
-        System.out.printf("k: %d | ", k);
-        Arrays.stream(indegrees).forEach(x -> {
-            if (x < 0) System.out.printf("%4s", "-");
-            else System.out.printf("%4d", x);
-        });
-        System.out.println();
+        printStage(vertices, indegrees, k);
 
         for (int i = 0; i < gSize; i++) {
             if (vertices[i] > 0 && indegrees[i] == 0) {
@@ -206,15 +185,28 @@ public class Demukron2 {
         return total;
     }
 
-    int getTotal() {
-        int total = 0;
-        for (int i = 0; i < gSize; i++) {
-            for (int j = i; j < gSize; j++) {
-                total += gMatrix[i][j];
-                total += gMatrix[j][i];
+    public void printLevels() {
+        for (int i = 0; i < levelsAmt; i++) {
+            System.out.printf("level %d: ", i);
+            for (int j = 0; j < level[i].length; j++) {
+                if (level[i][j] > 0) System.out.printf("%d, ", level[i][j]);
             }
+            System.out.println();
         }
-        return total;
+    }
+
+    void printStage(int[] vertices, int[] indegrees, int k) {
+        if (k == 0) {
+            System.out.print("     |\t ");
+            Arrays.stream(vertices).forEach(x -> System.out.printf("%d\t", x));
+            System.out.println("\n" + "-".repeat(80));
+        }
+        System.out.printf("k: %d |\t ", k);
+        Arrays.stream(indegrees).forEach(x -> {
+            if (x < 0) System.out.print("-\t");
+            else System.out.printf("%d\t", x);
+        });
+        System.out.println();
     }
 
 }
