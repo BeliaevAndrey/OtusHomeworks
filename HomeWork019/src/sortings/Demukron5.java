@@ -74,66 +74,6 @@ public class Demukron5 {
     }
 
 
-    // region another try
-
-    /*
-    Демукрон()
-    уровень = 0
-    для  i = 0  до  количество вершин
-        m[i] = CуммаCтолбца(A, i);
-        v.добавить(i)
-    пока  v не пусто
-        для  u  из  v
-            если  m[u] == 0  то
-            zero.добавить(u)
-        если  zero пусто
-            вернуть  ложь
-        для  u  из  zero
-            Порядок[уровень].добавить(u)
-            v.удалить(u)
-            ПересчитатьМ(u)
-        уровень++
-
-    ПересчитатьМ(u):
-        для  w  из  v
-            m[w] -= A(u, w)
-    */
-    int count = 14 * 14;
-
-    public boolean tplSort0() {
-        int k = 0;
-        int[] colSums = new int[size];
-        int total = getSumsOverColumns(colSums);
-        int[] vertices = new int[size];
-
-        level = new int[size][size];
-        CustomQueue<Integer> zero = new CustomQueue<>();
-        while (checkArr(vertices, colSums)) {
-            System.out.println("cols sums: " + Arrays.toString(colSums));
-            for (int j = 0; j < vertices.length; j++) {
-                if (colSums[j] == 0) zero.enqueue(j);
-            }
-            if (zero.isEmpty()) return false;
-            int cnt = 0;
-            System.out.println("zero.size() " + zero.size());
-            while (!zero.isEmpty()) {
-                int u = zero.dequeue();
-                level[k][cnt++] = u;
-                vertices[u] = -1;
-                colSums[u] -= 1;
-            }
-            k++;
-
-            System.out.println("check: " + checkArr(vertices, colSums));
-
-        }
-
-
-        return true;
-
-    }
-
-
     public boolean tplSort() {
         int k = 0;
         int[] indegrees = new int[size];
@@ -145,7 +85,6 @@ public class Demukron5 {
 
         while (checkArr(vertices, indegrees) /*&& total + 2 > 0 && count > 0*/) {
             total = stRow(vertices, indegrees, total);
-            count--;
         }
 
 
@@ -167,7 +106,7 @@ public class Demukron5 {
             }
             break;
         }
-        if (!found) return -1;  // System.out.println("\t".repeat(10) + " NOT FOUND ");
+        if (!found) return -1;
         return total;
     }
 
@@ -214,9 +153,6 @@ public class Demukron5 {
         return total;
     }
 
-
-    // endregion
-
     public void printLevels() {
         for (int i = 0; i < levelsAmt; i++) {
             System.out.printf("level %d: ", i);
@@ -226,20 +162,4 @@ public class Demukron5 {
             System.out.println();
         }
     }
-
-
-//    void printStage(int[] vertices, int[] indegrees, int k) {
-//        if (k == 0) {
-//            System.out.print("     |\t ");
-//            Arrays.stream(vertices).forEach(x -> System.out.printf("%d\t", x));
-//            System.out.println("\n" + "-".repeat(80));
-//        }
-//        System.out.printf("k: %d |\t ", k);
-//        Arrays.stream(indegrees).forEach(x -> {
-//            if (x < 0) System.out.print("-\t");
-//            else System.out.printf("%d\t", x);
-//        });
-//        System.out.println();
-//    }
-
 }
