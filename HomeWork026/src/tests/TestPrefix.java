@@ -11,11 +11,7 @@ public class TestPrefix {
     public static void main(String[] args) {
 
         String testText = "abcabcd";
-        KMP kmp = new KMP();
-        kmp.createPi(testText);
-        int[] res1 = kmp.getPi();
 
-        System.out.printf("res1: %d  %s\n", res1.length, Arrays.toString(res1));
 
         PrefixFunctions pf = new PrefixFunctions();
 

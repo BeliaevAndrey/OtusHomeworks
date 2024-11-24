@@ -1,18 +1,7 @@
 package hw;
 
 public class KMP {
-/*
-     pi | q |
-    ----|---|------------------
-     0  | 0 |    (+A)
-     0  | 1 | A    (+B)
-     0  | 2 | A B    (+A)
-     1  | 3 | A B A    (+B)
-     2  | 4 | A B A B    (+C)
-     0  | 5 | A B A B C
 
-
- */
 
     int[] pi; //    pi-function (pi-table)
 
@@ -30,7 +19,7 @@ public class KMP {
             if (pattern.charAt(len) == pattern.charAt(q)) len++;
 
             pi[q + 1] = len;
-        } // O(P)
+        }
 
     }
 
