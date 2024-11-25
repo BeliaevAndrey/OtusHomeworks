@@ -8,14 +8,13 @@ public class PrefixFunctions {
 
     public int[] prefixFunctionSlow(String s) {
         char[] str = s.toCharArray();
-        int[] p = new int[str.length + 1];
+        int[] p = new int[str.length + 1];  // prefix array
         for (int i = 0; i < str.length; i++)
             for (int k = 0; k < i; k++) {
                 if (s.substring(0, k).equals(s.substring(i - k, i))) {
                     p[i] = k;
                 }
-//                System.out.printf("%d %d | %10s %-10s%30s\n", i, k, s.substring(0, k), s.substring(i - k, i),
-//                        Arrays.toString(p));
+
             }
         return p;
     }

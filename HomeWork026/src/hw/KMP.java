@@ -10,7 +10,6 @@ public class KMP {
         pi = new int[pattern.length() + 1];
 
         pi[0] = 0;
-        pi[1] = 0;
         for (int q = 1; q < pattern.length(); q++) {
             int len = pi[q];
 
