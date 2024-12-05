@@ -7,38 +7,27 @@ public class ArrayRLE {
     public static void main(String[] args) {
         ArrayRLE arl = new ArrayRLE();
         String wikiLine1 = "WWWWWWWWWBBBWWWWWWWWWWWWWWWWWWWWWWWWBWWWWWWWWWWWWWW";
-                          //WWWWWWWWWBBBWWWWWWWWWWWWWWWWWWWWWWWWBWWWWWWWWWWWWWW
+        //WWWWWWWWWBBBWWWWWWWWWWWWWWWWWWWWWWWWBWWWWWWWWWWWWWW
         String wikiLine2 = "ABCABCABCDDDFFFFFF";
 
-        char[] a = wikiLine1.toCharArray();
-        arl.encode(a);
-        System.out.println(Arrays.toString(arl.encoded));
-//        char[] dcd1 =  arl.decode();
+        char[] sample1 = wikiLine1.toCharArray();
+        byte[] encoded1 = arl.encode(sample1);
+        System.out.println(Arrays.toString(encoded1));
         StringBuilder sb = new StringBuilder();
-        for (char c : arl.decode()) sb.append(c);
+        for (char c : arl.decode(encoded1)) sb.append(c);
         System.out.println("rst: " + sb);
         System.out.println(sb.toString().equals(wikiLine1));
 
-        char[] b = wikiLine2.toCharArray();
-        arl.encode(b);
-        System.out.println(Arrays.toString(arl.encoded));
+        char[] sample2 = wikiLine2.toCharArray();
+        byte[] encoded2 = arl.encode(sample2);
+        System.out.println(Arrays.toString(encoded2));
         sb = new StringBuilder();
-        for (char c : arl.decode()) sb.append(c);
+        for (char c : arl.decode(encoded2)) sb.append(c);
         System.out.println("rst: " + sb);
         System.out.println(sb.toString().equals(wikiLine2));
     }
 
-    byte[] storage;
-    byte[] encoded;
-
-    public void init(char[] array) {
-        storage = new byte[array.length];
-        for (int i = 0; i < array.length; i++) {
-            storage[i] = (byte) array[i];
-        }
-    }
-
-    public void encode(char[] array) {
+    public byte[] encode(char[] array) {
         int arLen = array.length;
         byte[] buffer = new byte[arLen];
         int i = 0;
@@ -64,27 +53,28 @@ public class ArrayRLE {
             }
             i += count;
         }
-        encoded = new byte[k];
+        byte[] encoded = new byte[k];
 
         for (int j = 0; j < k; j++) encoded[j] = buffer[j];
+
+        return encoded;
     }
 
-    public char[] decode() {
+    public char[] decode(byte[] encoded) {
         int arLen = encoded.length;
         char[] buffer = new char[arLen * arLen];
         int total = 0;
         for (int i = 0; i < arLen; ) {
             if (encoded[i] > 0) {
                 for (int j = 0; j < encoded[i]; j++) buffer[total++] = (char) encoded[i + 1];
-                i+=2;
-            }
-            else {
+                i += 2;
+            } else {
                 int j = 0;
                 for (; j < -encoded[i]; j++) buffer[total++] = (char) encoded[i + 1 + j];
                 i += j + 1;
             }
         }
-        char [] decoded = new char[total];
+        char[] decoded = new char[total];
         for (int i = 0; i < total; i++) decoded[i] = buffer[i];
 
         return decoded;
