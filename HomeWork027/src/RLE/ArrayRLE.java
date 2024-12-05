@@ -7,7 +7,7 @@ public class ArrayRLE {
     public static void main(String[] args) {
         ArrayRLE arl = new ArrayRLE();
         String wikiLine1 = "WWWWWWWWWBBBWWWWWWWWWWWWWWWWWWWWWWWWBWWWWWWWWWWWWWW";
-                          //WWWWWWWWBBBWWWWWWWWWWWWWWWWWWWWWWWWBWWWWWWWWWWWWWW
+                          //WWWWWWWWWBBBWWWWWWWWWWWWWWWWWWWWWWWWBWWWWWWWWWWWWWW
         String wikiLine2 = "ABCABCABCDDDFFFFFF";
 
         char[] a = wikiLine1.toCharArray();
@@ -53,15 +53,12 @@ public class ArrayRLE {
             } else {
                 int seqLen = 1;
                 int bufStart = k++;
-                System.out.printf("bufStart: %d; k: %d; seqLen: %d\n", bufStart, k, seqLen);
                 buffer[k++] = (byte) array[j - 2];
                 while (array[j] != array[j - 1]) {
                     buffer[k++] = (byte) array[j - 1];
                     j++;
                     seqLen++;
-                    System.out.printf("bufStart: %d; k: %d; seqLen: %d\n", bufStart, k, seqLen);
                 }
-                System.out.printf("bufStart: %d; k: %d; seqLen: %d; k - bs %d\n", bufStart, k, seqLen, k - bufStart);
                 buffer[bufStart] = (byte) -seqLen;
                 count = seqLen;
             }
@@ -75,23 +72,17 @@ public class ArrayRLE {
     public char[] decode() {
         int arLen = encoded.length;
         char[] buffer = new char[arLen * arLen];
-        System.out.println("\t\t"  + Arrays.toString(encoded));
         int total = 0;
-        for (int i = 0; i < arLen; i++) {
+        for (int i = 0; i < arLen; ) {
             if (encoded[i] > 0) {
-                System.out.printf("i: %d; e[i]: %d; e[i + 1]: %c\n", i, encoded[i], encoded[i+1]);
-                for (int j = 0; j < encoded[i]; j++) {
-                    buffer[total++] = (char) encoded[i + 1];
-                }
+                for (int j = 0; j < encoded[i]; j++) buffer[total++] = (char) encoded[i + 1];
+                i+=2;
             }
             else {
-                System.out.printf("ELSE! i: %d; e[i]: %d; e[i + 1]: %c\n", i, encoded[i], encoded[i+1]);
-                for (int j = 0; j < -encoded[i]; j++) {
-                    buffer[total++] = (char) encoded[i + 1 + j];
-                    System.out.printf("ELSE inner! i: %d; e[i]: %d; e[i + j]: %c\n", i, encoded[i], encoded[i+1+j]);
-                }
+                int j = 0;
+                for (; j < -encoded[i]; j++) buffer[total++] = (char) encoded[i + 1 + j];
+                i += j + 1;
             }
-            i++;
         }
         char [] decoded = new char[total];
         for (int i = 0; i < total; i++) decoded[i] = buffer[i];
