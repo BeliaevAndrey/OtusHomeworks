@@ -7,17 +7,17 @@ public class ArrayRLE2 {
     public static void main(String[] args) {
         ArrayRLE2 arl = new ArrayRLE2();
 
-        String wikiLine1 = "WWWWWWWWWBBBWWWWWWWWWWWWWWWWWWWWWWWWBWWWWWWWWWWWWWWWB";
-//        String wikiLine1 = "WWWWWWWWWBBB" +
-//                "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW" +
-//                "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW" +
-//                "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW" +
-//                "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW" +
-//                "BWWWWWWWWWWWWWW" +
-//                "additional string to test edge case";
+//        String wikiLine1 = "WWWWWWWWWBBBWWWWWWWWWWWWWWWWWWWWWWWWBWWWWWWWWWWWWWWWB";
+        String wikiLine1 = "WWWWWWWWWBBB" +
+                "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW" +
+                "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW" +
+                "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW" +
+                "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW" +
+                "BWWWWWWWWWWWWWW" +
+                "additional string to test edge case";
 
         System.out.println(wikiLine1.length());
-        String wikiLine2 = "ABCABCABCDDDFFFFFF";
+        String wikiLine2 = "ABCABCABCDDDFFFFFFf";
         char[] sample1 = wikiLine1.toCharArray();
         byte[] encoded1 = arl.encode(sample1);
         System.out.println(Arrays.toString(encoded1));
@@ -45,7 +45,10 @@ public class ArrayRLE2 {
             int j = i;
             int count = 0;
 
-            while (j < arLen && array[j++] == array[i]) count++;
+            while (j < arLen && array[j] == array[i]) {
+                count++;
+                j++;
+            }
 
             if (count > 127) {                  // in case of count value larger than byte
                 for (int k = 0; k < count / 127; k++) {
@@ -63,8 +66,8 @@ public class ArrayRLE2 {
             } else {
                 int seqLen = 1;                             // first byte already counted
                 int bufStart = total++;                     // a place for length of series value
-                buffer[total++] = (byte) array[j - 2];      // first byte of sequence
-
+                buffer[total++] = (byte) array[j - 1];      // first byte of sequence
+                j += 1;                                     // shift by 1 position -- 1st byte is written
                 while (j < arLen && array[j] != array[j - 1]) {
                     buffer[total++] = (byte) array[j - 1];  // placing a symbol byte value
                     j++;
@@ -86,12 +89,10 @@ public class ArrayRLE2 {
     public char[] decode(byte[] encoded) {
         int arLen = encoded.length;
         int bufLen = countLen(encoded);
-        System.out.printf("\nbuf len: %d\n", bufLen);
         char[] buffer = new char[bufLen];
         int total = 0;
 
         for (int i = 0; i < arLen; ) {
-            System.out.printf("enc[i]%d\n", encoded[i]);
             if (encoded[i] > 0) {   /* appending repeating bytes one by one */
                 int count = 0;
 
@@ -105,24 +106,18 @@ public class ArrayRLE2 {
             } else {                /* appending a sequence byte by byte */
 
                 int j = 0;
-                for (; j < -encoded[i]; j++) {
-                    System.out.printf("j: %d; e[i] %d; e[i + 1 + j] %d %c \n",
-                            j, encoded[i], encoded[i + 1 + j], encoded[i + 1 + j]);
-                    buffer[total++] = (char) encoded[i + 1 + j];
-                }
+                for (; j < -encoded[i]; j++) buffer[total++] = (char) encoded[i + 1 + j];
                 i += j + 1;         // shift to last position
 
             }
         }
-
-        System.out.printf("\nbuffer: %s\n", Arrays.toString(buffer));
 
         return buffer;
     }
 
     private int countLen(byte[] arr) {
         int size = 0;
-        for (int i = 0; i < arr.length; i+=2) {
+        for (int i = 0; i < arr.length; i += 2) {
 
             while (arr[i] == 127) size += arr[i++];
 
