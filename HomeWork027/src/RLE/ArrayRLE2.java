@@ -2,14 +2,22 @@ package RLE;
 
 import java.util.Arrays;
 
-public class ArrayRLE {
+public class ArrayRLE2 {
 
     public static void main(String[] args) {
-        ArrayRLE arl = new ArrayRLE();
+        ArrayRLE2 arl = new ArrayRLE2();
 
-        String wikiLine1 = "WWWWWWWWWBBBWWWWWWWWWWWWWWWWWWWWWWWWBWWWWWWWWWWWWWW";
+        String wikiLine1 = "WWWWWWWWWBBBWWWWWWWWWWWWWWWWWWWWWWWWBWWWWWWWWWWWWWWWB";
+//        String wikiLine1 = "WWWWWWWWWBBB" +
+//                "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW" +
+//                "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW" +
+//                "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW" +
+//                "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW" +
+//                "BWWWWWWWWWWWWWW" +
+//                "additional string to test edge case";
+
+        System.out.println(wikiLine1.length());
         String wikiLine2 = "ABCABCABCDDDFFFFFF";
-
         char[] sample1 = wikiLine1.toCharArray();
         byte[] encoded1 = arl.encode(sample1);
         System.out.println(Arrays.toString(encoded1));
@@ -39,6 +47,14 @@ public class ArrayRLE {
 
             while (j < arLen && array[j++] == array[i]) count++;
 
+            if (count > 127) {                  // in case of count value larger than byte
+                for (int k = 0; k < count / 127; k++) {
+                    buffer[total++] = 127;
+                    i += 127;
+                }
+                count %= 127;
+            }
+
             if (count > 1) {                                // in case of amount of bytes more than 1
                 buffer[total++] = (byte) count;             // a positive means the repetitions amount
                 buffer[total++] = (byte) array[i];          // byte value of a symbol
@@ -49,7 +65,7 @@ public class ArrayRLE {
                 int bufStart = total++;                     // a place for length of series value
                 buffer[total++] = (byte) array[j - 2];      // first byte of sequence
 
-                while (array[j] != array[j - 1]) {
+                while (j < arLen && array[j] != array[j - 1]) {
                     buffer[total++] = (byte) array[j - 1];  // placing a symbol byte value
                     j++;
                     seqLen++;
@@ -69,25 +85,53 @@ public class ArrayRLE {
 
     public char[] decode(byte[] encoded) {
         int arLen = encoded.length;
-        char[] buffer = new char[arLen * arLen];
+        int bufLen = countLen(encoded);
+        System.out.printf("\nbuf len: %d\n", bufLen);
+        char[] buffer = new char[bufLen];
         int total = 0;
 
         for (int i = 0; i < arLen; ) {
+            System.out.printf("enc[i]%d\n", encoded[i]);
             if (encoded[i] > 0) {   /* appending repeating bytes one by one */
-                for (int j = 0; j < encoded[i]; j++) buffer[total++] = (char) encoded[i + 1];
+                int count = 0;
+
+                while (encoded[i] == 127) count += encoded[i++];
+
+                count += encoded[i];
+
+                for (int j = 0; j < count; j++) buffer[total++] = (char) encoded[i + 1];
                 i += 2;             // shift to next pair
+
             } else {                /* appending a sequence byte by byte */
+
                 int j = 0;
-                for (; j < -encoded[i]; j++) buffer[total++] = (char) encoded[i + 1 + j];
+                for (; j < -encoded[i]; j++) {
+                    System.out.printf("j: %d; e[i] %d; e[i + 1 + j] %d %c \n",
+                            j, encoded[i], encoded[i + 1 + j], encoded[i + 1 + j]);
+                    buffer[total++] = (char) encoded[i + 1 + j];
+                }
                 i += j + 1;         // shift to last position
+
             }
         }
 
-        char[] decoded = new char[total];
+        System.out.printf("\nbuffer: %s\n", Arrays.toString(buffer));
 
-        for (int i = 0; i < total; i++) decoded[i] = buffer[i];
+        return buffer;
+    }
 
-        return decoded;
+    private int countLen(byte[] arr) {
+        int size = 0;
+        for (int i = 0; i < arr.length; i+=2) {
+
+            while (arr[i] == 127) size += arr[i++];
+
+            if (arr[i] < 0) {
+                size += -arr[i];
+                i += -arr[i] - 1;
+            } else size += arr[i];
+        }
+        return size;
     }
 
 
