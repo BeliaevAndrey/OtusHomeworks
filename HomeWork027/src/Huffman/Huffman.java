@@ -19,13 +19,8 @@ public class Huffman {
 
     private byte[] compressBytes(byte[] bytes) {
 
-        FileUtil fu = new FileUtil();
-
         int[] freqArr = countFrequencies(bytes);
         byte[] fileHeader = buildHead(bytes.length, freqArr);
-
-        fu.writeBytes("fileHead.txt", fileHeader);
-
         Node root = growHuffmanTree(freqArr);
         String[] codes = createHuffmanCode(root);
         byte[] bits = compress(bytes, codes);
@@ -66,8 +61,13 @@ public class Huffman {
         head.add(  (byte) ((fileLen >> 16) & 255)  );
         head.add(  (byte) ((fileLen >> 24) & 255)  );
 
+        System.out.printf("file len: %d: %d %d %d %d\n",
+                fileLen, head.get(0), head.get(1), head.get(2), head.get(3));   // TODO: RM semaphore
+
         int count = 0;
         for (int i : freqArr) if (i > 0) count++;
+
+        System.out.printf("count before: %d\n", count);     // TODO: RMS
 
         head.add((byte) count);
 
@@ -171,20 +171,20 @@ public class Huffman {
     }
 
     private int[] parseHeader(byte[] bytes, int[] tmp) {
-        int dataLength = (bytes[0] & 255 )      |
-                        ((bytes[1] & 255) << 8)  |
-                        ((bytes[2] & 255) << 16) |
-                        ((bytes[3] & 255) << 24);
+        int dataLength = (bytes[0] & 127)        |
+                ((bytes[1] & 127) << 8)  |
+                ((bytes[2] & 127) << 16) |
+                ((bytes[3] & 127) << 24);
 
-        System.out.printf("DATA LEN: %d\n", dataLength);
+        System.out.printf("Data len: %d\n", dataLength);
 
-        int count = bytes[4] & 255;
-//        if (count == 0) count = 128;
+        int count = bytes[4] & 127;
+        if (count == 0) count = 128;
 
         int[] freqArr = new int[256];
         for (int i = 0; i < count; i++) {
             int pos = 5 + i * 2;
-            byte symbol = bytes[pos];
+            int symbol = bytes[pos];
             freqArr[symbol] = bytes[pos + 1];
         }
 
