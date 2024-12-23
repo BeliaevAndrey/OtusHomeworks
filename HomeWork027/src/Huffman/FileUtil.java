@@ -18,15 +18,14 @@ public class FileUtil {
     public byte[] readBytes(String fileIn) {
         Path fullInPath = Path.of(path.toString(), fileIn);
         byte[] buffer = null;
-        try (DataInputStream dis = new DataInputStream(new FileInputStream(fullInPath.toString()))) {
 
+        try (InputStream fis = Files.newInputStream(fullInPath)) {
             buffer = new byte[(int) Files.size(fullInPath)];
-            int i = 0;
-            while (dis.available() > 0) buffer[i++] = dis.readByte();
-
+            System.out.println(fis.read(buffer));
         } catch (IOException e) {
             e.printStackTrace();
         }
+
         return buffer;
     }
 
@@ -44,10 +43,9 @@ public class FileUtil {
 
         System.out.println("Writer: bytes.length=" + bytes.length);
 
-        try (DataOutputStream dos = new DataOutputStream(new FileOutputStream(fullOutPath.toString()))) {
-
-            for (byte b : bytes) dos.writeByte(b);
-            dos.flush();
+        try (OutputStream fos = Files.newOutputStream(fullOutPath)) {
+            fos.write(bytes);
+            fos.flush();
 
         } catch (IOException e) {
             e.printStackTrace();

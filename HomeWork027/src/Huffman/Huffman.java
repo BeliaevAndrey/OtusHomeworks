@@ -35,7 +35,7 @@ public class Huffman {
 
     private int[] countFrequencies(byte[] bytes) {
 
-        int[] freqArr = new int[256];
+        int[] freqArr = new int[128];
         for (byte b : bytes) freqArr[b & 127]++;
         normalize(freqArr);
         return freqArr;
@@ -46,7 +46,6 @@ public class Huffman {
         for (int frq : freqArr) if (frq > max) max = frq;
 
         if (max < 127) return;
-        System.out.printf("\n\t\tmax = %d\n", max);
 
         for (int i = 0; i < freqArr.length; i++)
             if (freqArr[i] > 0) freqArr[i] = 1 + freqArr[i] * 127 / (max + 1);
@@ -56,10 +55,16 @@ public class Huffman {
     private byte[] buildHead(int fileLen, int[] freqArr) {
         ArrayList<Byte> head = new ArrayList<>();
 
-        head.add(  (byte) (fileLen         & 255)  );
-        head.add(  (byte) ((fileLen >> 8)  & 255)  );
-        head.add(  (byte) ((fileLen >> 16) & 255)  );
-        head.add(  (byte) ((fileLen >> 24) & 255)  );
+        /* This kind of number code/decode procedure restores wrong length for large files, e.g: 8900890 -> 125082 */
+//        head.add(  (byte) (fileLen         & 127)  );
+//        head.add(  (byte) ((fileLen >> 8)  & 127)  );
+//        head.add(  (byte) ((fileLen >> 16) & 127)  );
+//        head.add(  (byte) ((fileLen >> 24) & 127)  );
+
+        head.add(  (byte) (fileLen         & 127)  );
+        head.add(  (byte) ((fileLen >> 7)  & 127)  );
+        head.add(  (byte) ((fileLen >> 14) & 127)  );
+        head.add(  (byte) ((fileLen >> 21) & 127)  );
 
         System.out.printf("file len: %d: %d %d %d %d\n",
                 fileLen, head.get(0), head.get(1), head.get(2), head.get(3));   // TODO: RM semaphore
@@ -85,7 +90,7 @@ public class Huffman {
 
     private Node growHuffmanTree(int[] freqArr) {
         int max = 0;
-        for (int i : freqArr) max += (i & 255);
+        for (int i : freqArr) max += i;
         IPriorityQueue<Node> pq = new CustomPriorityQueue<>(max + 1);
 
         for (int i = 0; i < freqArr.length; i++) {
@@ -103,7 +108,7 @@ public class Huffman {
     }
 
     private String[] createHuffmanCode(Node root) {
-        String[] codes = new String[256];
+        String[] codes = new String[127];
         next(root, "", codes);
         return codes;
     }
@@ -124,7 +129,7 @@ public class Huffman {
         for (byte b : bytes) {
             for (char c : codes[b & 127].toCharArray()) {
                 if (c == '1') sum |= bit;
-                if ((bit & 255) == 128) {
+                if ((bit & 128) == 128) {
                     bits.add(sum);
                     sum = 0;
                     bit = 1;
@@ -134,6 +139,7 @@ public class Huffman {
 
             }
         }
+        System.out.printf("\nbit %d, bit&128=%d, bit&255=%d, bit&127=%d\n", bit, bit&128, bit&255, bit&127);
         if ((bit & 255) > 1) bits.add(sum);
         byte[] result = new byte[bits.size()];
         for (int i = 0; i < result.length; i++) {
@@ -150,9 +156,7 @@ public class Huffman {
         FileUtil fr = new FileUtil();
         byte[] bytes = fr.readBytes(compressedFile);
         byte[] decompressed = deCompressBytes(bytes);
-        System.out.println("dcmp: decompressed.length " +
-                decompressed.length + " " +
-                decompressed.length / 1024 / 1024);
+        System.out.printf("Decompress: decompressed.length %d\n", decompressed.length);
         fr.writeBytes(deCompressedFile, decompressed);
     }
 
@@ -171,25 +175,31 @@ public class Huffman {
     }
 
     private int[] parseHeader(byte[] bytes, int[] tmp) {
-        int dataLength = (bytes[0] & 127)        |
-                ((bytes[1] & 127) << 8)  |
-                ((bytes[2] & 127) << 16) |
-                ((bytes[3] & 127) << 24);
+        /* This kind of number code/decode procedure restores wrong length for large files, e.g: 8900890 -> 479514 */
+//        int dataLength = (bytes[0]       )  |
+//                         (bytes[1]  << 8 )  |
+//                         (bytes[2]  << 16)  |
+//                         (bytes[3]  << 24);
 
-        System.out.printf("Data len: %d\n", dataLength);
+        int dataLength = (bytes[0])         |
+                (bytes[1]  << 7 )  |
+                (bytes[2]  << 14)  |
+                (bytes[3]  << 21);
+
+        System.out.printf("Data length: %d\n", dataLength);     // TODO: RMS
 
         int count = bytes[4] & 127;
         if (count == 0) count = 128;
 
-        int[] freqArr = new int[256];
+        int[] freqArr = new int[128];
         for (int i = 0; i < count; i++) {
             int pos = 5 + i * 2;
             int symbol = bytes[pos];
             freqArr[symbol] = bytes[pos + 1];
         }
 
-        int startIndex = 5 + count * 2;
-        System.out.printf("start index: %d count: %d\n", startIndex, count);
+        int startIndex = 5 + count * 2;     // header length + dictionary length
+        System.out.printf("Start index: %d count: %d\n", startIndex, count);        // TODO: RMS
         tmp[0] = dataLength;
         tmp[1] = startIndex;
 
@@ -198,17 +208,13 @@ public class Huffman {
 
     byte[] decompress(byte[] bytes, int startIdx, int dataLen, Node root) {
 
-        for (int i = 0; i < bytes.length; i++) {
-            bytes[i] = (byte)(bytes[i] & 255);
-        }
-
         int size = 0;
         byte[] data = new byte[dataLen];
         Node current = root;
 
         for (int i = startIdx; i < bytes.length; i++) {
             for (int bit = 1; bit <= 128; bit <<= 1) {
-                if (((bytes[i] & 255) & bit) == 0) current = current.bit0;
+                if ((bytes[i] & bit) == 0) current = current.bit0;
                 else current = current.bit1;
 
                 if (current.bit0 == null) {
