@@ -10,7 +10,7 @@ public class HuffmanCompress {
     }
 
 
-    private void parseArgs(String[] args) {
+    private void parseArgs(String[] args) { // TODO: Correct file names creation
         String fileIn, fileOut;
         String arcExt = ".huffmanned";
         System.out.println(Arrays.toString(args));
