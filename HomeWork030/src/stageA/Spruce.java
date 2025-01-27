@@ -4,7 +4,7 @@ import util.ReadFile;
 import util.WriteResults;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+
 
 public class Spruce {
     static final String taskName = "spruce";
@@ -70,6 +70,7 @@ public class Spruce {
         int rowsAmt = rows.length;
         int[][] nums = new int[rowsAmt][];
         for (int i = 0; i < rowsAmt; i++) {
+
             nums[i] = new int[i + 1];
             int j = 0;
 
@@ -80,7 +81,4 @@ public class Spruce {
         return nums;
     }
 
-    private void printArr(int[][] arr) {
-        for (int[] a : arr) System.out.println(Arrays.toString(a));
-    }
 }
