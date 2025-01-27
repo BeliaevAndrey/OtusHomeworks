@@ -15,10 +15,10 @@ public class ReadFile {
     private final HashMap<Integer, Path[]> tests;
 
     public static void main(String[] args) {
-        ReadFile rf = new ReadFile("peas");
+        ReadFile rf = new ReadFile("spruce");
         int n = rf.getTestAmt() - 1;
         for (;n != 0; n--) {
-            String[] s = rf.getTest(n);
+            String[] s = rf.getTest(n, false);
             System.out.printf("%s %s\n\n", s[0], s[1]);
         }
     }
@@ -52,13 +52,25 @@ public class ReadFile {
     }
 
 
-    public String[] getTest(int testNum) {
+    public String[] getTest(int testNum, boolean multiline) {
 
             Path[] testPath = tests.get(testNum);
             String[] testData = new String[2];
 
             try (BufferedReader br = new BufferedReader(new FileReader(testPath[0].toString()))) {
-                testData[0] = br.readLine();
+
+                if (multiline) {
+                    StringBuilder lines = new StringBuilder(br.readLine());
+                    try {
+                        int count = Integer.parseInt(lines.toString());
+                        lines = new StringBuilder();
+                        for (;count > 0; count--) lines.append(br.readLine()).append('\n');
+                        testData[0] = lines.toString();
+                    } catch (NumberFormatException e) { e.printStackTrace(); }
+
+                }
+                else testData[0] = br.readLine();
+
             } catch (IOException e) { e.printStackTrace(); }
 
             try (BufferedReader br = new BufferedReader(new FileReader(testPath[1].toString()))) {
