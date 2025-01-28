@@ -15,6 +15,8 @@ public class Huffman {
         FileUtil fr = new FileUtil();
         byte[] bytes = fr.readBytes(rawFile);
         byte[] compressed = compressBytes(bytes);
+        System.out.printf("Compress: decompressed.length %d\n", compressed.length);
+
         fr.writeBytes(compressedFile, compressed);
     }
 

@@ -21,7 +21,8 @@ public class FileUtil {
 
         try (InputStream fis = Files.newInputStream(fullInPath)) {
             buffer = new byte[(int) Files.size(fullInPath)];
-            System.out.println(fis.read(buffer));
+            int len = fis.read(buffer);
+            System.out.printf("Reader. Bytes read: %d\n", len);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -41,7 +42,7 @@ public class FileUtil {
             }
         } else System.out.println("File not found.");
 
-        System.out.println("Writer: bytes.length=" + bytes.length);
+        System.out.println("Writer: bytes.length: " + bytes.length);
 
         try (OutputStream fos = Files.newOutputStream(fullOutPath)) {
             fos.write(bytes);
