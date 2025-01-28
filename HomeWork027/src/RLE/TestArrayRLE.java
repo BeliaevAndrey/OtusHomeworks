@@ -1,17 +1,22 @@
 package RLE;
 
+import util.WriteResults;
+
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class TestArrayRLE {
 
+    ArrayList<String> testResults;
+
     public static void main(String[] args) {
         TestArrayRLE tar = new TestArrayRLE();
-
         tar.runTests();
 
     }
 
     void runTests() {
+        testResults = new ArrayList<>();
 
         String longLine = "WWWWWWWWWBBB" +
                 "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW" +
@@ -29,6 +34,8 @@ public class TestArrayRLE {
         testStrings(new ArrayRLE(), longLine);
         testStrings(new ArrayRLE(), wikiLine2);
 
+        WriteResults wr = new WriteResults("Test_RLE");
+        wr.writeFile(testResults);
     }
 
 
@@ -37,24 +44,32 @@ public class TestArrayRLE {
         char[] sample1 = line.toCharArray();
         int lenSrc = sample1.length;
 
-        System.out.println("Encoding:");
-        System.out.printf("Line: %s\n", line);
-        System.out.printf("Char array source:\n%s\n", Arrays.toString(sample1));
-        System.out.printf("Char array length: %d\n", lenSrc);
+        StringBuilder report = new StringBuilder();
+
+        report.append("Encoding:\n");
+        report.append(String.format("Line: %s\n", line));
+        report.append(String.format("Char array source:\n%s\n", Arrays.toString(sample1)));
+        report.append(String.format("Char array length: %d\n", lenSrc));
 
         byte[] encoded1 = arl.encode(sample1);
         int lenRst = encoded1.length;
 
-        System.out.printf("Byte array encoded:\n%s\n", Arrays.toString(encoded1));
-        System.out.printf("Byte array length: %d\n", lenRst);
-        System.out.printf("\nCompress ratio: %.3f %%", ((double) lenRst / lenSrc * 100));
+        report.append(String.format("Byte array encoded:\n%s\n", Arrays.toString(encoded1)));
+        report.append(String.format("Byte array length: %d\n", lenRst));
+        report.append(String.format("Compress ratio: %.3f %%\n", ((double) lenRst / lenSrc * 100)));
 
-        System.out.println("\nDecoding:");
+        testResults.add(report.toString());
+        System.out.println(report);
+        report = new StringBuilder();
+
+        report.append(String.format("Decoding:\n"));
         StringBuilder sb = new StringBuilder();
         for (char c : arl.decode(encoded1)) sb.append(c);
-        System.out.printf("Result: %s\n", sb);
-        System.out.printf("Correct: %s\n", sb.toString().equals(line));
-        System.out.println("=".repeat(80));
+        report.append(String.format("Result: %s\n", sb));
+        report.append(String.format("Correct: %s\n", sb.toString().equals(line)));
+        report.append(String.format("=".repeat(80))).append("\n\n");
+        testResults.add(report.toString());
+        System.out.println(report);
 
     }
 

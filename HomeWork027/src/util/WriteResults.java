@@ -15,7 +15,7 @@ public class WriteResults {
 
 
     public WriteResults(String taskName) {
-        basicPath = Path.of(System.getProperty("user.dir"), "HomeWork030", "TestResults", taskName + ".txt");
+        basicPath = Path.of(System.getProperty("user.dir"), "HomeWork027", "TestResults", taskName);
         if (!Files.isDirectory(basicPath)) {
             try {
 
@@ -29,7 +29,8 @@ public class WriteResults {
     }
 
     public void writeFile(ArrayList<String> lines) {
-        Path outPath = Path.of(basicPath.toString(), taskName);
+        String fileOut = taskName + ".txt";
+        Path outPath = Path.of(basicPath.toString(), fileOut);
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(outPath.toString()))) {
             bw.write("Results for task: ");
             bw.write(taskName);

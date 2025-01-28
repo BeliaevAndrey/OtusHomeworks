@@ -1,0 +1,29 @@
+Results for task: Test_RLE
+Encoding:
+Line: WWWWWWWWWBBBWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWBWWWWWWWWWWWWWW1 2 3 5 6 7 8 9 0additional string to test edge case12345678
+Char array source:
+[W, W, W, W, W, W, W, W, W, B, B, B, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, B, W, W, W, W, W, W, W, W, W, W, W, W, W, W, 1,  , 2,  , 3,  , 5,  , 6,  , 7,  , 8,  , 9,  , 0, a, d, d, i, t, i, o, n, a, l,  , s, t, r, i, n, g,  , t, o,  , t, e, s, t,  , e, d, g, e,  , c, a, s, e, 1, 2, 3, 4, 5, 6, 7, 8]
+Char array length: 287
+Byte array encoded:
+[9, 87, 3, 66, 127, 73, 87, -1, 66, 14, 87, -18, 49, 32, 50, 32, 51, 32, 53, 32, 54, 32, 55, 32, 56, 32, 57, 32, 48, 97, 2, 100, -39, 105, 116, 105, 111, 110, 97, 108, 32, 115, 116, 114, 105, 110, 103, 32, 116, 111, 32, 116, 101, 115, 116, 32, 101, 100, 103, 101, 32, 99, 97, 115, 101, 49, 50, 51, 52, 53, 54, 55, -1, 56]
+Byte array length: 74
+Compress ratio: 25,784 %
+Decoding:
+Result: WWWWWWWWWBBBWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWBWWWWWWWWWWWWWW1 2 3 5 6 7 8 9 0additional string to test edge case12345678
+Correct: true
+================================================================================
+
+Encoding:
+Line: ABCABCABCDDDFFFFFF
+Char array source:
+[A, B, C, A, B, C, A, B, C, D, D, D, F, F, F, F, F, F]
+Char array length: 18
+Byte array encoded:
+[-9, 65, 66, 67, 65, 66, 67, 65, 66, 67, 3, 68, 6, 70]
+Byte array length: 14
+Compress ratio: 77,778 %
+Decoding:
+Result: ABCABCABCDDDFFFFFF
+Correct: true
+================================================================================
+

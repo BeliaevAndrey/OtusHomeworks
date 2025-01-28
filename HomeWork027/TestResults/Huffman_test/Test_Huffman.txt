@@ -1,0 +1,46 @@
+/* Copy from console */
+
+========================================
+test 1
+test0.txt compress
+Reader. Bytes read: 155
+fileLengthRestored: 155
+Compress: compressed.length 385
+File found. Deleting
+Writer: bytes.length: 385
+
+test0.txt decompress
+Reader. Bytes read: 385
+Decompress: decompressed.length 155
+File found. Deleting
+Writer: bytes.length: 155
+
+========================================
+test 2
+test1.txt compress
+Reader. Bytes read: 11
+fileLengthRestored: 11
+Compress: compressed.length 17
+File found. Deleting
+Writer: bytes.length: 17
+
+test1.txt decompress
+Reader. Bytes read: 17
+Decompress: decompressed.length 11
+File found. Deleting
+Writer: bytes.length: 11
+
+========================================
+test 3
+test4.txt compress
+Reader. Bytes read: 8900910
+fileLengthRestored: 8900910
+Compress: compressed.length 4969349
+File found. Deleting
+Writer: bytes.length: 4969349
+
+test4.txt decompress
+Reader. Bytes read: 4969349
+Decompress: decompressed.length 8900910
+File found. Deleting
+Writer: bytes.length: 8900910
