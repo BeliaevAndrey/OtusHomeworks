@@ -10,6 +10,7 @@ public class Huffman {
     /* Alphabet of length 126 chars only available */
 
     // region Compress File
+
     public void compressFile(String rawFile, String compressedFile) {
         FileUtil fr = new FileUtil();
         byte[] bytes = fr.readBytes(rawFile);
@@ -60,21 +61,15 @@ public class Huffman {
         head.add(  (byte) ((fileLen >> 16) & 255)  );
         head.add(  (byte) ((fileLen >> 24) & 255)  );
 
-        System.out.printf("file len: %d: %d %d %d %d\n",
-                fileLen, head.get(0), head.get(1), head.get(2), head.get(3));   // TODO: RM semaphore
-
-        System.out.println("I want file length back...");
-        int fileLengthRestored = (head.get(0) & 255) |
-                (head.get(1) & 255) << 8 |
-                (head.get(2) & 255) << 16 |
-                (head.get(3) & 255) << 24 ;
+        int fileLengthRestored = (head.get(0) & 255)  |
+                            (head.get(1) & 255) << 8  |
+                            (head.get(2) & 255) << 16 |
+                            (head.get(3) & 255) << 24 ;
 
         System.out.println("fileLengthRestored: " + fileLengthRestored);
 
         int count = 0;
         for (int i : freqArr) if (i > 0) count++;
-
-        System.out.printf("count before: %d\n", count);     // TODO: RMS
 
         head.add((byte) count);
 
@@ -179,15 +174,10 @@ public class Huffman {
 
     private int[] parseHeader(byte[] bytes, int[] tmp) {
 
-        System.out.printf("Splat size: %d %d %d %d\n",
-                bytes[0], bytes[1], bytes[2],bytes[3]);
-
         int dataLength = (bytes[0]  & 255)        |
-                ((bytes[1] & 255) << 8 ) |
-                ((bytes[2] & 255) << 16) |
-                ((bytes[3] & 255) << 24);
-
-        System.out.printf("Data length: %d\n", dataLength);     // TODO: RMS
+                         ((bytes[1] & 255) << 8 ) |
+                         ((bytes[2] & 255) << 16) |
+                         ((bytes[3] & 255) << 24);
 
         int count = bytes[4] & 255;
         if (count == 0) count = 256;
@@ -200,7 +190,6 @@ public class Huffman {
         }
 
         int startIndex = 5 + count * 2;     // header length + dictionary length
-        System.out.printf("Start index: %d count: %d\n", startIndex, count);        // TODO: RMS
         tmp[0] = dataLength;
         tmp[1] = startIndex;
 
