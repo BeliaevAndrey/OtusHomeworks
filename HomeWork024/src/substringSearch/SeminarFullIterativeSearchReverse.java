@@ -34,7 +34,6 @@ public class SeminarFullIterativeSearchReverse implements ISearcher {
         return -1;
     }
 
-    @Override
     public void prepare() {    }
 
     @Override

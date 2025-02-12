@@ -36,7 +36,7 @@ public class BoyerMoore implements ISearcher {
         return -1;
     }
 
-    public void prepare() {
+    private void prepare() {
         // search for repeated symbol groups in pattern
         suffix = new int[lenMask];                  // array of shifts by pattern length
         suffix[0] = 1;                              // shift by 1 position if no coincidences

@@ -37,7 +37,7 @@ public class BoyerMooreHorspoolShift1 implements ISearcher {
         return -1;
     }
 
-    public void prepare() {
+    private void prepare() {
         int size = 128;
         shifts = new int[size];
         for (int i = 0; i < size; i++)

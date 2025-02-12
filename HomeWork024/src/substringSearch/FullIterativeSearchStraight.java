@@ -40,7 +40,6 @@ public class FullIterativeSearchStraight implements ISearcher {
         return l == r;
     }
 
-    @Override
     public void prepare() {    }
 
     @Override

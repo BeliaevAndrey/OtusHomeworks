@@ -40,7 +40,7 @@ public class BoyerMooreHorspool implements ISearcher {
         return -1;
     }
 
-    public void prepare() {
+    private void prepare() {
         int size = 128;                     // ASCII table length
         shifts = new int[size];
         for (int i = 0; i < size; i++)
